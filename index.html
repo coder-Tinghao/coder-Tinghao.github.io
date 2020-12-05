@@ -158,6 +158,140 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/coder-Tinghao/coder-Tinghao.github.io/2020/12/05/Knuth-Shuffle%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/terran.png">
+      <meta itemprop="name" content="Tinghao">
+      <meta itemprop="description" content="嘤嘤嘤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="焦糖玛奇朵">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/05/Knuth-Shuffle%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Knuth-Shuffle洗牌算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-05 19:44:06 / Modified: 22:59:19" itemprop="dateCreated datePublished" datetime="2020-12-05T19:44:06+08:00">2020-12-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Knuth-Shuffle洗牌算法"><a href="#Knuth-Shuffle洗牌算法" class="headerlink" title="Knuth-Shuffle洗牌算法"></a>Knuth-Shuffle洗牌算法</h1><p>该算法来自于一个问题：<strong>设计一个公平的洗牌算法</strong></p>
+<p>这个问题表面上看是一个随机问题，很容易想到的是，每次随机交换两张牌，交换一定次数，且交换次数与牌的数量相关。而这种方法就忽略了这个问题的另一个方面，也是问题的本质：<strong>公平</strong>。就是<strong>对于生成的排列，每一个元素都能独立等概率地出现在每一个位置。</strong>或者反过来，<strong>每一个位置都能独立等概率地放置每个元素。</strong></p>
+<p>抛开时间复杂度来看，只要得到n个元素的全排列再随机选取一个就可以实现公平，但复杂度可以达到O（n！），是不可以被使用的。</p>
+<p>下面给出Knuth提出的洗牌算法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>; i&gt;=<span class="number">0</span>; i--)&#123;</span><br><span class="line">    swap(arr[i], arr[rand(<span class="number">0</span>, i)])  <span class="comment">//rand(0,i)为生成[0,i]之间的速随机整数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来验证Knuth洗牌算法的公平性：用简单的5个数字：1，2，3，4，5进行模拟</p>
+<img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20201205201725842.png" alt="image-20201205201725842" style="zoom:50%;" />
+
+<img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20201205201840375.png" alt="image-20201205201840375" style="zoom:50%;" />
+
+<p>从5开始，随机和包括5在内的数字进行对换，假设这一步随机到2。因为每个数被随机到的可能性为1/5，所以任意元素出现在最后一个位置的概率均为1/5。</p>
+<img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20201205202037477.png" alt="image-20201205202037477" style="zoom:50%;" />
+
+<img src="C:\Users\dell\AppData\Roaming\Typora\typora-user-images\image-20201205202100703.png" alt="image-20201205202100703" style="zoom:50%;" />
+
+<p>接下来，对第四个位置重复上一步的过程，只看这个四个元素，任意元素出现在该位置的概率为1/4，算入第一步选取该四个数的4/5，即从总体上看任意元素出现在该位置的概率为1/4 * 4/5 = 1/5，和最后一个位置的概率相同，同理可以完成该算法的公平性验证！</p>
+<p><strong>其实这个过程也可以理解为一个从袋子里随机取出球不放回的过程，但本算法空间上在原地完成，是工程实现前提下的算法思想。</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://github.com/coder-Tinghao/coder-Tinghao.github.io/2020/12/02/%E8%AE%B02020%E5%A4%A7%E5%88%9B%E4%B8%AD%E6%9C%9F%E7%AD%94%E8%BE%A9%E5%89%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/terran.png">
+      <meta itemprop="name" content="Tinghao">
+      <meta itemprop="description" content="嘤嘤嘤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="焦糖玛奇朵">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/02/%E8%AE%B02020%E5%A4%A7%E5%88%9B%E4%B8%AD%E6%9C%9F%E7%AD%94%E8%BE%A9%E5%89%8D/" class="post-title-link" itemprop="url">记2020大创中期答辩前</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-02 00:01:02 / Modified: 00:01:41" itemprop="dateCreated datePublished" datetime="2020-12-02T00:01:02+08:00">2020-12-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://github.com/coder-Tinghao/coder-Tinghao.github.io/2020/11/26/python-type-%E5%87%BD%E6%95%B0%E5%8F%8A%E5%BC%95%E7%94%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -484,12 +618,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
