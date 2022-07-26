@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2022-07-23T09:05:10.883Z</updated>
+  <updated>2022-07-26T07:32:09.230Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记hexo配置与部署</title>
+    <link href="http://coder_tinghao.github.io/2022/07/26/%E8%AE%B0hexo%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2/"/>
+    <id>http://coder_tinghao.github.io/2022/07/26/%E8%AE%B0hexo%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2/</id>
+    <published>2022-07-26T04:53:22.000Z</published>
+    <updated>2022-07-26T07:32:09.230Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="记hexo配置与部署"><a href="#记hexo配置与部署" class="headerlink" title="记hexo配置与部署"></a>记hexo配置与部署</h1><p>hexo中文文档：<a href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p><hr><p>因为官方文档的一点小问题和我对Mac系统环境变量、终端类型等的不熟悉，这个安装过程比较坎坷。关于Git和Node.js的安装比较顺利，我又顺手安装了Homebrew（Mac下的包管理器）。</p><hr><h2 id="Hexo安装过程中的小问题"><a href="#Hexo安装过程中的小问题" class="headerlink" title="Hexo安装过程中的小问题"></a>Hexo安装过程中的小问题</h2><p>Hexo的安装首先如文档所说出现了EACCES权限错误，解决办法是将npm的<strong>全局</strong>安装包放到新创建的npm-global文件夹，并将npm-global的路径添加到环境变量，问题就出在环境变量的配置，Node.js的文档中提到将“export PATH&#x3D;<del>&#x2F;.npm-global&#x2F;bin:$PATH”语句加入到</del>&#x2F;.profile 中，~&#x2F;.profile是<strong>bash终端</strong>的环境变量配置文件，而现在Mac系统默认为<strong>zsh终端</strong>，需要将上述语句加入.zshrc文件中，保证在打开终端后npm全局环境变量已经加载。否则，需要每次source ~&#x2F;.profile才可以执行 hexo &lt; command &gt; 命令。经过几个小时的排查最终发现。</p><hr><h2 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h2><p>hexo n “新博客”  创建新博客</p><p>hexo clean      清理hexo缓存</p><p>hexo g          生成博客</p><p>hexo d          部署博客</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;记hexo配置与部署&quot;&gt;&lt;a href=&quot;#记hexo配置与部署&quot; class=&quot;headerlink&quot; title=&quot;记hexo配置与部署&quot;&gt;&lt;/a&gt;记hexo配置与部署&lt;/h1&gt;&lt;p&gt;hexo中文文档：&lt;a href=&quot;https://hexo.io/zh-c</summary>
+      
+    
+    
+    
+    
+    <category term="日常" scheme="http://coder_tinghao.github.io/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>test</title>
