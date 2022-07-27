@@ -206,9 +206,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-07-26 12:53:22 / Modified: 15:32:09" itemprop="dateCreated datePublished" datetime="2022-07-26T12:53:22+08:00">2022-07-26</time>
+      <time title="Created: 2022-07-26 12:53:22" itemprop="dateCreated datePublished" datetime="2022-07-26T12:53:22+08:00">2022-07-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-07-27 16:18:16" itemprop="dateModified" datetime="2022-07-27T16:18:16+08:00">2022-07-27</time>
     </span>
 
   
@@ -225,7 +231,7 @@
 <hr>
 <p>因为官方文档的一点小问题和我对Mac系统环境变量、终端类型等的不熟悉，这个安装过程比较坎坷。关于Git和Node.js的安装比较顺利，我又顺手安装了Homebrew（Mac下的包管理器）。</p>
 <hr>
-<h2 id="Hexo安装过程中的小问题"><a href="#Hexo安装过程中的小问题" class="headerlink" title="Hexo安装过程中的小问题"></a>Hexo安装过程中的小问题</h2><p>Hexo的安装首先如文档所说出现了EACCES权限错误，解决办法是将npm的<strong>全局</strong>安装包放到新创建的npm-global文件夹，并将npm-global的路径添加到环境变量，问题就出在环境变量的配置，Node.js的文档中提到将“export PATH&#x3D;<del>&#x2F;.npm-global&#x2F;bin:$PATH”语句加入到</del>&#x2F;.profile 中，~&#x2F;.profile是<strong>bash终端</strong>的环境变量配置文件，而现在Mac系统默认为<strong>zsh终端</strong>，需要将上述语句加入.zshrc文件中，保证在打开终端后npm全局环境变量已经加载。否则，需要每次source ~&#x2F;.profile才可以执行 hexo &lt; command &gt; 命令。经过几个小时的排查最终发现。</p>
+<h2 id="Hexo安装过程中的小问题"><a href="#Hexo安装过程中的小问题" class="headerlink" title="Hexo安装过程中的小问题"></a>Hexo安装过程中的小问题</h2><p>Hexo的安装首先如文档所说出现了EACCES权限错误，解决办法是将npm的<strong>全局</strong>安装包放到新创建的npm-global文件夹，并将npm-global的路径添加到环境变量，问题就出在环境变量的配置，Node.js的文档中提到将npm-global&#x2F;bin添加到环境变量的语句加入到<del>&#x2F;.profile 中，</del>&#x2F;.profile是<strong>bash终端</strong>的环境变量配置文件，而现在Mac系统默认为<strong>zsh终端</strong>，需要将上述语句加入.zshrc文件中，保证在打开终端后npm全局环境变量已经加载。否则，需要每次source ~&#x2F;.profile才可以执行 hexo &lt; command &gt; 命令。经过几个小时的排查最终发现。</p>
 <hr>
 <h2 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h2><p>hexo n “新博客”  创建新博客</p>
 <p>hexo clean      清理hexo缓存</p>
