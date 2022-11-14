@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2022-07-27T08:18:16.556Z</updated>
+  <updated>2022-11-14T13:44:02.159Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>事务管理与并发控制</title>
+    <link href="http://coder_tinghao.github.io/2022/11/14/%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E4%B8%8E%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/"/>
+    <id>http://coder_tinghao.github.io/2022/11/14/%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E4%B8%8E%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/</id>
+    <published>2022-11-14T13:44:02.000Z</published>
+    <updated>2022-11-14T13:44:02.159Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>记hexo配置与部署</title>
