@@ -209,6 +209,13 @@
 
       <time title="Created: 2022-11-14 21:44:02" itemprop="dateCreated datePublished" datetime="2022-11-14T21:44:02+08:00">2022-11-14</time>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-11-15 13:19:50" itemprop="dateModified" datetime="2022-11-15T13:19:50+08:00">2022-11-15</time>
+    </span>
 
   
 </div>
@@ -220,7 +227,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <p>最近看了看《数据库事务处理的艺术》，主要介绍事物原理和并发控制技术，之前有看过一些并发控制的博客，看的一头雾水，这本书相对更清晰一些</p>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><h2 id="ACID特性"><a href="#ACID特性" class="headerlink" title="ACID特性"></a>ACID特性</h2><p>（A）原子性：要么成功–Committed，要么失败–Aborted<br>（C）一致性：<strong>from one valid state to another</strong>。数据在事务的操作下，一直符合“all defined rules”。一个是属于用户的语义所限定的数据一致性，一个是系统级，要求数据库系统符合可串行性（serializability）和可恢复性(recoverability),这两个将在下面具体解释<br>（I）隔离性：存在多个事务（多个会话中的不同的但同一时间段内运行的事务）同时运行，但他们运行的顺序好像是”serially“<br>（D）持久性：committed的数据，要能够永久保存</p>
+<h2 id="事务的属性"><a href="#事务的属性" class="headerlink" title="事务的属性"></a>事务的属性</h2><h3 id="可串行化"><a href="#可串行化" class="headerlink" title="可串行化"></a>可串行化</h3><p>如果事务间没有共同的操作对象（R&#x2F;W操作），则事务之间的执行顺序前后置换是没有关系的；但是如果事务间存在共同的操作对象，则事务间先后执行的顺序需要区分；对于存在共同操作对象的多个并发执行的事务，如果其执行等价于某个串行化调度，则这个调度是可串行化调度，具有了可串性化属性。可串性化保证的是多个事务并发时执行顺序要对数据的一致性没有影响。</p>
+<p>关于等价，需要几个概念：冲突行为、冲突等价、冲突可串行化<br>冲突可串行化：某个调度“冲突等价”于一个或多个串行调度</p>
+<h3 id="可恢复性"><a href="#可恢复性" class="headerlink" title="可恢复性"></a>可恢复性</h3><p>已经提交的事务没有读过被中止的事务的写数据，可恢复性保证多个事务并发调度后期的提交顺序对数据的一致性没有影响</p>
+<h3 id="严格性"><a href="#严格性" class="headerlink" title="严格性"></a>严格性</h3><p>保证有冲突动作的并发事务中，先发生写操作的事务提交或中止的操作优先于其他事务。</p>
+<h1 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h1><p>Serializable（串行化）<br>以物理上是可串行化的机制保证逻辑上符合串行化调度。一个事务在执行过程中完全看不到其他事务的对数据库所做的更新<br>Repeatable Read（可重复读）<br>一个事务在执行过程中可以看到其他事务已经提交的新插入的元组，但是不能看到其他事务对已有元组的更新。对于<strong>读出的记录</strong>，添加共享锁直到事务T1结束。其他事务T2对这个记录的修改会一直等待直到事务T1结束。但其他事务允许读取同样的数据。<br>Read Committed（已提交读）<br>一个事务在执行过程中可以看到<strong>已经提交</strong>的其他事务新插入的元组，能看到<strong>已经提交</strong>的其他事务对已有元组的更新<br>Read Uncommitted（未提交读）<br>一个事务在执行过程中可以看到<strong>没有提交</strong>的其他事务新插入的元组，能看到<strong>没有提交</strong>的其他事务对已有元组的更新</p>
+<h1 id="快照隔离"><a href="#快照隔离" class="headerlink" title="快照隔离"></a>快照隔离</h1><p>使用快照隔离技术的事务中的所有读操作，读到的数据一定是一致的<br>避免了各种<strong>读异常现象</strong><br>如果没有写-写冲突，则会提交成功。不会发生读-写、写-读冲突<br>从事务开始时，处于<strong>当时的并发事务的状态（快照）</strong>被保存，利用这个快照可以判断本事务和其他事务之间启动的先后顺序，事务的读写情况。</p>
+<p>快照隔离是MVCC技术的一种实现方式，MVCC技术的本质，是为每个对象在写操作发生时，生成一个新的版本；在读操作发生时，读出最近的一个版本。<br>并发事务同时写一个数据项，要遵循“First-Committer-Wins”,并发的同时写同一个数据项的事务只能有一个成功，另外一个必须回滚，相当于<strong>并发不存在</strong>，解决了写-写冲突。<br>存在写偏序问题，不能保证数据的一致性。<br>阅读进阶GSI–《Database Replication Using Generalized Snapshot Isolation》、PCSI、《Generalized Snapshot Isolation and a Prefix-Consistent Implementation》</p>
+
       
     </div>
 
