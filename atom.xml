@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2022-11-20T03:34:20.945Z</updated>
+  <updated>2022-12-06T12:29:51.901Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mapreduce论文总结</title>
+    <link href="http://coder_tinghao.github.io/2022/12/06/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/"/>
+    <id>http://coder_tinghao.github.io/2022/12/06/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</id>
+    <published>2022-12-06T12:29:51.000Z</published>
+    <updated>2022-12-06T12:29:51.901Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>事务管理与并发控制</title>
