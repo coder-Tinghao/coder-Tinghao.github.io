@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2022-12-06T12:39:47.826Z</updated>
+  <updated>2022-12-25T05:07:54.250Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>拜占庭容错--BFT</title>
+    <link href="http://coder_tinghao.github.io/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/"/>
+    <id>http://coder_tinghao.github.io/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/</id>
+    <published>2022-12-25T05:07:54.000Z</published>
+    <updated>2022-12-25T05:07:54.250Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Mapreduce论文总结</title>
