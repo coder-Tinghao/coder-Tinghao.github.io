@@ -208,7 +208,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-01-11 18:17:21 / Modified: 21:08:40" itemprop="dateCreated datePublished" datetime="2023-01-11T18:17:21+08:00">2023-01-11</time>
+      <time title="Created: 2023-01-11 18:17:21 / Modified: 21:09:54" itemprop="dateCreated datePublished" datetime="2023-01-11T18:17:21+08:00">2023-01-11</time>
     </span>
 
   
@@ -224,6 +224,7 @@
           <h1 id="EC及其演进LRC"><a href="#EC及其演进LRC" class="headerlink" title="EC及其演进LRC"></a>EC及其演进LRC</h1><p>近期因为几门课程作业，阅读了一些论文，在此依次进行总结</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69374970">参考链接1</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tinoryj/p/Erasure-Codes-for-Storage-Systems-Summary.html">参考链接2</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cyq6239075/article/details/105775698">参考链接3</a></p>
 <p>如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code）</p>
 <h2 id="副本（Replication）"><a href="#副本（Replication）" class="headerlink" title="副本（Replication）"></a>副本（Replication）</h2><p>副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证在原始数据失效后，数据仍然可用并能通过副本数据恢复。多副本策略即将数据存储多个副本（一般是三副本，比如HDFS），当某个副本丢失时，可以通过其他副本复制回来。三副本的磁盘利用率为1&#x2F;3。</p>
 <h2 id="纠删编码（EC）"><a href="#纠删编码（EC）" class="headerlink" title="纠删编码（EC）"></a>纠删编码（EC）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>总数据块 &#x3D; 原始数据块 + 校验块</p>
