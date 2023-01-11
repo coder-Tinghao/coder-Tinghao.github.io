@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -169,6 +169,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/" class="post-title-link" itemprop="url">纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-01-11 18:17:21 / Modified: 21:08:40" itemprop="dateCreated datePublished" datetime="2023-01-11T18:17:21+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="EC及其演进LRC"><a href="#EC及其演进LRC" class="headerlink" title="EC及其演进LRC"></a>EC及其演进LRC</h1><p>近期因为几门课程作业，阅读了一些论文，在此依次进行总结</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69374970">参考链接1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tinoryj/p/Erasure-Codes-for-Storage-Systems-Summary.html">参考链接2</a></p>
+<p>如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code）</p>
+<h2 id="副本（Replication）"><a href="#副本（Replication）" class="headerlink" title="副本（Replication）"></a>副本（Replication）</h2><p>副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证在原始数据失效后，数据仍然可用并能通过副本数据恢复。多副本策略即将数据存储多个副本（一般是三副本，比如HDFS），当某个副本丢失时，可以通过其他副本复制回来。三副本的磁盘利用率为1&#x2F;3。</p>
+<h2 id="纠删编码（EC）"><a href="#纠删编码（EC）" class="headerlink" title="纠删编码（EC）"></a>纠删编码（EC）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>总数据块 &#x3D; 原始数据块 + 校验块</p>
+<p>n &#x3D; k + m</p>
+<p>从k个原始数据块中计算出m个校验块</p>
+<p>编码只需要乘法和加法，解码需要用高斯消除或矩阵求逆求的方法解一组线性方程。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>在出现硬盘故障后，重建数据非常耗CPU，而且计算一个数据块需要通过网络读出k倍的数据并传输，网络负载成倍增加</p>
+<h2 id="局部校验编码LRC（Locally-Repairable-Codes）"><a href="#局部校验编码LRC（Locally-Repairable-Codes）" class="headerlink" title="局部校验编码LRC（Locally Repairable Codes）"></a>局部校验编码LRC（Locally Repairable Codes）</h2><p>局部校验编码：将校验块（parity block）分为全局校验块(global parity)、局部重建校验块(local reconstruction parity)，故障恢复时分组计算。</p>
+<p>例子：</p>
+<p>P1&#x3D;D1+D2</p>
+<p>P2&#x3D;D3+D4</p>
+<p>P3&#x3D; D1+D2+ D3+D4</p>
+<p>P1、P2是局部校验。P3是全局校验<br><img src="https://img-blog.csdnimg.cn/20200426195932950.png" alt="例子"></p>
+<p>当仅损坏一个数据块时，可以根据该数据在所在的分组，在组内对该数据块进行重建。损坏一个数据块时的最差情况就是全局校验块损坏，此时需要读全部数据块数据进行重建。</p>
+<p>当损坏两个数据块时情况分成组内和组外，不管哪种需要拉取全部数据进行重建，此时采用LRC方法并不能提升性能。</p>
+<p>当损坏三块数据时，如果这三个数据块在一个组内，例如P1、D1、D2。此时就无法进行数据重建，虽然我们这里是使用三个校验。</p>
+<p>所以LRC并不是100%保证数据不丢，并且还要多占用一部分存储空间</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -833,7 +922,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
