@@ -29,10 +29,11 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/consistency.png?raw=true">
 <meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce.png?raw=true">
+<meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce_execution.png?raw=true">
 <meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/map.png?raw=true">
 <meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/reduce.png?raw=true">
 <meta property="article:published_time" content="2023-02-05T05:50:51.000Z">
-<meta property="article:modified_time" content="2023-02-05T10:10:09.133Z">
+<meta property="article:modified_time" content="2023-02-05T10:16:51.582Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
@@ -220,7 +221,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-02-05 13:50:51 / Modified: 18:10:09" itemprop="dateCreated datePublished" datetime="2023-02-05T13:50:51+08:00">2023-02-05</time>
+      <time title="Created: 2023-02-05 13:50:51 / Modified: 18:16:51" itemprop="dateCreated datePublished" datetime="2023-02-05T13:50:51+08:00">2023-02-05</time>
     </span>
 
   
@@ -246,7 +247,7 @@
 <h1 id="Mapreduce论文"><a href="#Mapreduce论文" class="headerlink" title="Mapreduce论文"></a>Mapreduce论文</h1><h2 id="Mapreduce框架"><a href="#Mapreduce框架" class="headerlink" title="Mapreduce框架"></a>Mapreduce框架</h2><p>MapReduce的思想是：应用程序设计人员和分布式运算的使用者，只需要写简单的Map函数和Reduce函数，而不需要知道任何有关分布式的事情，MapReduce框架会处理剩下的事情。</p>
 <p><img src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce.png?raw=true" alt="Mapreduce框架"></p>
 <p>Map函数以文件作为输入，文件是整个输入数据的一部分。Map函数的输出是一个key-value对的列表。假设我们在实现一个最简单的MapReduce Job：单词计数器。它会统计每个单词出现的次数。在这个例子中，Map函数会输出key-value对，其中key是单词，而value是1。Map函数会将输入中的每个单词拆分，并输出一个key-value对，key是该单词，value是1。最后需要对所有的key-value进行计数，以获得最终的输出。所以，假设输入文件1包含了单词a和单词b，Map函数的输出将会是key&#x3D;a，value&#x3D;1和key&#x3D;b，value&#x3D;1。第二个Map函数只从输入文件2看到了b，那么输出将会是key&#x3D;b，value&#x3D;1。第三个输入文件有一个a和一个c。</p>
-<p>![Mapreduce执行过程](<a target="_blank" rel="noopener" href="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce">https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce</a> execution.png?raw&#x3D;true)</p>
+<p><img src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce_execution.png?raw=true" alt="Mapreduce执行过程"></p>
 <p>我们对所有的输入文件都运行了Map函数，并得到了论文中称之为中间输出（intermediate output），也就是每个Map函数输出的key-value对。<br>运算的第二阶段是运行Reduce函数。MapReduce框架会收集所有Map函数输出的每一个单词的统计。比如说，MapReduce框架会先收集每一个Map函数输出的key为a的key-value对。收集了之后，会将它们提交给Reduce函数。</p>
 <p>之后会收集所有的b。这里的收集是真正意义上的收集，因为b是由不同计算机上的不同Map函数生成，所以不仅仅是数据从一台计算机移动到另一台（如果Map只在一台计算机的一个实例里，可以直接通过一个RPC将数据从Map移到Reduce）。我们收集所有的b，并将它们提交给另一个Reduce函数。这个Reduce函数的入参是所有的key为b的key-value对。对c也是一样。所以，MapReduce框架会为所有Map函数输出的每一个key，调用一次Reduce函数。</p>
 <p>Job：整个MapReduce计算称为Job</p>
