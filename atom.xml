@@ -181,9 +181,9 @@
     <link href="http://coder_tinghao.github.io/2022/02/05/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/"/>
     <id>http://coder_tinghao.github.io/2022/02/05/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</id>
     <published>2022-02-05T05:50:51.000Z</published>
-    <updated>2023-02-05T05:50:21.055Z</updated>
+    <updated>2023-02-05T06:51:57.229Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近决定通过MIT6.824的分布式课程学习一下Google的三篇经典论文，Mapreduce、GFS、Raft。6.824课程相关链接如下：</p><p><a href="https://mit-public-courses-cn-translatio.gitbook.io/mit6-824/lecture-01-introduction">6.824课程翻译链接</a></p><p><a href="https://www.bilibili.com/video/av87684880/?vd_source=cc4910ad55a90281a3f278b41a379e5b">2020课程视频链接（带字幕）</a></p><p><a href="http://nil.csail.mit.edu/6.824/2020/schedule.html">2020课程安排官方链接（含实验）</a></p><p>起初读到Mapreduce论文的时候还在12月初，想要去总结但一拖拖到现在，接下来我将对Mapreduce论文的学习进行一些总结：</p><h1 id="Mapreduce论文"><a href="#Mapreduce论文" class="headerlink" title="Mapreduce论文"></a>Mapreduce论文</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近决定通过MIT6.824的分布式课程学习一下Google的三篇经典论文，Mapreduce、GFS、Raft。6.824课程相关链接如下：</p><p><a href="https://mit-public-courses-cn-translatio.gitbook.io/mit6-824/lecture-01-introduction">6.824课程翻译链接</a></p><p><a href="https://www.bilibili.com/video/av87684880/?vd_source=cc4910ad55a90281a3f278b41a379e5b">2020课程视频链接（带字幕）</a></p><p><a href="http://nil.csail.mit.edu/6.824/2020/schedule.html">2020课程安排官方链接（含实验）</a></p><p>起初读到Mapreduce论文的时候还在12月初，想要去总结但一拖拖到现在，接下来我将对Mapreduce论文的学习进行一些总结：</p><h1 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h1><p><img src="/Users/fth/Desktop/neu/Blogs/public/images/consistency.png" alt="一致性"></p><h1 id="Mapreduce论文"><a href="#Mapreduce论文" class="headerlink" title="Mapreduce论文"></a>Mapreduce论文</h1>]]></content>
     
     
       
