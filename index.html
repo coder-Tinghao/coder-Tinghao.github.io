@@ -208,7 +208,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-02-05 13:50:51 / Modified: 18:06:19" itemprop="dateCreated datePublished" datetime="2023-02-05T13:50:51+08:00">2023-02-05</time>
+      <time title="Created: 2023-02-05 13:50:51 / Modified: 18:10:09" itemprop="dateCreated datePublished" datetime="2023-02-05T13:50:51+08:00">2023-02-05</time>
     </span>
 
   
@@ -246,6 +246,9 @@
 <h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="Shuffle过程"><a href="#Shuffle过程" class="headerlink" title="Shuffle过程"></a>Shuffle过程</h3><p>Mapreduce框架中提到的从Map函数到Reduce函数的过程就是<strong>shuffle</strong>，根据课程中的讲解，这个过程如mapreduce图所示<strong>本质是从行存储到列存储的转换</strong>，也是mapreduce整个过程代价最大的部分</p>
 <p>这里的shuffle的重点是，这里实际上可能会有大量的网络通信。假设你在进行排序，排序的输入输出会有相同的大小。这样，如果你的输入是10TB，为了能排序，你需要将10TB的数据在网络上移动，并且输出也会是10TB，所以这里有大量的数据。这可能发生在任何MapReduce job中，尽管有一些MapReduce job在不同阶段的数据没有那么大。之前有人提过，想将Reduce的输出传给另一个MapReduce job，而这也是人们常做的事情。在一些场景中，Reduce的输出可能会非常巨大，比如排序，比如网页索引器。10TB的输入对应的是10TB的输出。所以，Reduce的输出也会存储在GFS上。但是Reduce只会生成key-value对，MapReduce框架会收集这些数据，并将它们写入到GFS的大文件中。</p>
 <h3 id="Mapreduce-GFS"><a href="#Mapreduce-GFS" class="headerlink" title="Mapreduce+GFS"></a>Mapreduce+GFS</h3><p>GFS是一个共享文件服务，并且它也运行在MapReduce的worker集群的物理服务器上。GFS会自动拆分你存储的任何大文件，并且以64MB的块存储在多个服务器之上。所以，如果你有了10TB的网页数据，你只需要将它们写入到GFS，甚至你写入的时候是作为一个大文件写入的，GFS会自动将这个大文件拆分成64MB的块，并将这些块平均的分布在所有的GFS服务器之上，而这是极好的，这正是我们所需要的。如果我们接下来想要对刚刚那10TB的网页数据运行MapReduce Job，数据已经均匀的分割存储在所有的服务器上了。如果我们有1000台服务器，我们会启动1000个Map worker，每个Map worker会读取1&#x2F;1000输入数据。这些Map worker可以并行的从1000个GFS文件服务器读取数据，并获取巨大的读取吞吐量，也就是1000台服务器能提供的吞吐量。</p>
+<h3 id="论文补充"><a href="#论文补充" class="headerlink" title="论文补充"></a>论文补充</h3><p>The master keeps several data structures. For each map task and reduce task, it stores the state (idle, in-progress, or completed), and the identity of the worker machine (for non-idle tasks).</p>
+<p>The master pings every worker periodically. If no re- sponse is received from a worker in a certain amount of time, the master marks the worker as failed.</p>
+<p>The master runs an internal HTTP server and exports a set of status pages for human consumption.</p>
 <h3 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h3><p><a target="_blank" rel="noopener" href="http://nil.csail.mit.edu/6.824/2020/labs/lab-mr.html">6.824lab1链接</a></p>
 
       
