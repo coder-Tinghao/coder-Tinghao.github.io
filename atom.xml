@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-02-12T07:27:13.634Z</updated>
+  <updated>2023-02-12T08:04:22.354Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://coder_tinghao.github.io/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/"/>
     <id>http://coder_tinghao.github.io/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</id>
     <published>2023-02-12T07:22:47.000Z</published>
-    <updated>2023-02-12T07:27:13.634Z</updated>
+    <updated>2023-02-12T08:04:22.354Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p><h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p><p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p><p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p><p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p><h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p><p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p><p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p><p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p><h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p><p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p><p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p><p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop.</p>]]></content>
     
     
       
