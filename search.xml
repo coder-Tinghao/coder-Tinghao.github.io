@@ -194,4 +194,17 @@
         <tag>分布式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>故障模型</title>
+    <url>/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p>
+<h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p>
+<p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p>
+<p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p>
+<p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
 </search>
