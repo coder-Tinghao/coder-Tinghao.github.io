@@ -209,6 +209,8 @@
 <p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p>
 <p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png?raw=true" alt="故障模型"></p>
 <p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p>
+<h2 id="fail-stop-故障-和-bugs"><a href="#fail-stop-故障-和-bugs" class="headerlink" title="fail-stop 故障 和 bugs"></a>fail-stop 故障 和 bugs</h2><p>简单来说复制能够处理单台计算机的fail-stop故障，如果某些东西出现故障，只是单纯的停止运行，而不是运算出错误结果。 比如电源线、服务器风扇导致CPU过热停止运行、网络等故障。网络隔离场景很有趣，因为从外界来看，这和服务器停止运行毫无区别。</p>
+<p>复制不能处理软件中的bug和硬件设计中的缺陷。 如果相同的程序，都计算出错误的结果，那么再多副本也都无法避免。我们也不能期望复制可以处理硬件的漏洞，当硬件有漏洞的时候会计算出错误的结果，至少基于复制这种技术，我们就无能为力了。</p>
 ]]></content>
       <tags>
         <tag>分布式</tag>
