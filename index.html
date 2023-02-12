@@ -194,7 +194,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-02-12 15:22:47 / 修改时间：16:04:22" itemprop="dateCreated datePublished" datetime="2023-02-12T15:22:47+08:00">2023-02-12</time>
+      <time title="创建时间：2023-02-12 15:22:47 / 修改时间：16:17:09" itemprop="dateCreated datePublished" datetime="2023-02-12T15:22:47+08:00">2023-02-12</time>
     </span>
 
   
@@ -215,7 +215,10 @@
 <h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p>
 <p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p>
 <p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p>
-<p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop.</p>
+<p>Crash failure: Omission failure的特例；在omission failure的基础上，增加了节点停止响应的假设，也即持续性地omission failure。</p>
+<p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png" alt="故障模型"></p>
+<p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p>
 
       
     </div>
