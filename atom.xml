@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-02-13T09:30:28.993Z</updated>
+  <updated>2023-02-13T10:01:58.902Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://coder_tinghao.github.io/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/"/>
     <id>http://coder_tinghao.github.io/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</id>
     <published>2023-02-13T07:51:29.000Z</published>
-    <updated>2023-02-13T09:30:28.993Z</updated>
+    <updated>2023-02-13T10:01:58.902Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="GFS论文总结"><a href="#GFS论文总结" class="headerlink" title="GFS论文总结"></a>GFS论文总结</h1><p>GFS（The Google File System），Google的目标是构建一个大型的，快速的文件系统。并且这个文件系统是全局有效的，这样各种不同的应用程序都可以从中读取数据。从硬件到使用了GFS的软件都有讨论，并且它也是一个成功的现实世界的设计。尽管这是在学术会议上发表的学术论文，但是文章里介绍的东西（GFS）也相当成功，并且在现实世界中使用了相当长的时间。</p><h2 id="分布式存储系统"><a href="#分布式存储系统" class="headerlink" title="分布式存储系统"></a>分布式存储系统</h2><p>存储是一种关键的抽象，可能有各种各样重要的抽象可以应用在分布式系统中，简单的存储接口往往非常有用且极其通用。所以，构建分布式系统大多都是关于如何设计存储系统，或是设计其它基于大型分布式存储的系统。所以我们会更加关注如何为大型分布式存储系统设计一个优秀的接口，以及如何设计存储系统的内部结构，这样系统才能良好运行。</p><h2 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h2>]]></content>
+    <content type="html"><![CDATA[<h1 id="GFS论文总结"><a href="#GFS论文总结" class="headerlink" title="GFS论文总结"></a>GFS论文总结</h1><p>GFS（The Google File System），Google的目标是构建一个大型的，快速的文件系统。并且这个文件系统是全局有效的，这样各种不同的应用程序都可以从中读取数据。从硬件到使用了GFS的软件都有讨论，并且它也是一个成功的现实世界的设计。尽管这是在学术会议上发表的学术论文，但是文章里介绍的东西（GFS）也相当成功，并且在现实世界中使用了相当长的时间。</p><h2 id="分布式存储系统"><a href="#分布式存储系统" class="headerlink" title="分布式存储系统"></a>分布式存储系统</h2><p>存储是一种关键的抽象，可能有各种各样重要的抽象可以应用在分布式系统中，简单的存储接口往往非常有用且极其通用。所以，构建分布式系统大多都是关于如何设计存储系统，或是设计其它基于大型分布式存储的系统。所以我们会更加关注如何为大型分布式存储系统设计一个优秀的接口，以及如何设计存储系统的内部结构，这样系统才能良好运行。<br><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/distributed_system.png?raw=true" alt="分布式系统"></p><p>1.对于分布式存储，为了获取更大的性能，利用数百台计算机的资源来同时完成大量工作</p><p>2.将数据分割放到大量的服务器上，这样就可以并行的从多台服务器读取数据。我们将这种方式称之为分片（Sharding）</p><p>3.分片导致常态的错误，需要自动化的方法而不是人工介入来修复错误，引出容错</p><p>4.实现容错最有用的一种方法是使用复制，只需要维护2-3个数据的副本，当其中一个故障了，你就可以使用另一个。所以，如果想要容错能力，就得有复制（replication）</p><p>5.如果有复制，那就有了两份数据的副本。可以确定的是，如果你不小心，它们就会不一致。获取到的数据内容也将取决于你向哪个副本请求数据。这对于应用程序来说就有些麻烦了。所以，如果我们有了复制，我们就有不一致的问题（inconsistency）</p><p>6.避免不一致的问题，并且让数据看起来也表现的符合预期。但是为了达到这样的效果，你总是需要额外的工作，需要不同服务器之间通过网络额外的交互，而这样的交互会降低性能。所以如果你想要一致性，你的代价就是低性能。</p><p><strong>通常，人们很少会乐意为好的一致性付出相应的性能代价。</strong></p><h2 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h2><h3 id="GFS设计目标"><a href="#GFS设计目标" class="headerlink" title="GFS设计目标"></a>GFS设计目标</h3><p>为了获得大容量和高速的特性，每个包含了数据的文件会被GFS自动的分割并存放在多个服务器之上，这样读写操作自然就会变得很快。因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量。将文件分割存储还可以在存储系统中保存比单个磁盘还要大的文件。</p><p><strong>GFS是为TB级别的文件而生。并且GFS只会顺序处理，不支持随机访问</strong></p><h3 id="GFS-Master节点"><a href="#GFS-Master节点" class="headerlink" title="GFS Master节点"></a>GFS Master节点</h3>]]></content>
     
     
       
