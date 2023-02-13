@@ -219,7 +219,9 @@
   <entry>
     <title>GFS论文总结</title>
     <url>/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="GFS论文总结"><a href="#GFS论文总结" class="headerlink" title="GFS论文总结"></a>GFS论文总结</h1>]]></content>
+    <content><![CDATA[<h1 id="GFS论文总结"><a href="#GFS论文总结" class="headerlink" title="GFS论文总结"></a>GFS论文总结</h1><p>GFS（The Google File System），Google的目标是构建一个大型的，快速的文件系统。并且这个文件系统是全局有效的，这样各种不同的应用程序都可以从中读取数据。从硬件到使用了GFS的软件都有讨论，并且它也是一个成功的现实世界的设计。尽管这是在学术会议上发表的学术论文，但是文章里介绍的东西（GFS）也相当成功，并且在现实世界中使用了相当长的时间。</p>
+<h2 id="分布式存储系统"><a href="#分布式存储系统" class="headerlink" title="分布式存储系统"></a>分布式存储系统</h2><p>存储是一种关键的抽象，可能有各种各样重要的抽象可以应用在分布式系统中，简单的存储接口往往非常有用且极其通用。所以，构建分布式系统大多都是关于如何设计存储系统，或是设计其它基于大型分布式存储的系统。所以我们会更加关注如何为大型分布式存储系统设计一个优秀的接口，以及如何设计存储系统的内部结构，这样系统才能良好运行。</p>
+<h2 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h2>]]></content>
       <tags>
         <tag>分布式</tag>
       </tags>
