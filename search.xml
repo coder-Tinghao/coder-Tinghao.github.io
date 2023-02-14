@@ -245,7 +245,15 @@
 <h3 id="GFS写文件"><a href="#GFS写文件" class="headerlink" title="GFS写文件"></a>GFS写文件</h3><p>写文件，客户端会向Master节点发送请求说：我想向这个文件名对应的文件追加数据，请告诉我文件中<strong>最后一个Chunk的位置</strong>。这就是GFS论文中讨论的<strong>记录追加（Record Append）</strong></p>
 <p>对于读文件来说，可以从任何最新的Chunk副本读取数据，但是对于写文件来说，必须要通过Chunk的主副本（Primary Chunk）来写入。对于Master节点来说，如果发现Chunk的主副本不存在，Master会找出所有存有Chunk最新副本的Chunk服务器。每个Chunk可能同时有多个副本，最新的副本是指，副本中保存的版本号与Master中记录的Chunk的版本号一致。当客户端想要对文件进行追加，但是又不知道文件尾的Chunk对应的Primary在哪时，Master会等所有存储了最新Chunk版本的服务器集合完成，然后挑选一个作为Primary，其他的作为Secondary。</p>
 <p>现在我们有了一个Primary，它可以接收来自客户端的写请求，并将写请求应用在多个Chunk服务器中。这样Master可以将实际更新Chunk的能力转移给Primary服务器。并且在将版本号更新到Primary和Secondary服务器之后，如果Master节点故障重启，还是可以在相同的Primary和Secondary服务器上继续更新Chunk。</p>
-<h3 id="GFS一致性"><a href="#GFS一致性" class="headerlink" title="GFS一致性"></a>GFS一致性</h3>]]></content>
+<h3 id="GFS一致性"><a href="#GFS一致性" class="headerlink" title="GFS一致性"></a>GFS一致性</h3><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_consistency.png?raw=true" alt="GFS一致性"></p>
+<p>如图所示，追加A成功，追加B时第三个副本失败，追加C成功，而后重新追加B会在C的后面追加。</p>
+<p>在GFS的这种工作方式下，如果Primary返回写入成功，那么一切都还好，如果Primary返回写入失败，就不是那么好了。Primary返回写入失败会导致不同的副本有完全不同的数据。</p>
+<h3 id="GFS问题"><a href="#GFS问题" class="headerlink" title="GFS问题"></a>GFS问题</h3><p>它最严重的局限可能在于，它只有一个Master节点，会带来以下问题：</p>
+<p>·Master节点必须为每个文件，每个Chunk维护表单，随着GFS的应用越来越多，涉及的文件也越来越多，最终Master会耗尽内存来存储文件表单。你可以增加内存，但是单台计算机的内存也是有上限的。</p>
+<p>·单个Master节点要承载数千个客户端的请求，而Master节点的CPU每秒只能处理数百个请求，尤其Master还需要将部分数据写入磁盘，很快，客户端数量超过了单个Master的能力。</p>
+<p>·应用程序发现很难处理GFS奇怪的语义（本节最开始介绍的GFS的副本数据的同步，或者可以说不同步）。</p>
+<p>·Master节点的故障切换不是自动的。GFS需要人工干预来处理已经永久故障的Master节点，并更换新的服务器，这可能需要几十分钟甚至更长的而时间来处理。对于某些应用程序来说，这个时间太长了。</p>
+]]></content>
       <tags>
         <tag>分布式</tag>
       </tags>
