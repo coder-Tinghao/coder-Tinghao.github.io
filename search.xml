@@ -235,6 +235,15 @@
 <p>1.文件名到Chunk ID或者Chunk Handle数组的对应。这个表单告诉你，文件对应了哪些Chunk。</p>
 <p>2.记录了Chunk ID到Chunk数据的对应关系。这里的数据又包括了：<br><strong>每个Chunk存储在哪些服务器上</strong>；<strong>每个Chunk当前的版本号</strong>；<strong>哪个Chunk服务器持有主Chunk</strong>，所有对于Chunk的写操作都必须在主Chunk（Primary Chunk）上顺序处理，主Chunk是Chunk的多个副本之一；<br><strong>主Chunk的租约过期时间</strong>，主Chunk只能在特定的租约时间内担任主Chunk</p>
 <p>Master会在磁盘上存储log，每次有数据变更时，Master会在磁盘的log中追加一条记录，并生成CheckPoint（类似于备份点）</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_Master.png?raw=true" alt="GFS_Master"></p>
+<p>有些数据需要存在磁盘上，而有些不用。它们分别是：<br>如图所示，需要保存在磁盘上的，标记为NV（non-volatile, 非易失）；不需要保存在磁盘上的标记为V</p>
+<p>任何时候，如果文件扩展到达了一个新的64MB，需要新增一个Chunk或者由于指定了新的主Chunk而导致版本号更新了，Master节点需要向磁盘中的Log追加一条记录。这里在磁盘中维护log而不是数据库的原因是，数据库本质上来说是某种B树（b-tree）或者hash table，相比之下，<strong>追加log会非常的高效</strong>，因为你可以将最近的<strong>多个log记录一次性的写入磁盘</strong>。因为这些数据都是向同一个地址追加，这样只需要等待磁盘的磁碟旋转一次。而对于B树来说，每一份数据都需要在磁盘中随机找个位置写入。</p>
+<p>Master节点重启时，会从log中的最近一个<strong>checkpoint</strong>开始恢复，再逐条执行从Checkpoint开始的log，最后恢复自己的状态。</p>
+<h3 id="GFS读文件"><a href="#GFS读文件" class="headerlink" title="GFS读文件"></a>GFS读文件</h3><p>读请求，意味着应用程序或者GFS客户端有一个文件名和它想从文件的某个位置读取的偏移量（offset），应用程序会将这些信息发送给Master节点。Master节点会从自己的file表单中查询文件名，得到Chunk ID的数组。因为每个Chunk是64MB，所以偏移量除以64MB就可以从数组中得到对应的Chunk ID。之后Master再从Chunk表单中找到存有Chunk的服务器列表，并将列表返回给客户端。所以，第一步是客户端（或者应用程序）将文件名和偏移量发送给Master。第二步，Master节点将Chunk Handle（也就是ID，记为H）和服务器列表发送给客户端。</p>
+<p>客户端可以从这些Chunk服务器中挑选一个来读取数据。GFS论文说，客户端会选择一个网络上最近的服务器（Google的数据中心中，IP地址是连续的，所以可以从IP地址的差异判断网络位置的远近），并将读请求发送到那个服务器。因为客户端每次可能只读取1MB或者64KB数据，所以，客户端可能会连续多次读取同一个Chunk的不同位置。所以，客户端会缓存Chunk和服务器的对应关系。</p>
+<p>客户端会与选出的Chunk服务器通信，将Chunk Handle和偏移量发送给那个Chunk服务器。Chunk服务器会在本地的硬盘上，将每个Chunk存储成独立的Linux文件，并通过普通的Linux文件系统管理</p>
+<h3 id="GFS写文件"><a href="#GFS写文件" class="headerlink" title="GFS写文件"></a>GFS写文件</h3><p>写文件，客户端会向Master节点发送请求说：我想向这个文件名对应的文件追加数据，请告诉我文件中<strong>最后一个Chunk的位置</strong>。这就是GFS论文中讨论的<strong>记录追加（Record Append）</strong></p>
+<p>对于读文件来说，可以从任何最新的Chunk副本读取数据，但是对于写文件来说，必须要通过Chunk的主副本（Primary Chunk）来写入。对于Master节点来说，如果发现Chunk的主副本不存在，Master会找出所有存有Chunk最新副本的Chunk服务器。每个Chunk可能同时有多个副本，最新的副本是指，副本中保存的版本号与Master中记录的Chunk的版本号一致。</p>
 ]]></content>
       <tags>
         <tag>分布式</tag>
