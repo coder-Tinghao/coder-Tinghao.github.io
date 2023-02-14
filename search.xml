@@ -228,7 +228,8 @@
 <p>5.如果有复制，那就有了两份数据的副本。可以确定的是，如果你不小心，它们就会不一致。获取到的数据内容也将取决于你向哪个副本请求数据。这对于应用程序来说就有些麻烦了。所以，如果我们有了复制，我们就有不一致的问题（inconsistency）</p>
 <p>6.避免不一致的问题，并且让数据看起来也表现的符合预期。但是为了达到这样的效果，你总是需要额外的工作，需要不同服务器之间通过网络额外的交互，而这样的交互会降低性能。所以如果你想要一致性，你的代价就是低性能。</p>
 <p><strong>通常，人们很少会乐意为好的一致性付出相应的性能代价。</strong></p>
-<h1 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h1><h2 id="GFS设计目标"><a href="#GFS设计目标" class="headerlink" title="GFS设计目标"></a>GFS设计目标</h2><p>为了获得大容量和高速的特性，每个包含了数据的文件会被GFS自动的分割并存放在多个服务器之上，这样读写操作自然就会变得很快。因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量。将文件分割存储还可以在存储系统中保存比单个磁盘还要大的文件。</p>
+<h1 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h1><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_architecture.png?raw=true" alt="GFS结构"></p>
+<h2 id="GFS设计目标"><a href="#GFS设计目标" class="headerlink" title="GFS设计目标"></a>GFS设计目标</h2><p>为了获得大容量和高速的特性，每个包含了数据的文件会被GFS自动的分割并存放在多个服务器之上，这样读写操作自然就会变得很快。因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量。将文件分割存储还可以在存储系统中保存比单个磁盘还要大的文件。</p>
 <p><strong>GFS是为TB级别的文件而生。并且GFS只会顺序处理，不支持随机访问</strong></p>
 <h2 id="GFS-Master节点"><a href="#GFS-Master节点" class="headerlink" title="GFS Master节点"></a>GFS Master节点</h2><p>Master节点用来管理文件和Chunk的信息，而Chunk服务器用来存储实际的数据。Master节点知道每一个文件对应的所有的Chunk的ID，这些Chunk每个是64MB大小，它们共同构成了一个文件。如果我有一个1GB的文件，那么Master节点就知道文件的第一个Chunk存储在哪，第二个Chunk存储在哪，等等。当我想读取这个文件中的任意一个部分时，我需要向Master节点查询对应的Chunk在哪个服务器上，之后我可以直接从Chunk服务器读取对应的Chunk数据。</p>
 <p>Master节点主要保存了两个表单：</p>
@@ -243,6 +244,7 @@
 <p>客户端可以从这些Chunk服务器中挑选一个来读取数据。GFS论文说，客户端会选择一个网络上最近的服务器（Google的数据中心中，IP地址是连续的，所以可以从IP地址的差异判断网络位置的远近），并将读请求发送到那个服务器。因为客户端每次可能只读取1MB或者64KB数据，所以，客户端可能会连续多次读取同一个Chunk的不同位置。所以，客户端会缓存Chunk和服务器的对应关系。</p>
 <p>客户端会与选出的Chunk服务器通信，将Chunk Handle和偏移量发送给那个Chunk服务器。Chunk服务器会在本地的硬盘上，将每个Chunk存储成独立的Linux文件，并通过普通的Linux文件系统管理</p>
 <h2 id="GFS写文件"><a href="#GFS写文件" class="headerlink" title="GFS写文件"></a>GFS写文件</h2><p>写文件，客户端会向Master节点发送请求说：我想向这个文件名对应的文件追加数据，请告诉我文件中<strong>最后一个Chunk的位置</strong>。这就是GFS论文中讨论的<strong>记录追加（Record Append）</strong></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_write.png?raw=true" alt="GFS写操作"></p>
 <p>GFS 使用了**租约(lease)**的手段，Master 会定期向 chunk 的某个 replica 所在的服务器进行授权（有超时时间，所以称为租约），拿到授权的副本称为主副本（primary replica），由其进行写入顺序的安排。</p>
 <p>对于读文件来说，可以从任何最新的Chunk副本读取数据，但是对于写文件来说，必须要通过Chunk的主副本（Primary Chunk）来写入。对于Master节点来说，如果发现Chunk的主副本不存在，Master会找出所有存有Chunk最新副本的Chunk服务器。每个Chunk可能同时有多个副本，最新的副本是指，副本中保存的版本号与Master中记录的Chunk的版本号一致。当客户端想要对文件进行追加，但是又不知道文件尾的Chunk对应的Primary在哪时，Master会等所有存储了最新Chunk版本的服务器集合完成，然后挑选一个作为Primary，其他的作为Secondary。</p>
 <p>现在我们有了一个Primary，它可以接收来自客户端的写请求，并将写请求应用在多个Chunk服务器中。这样Master可以将实际更新Chunk的能力转移给Primary服务器。并且在将版本号更新到Primary和Secondary服务器之后，如果Master节点故障重启，还是可以在相同的Primary和Secondary服务器上继续更新Chunk。</p>
