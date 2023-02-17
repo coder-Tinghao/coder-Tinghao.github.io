@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-02-14T05:01:51.169Z</updated>
+  <updated>2023-02-17T06:52:10.847Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>copy-on-write机制</title>
+    <link href="http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/"/>
+    <id>http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/</id>
+    <published>2023-02-17T04:05:05.000Z</published>
+    <updated>2023-02-17T06:52:10.847Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="copy-on-write机制"><a href="#copy-on-write机制" class="headerlink" title="copy-on-write机制"></a>copy-on-write机制</h1><p><a href="https://juejin.cn/post/6844903702373859335">参考链接</a></p><p>写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。</p><h1 id="linux下的fork函数和exec函数"><a href="#linux下的fork函数和exec函数" class="headerlink" title="linux下的fork函数和exec函数"></a>linux下的fork函数和exec函数</h1><p>在说明Linux下的copy-on-write机制前，首先要知道两个函数：fork()和exec()</p><p>需要注意的是exec()并不是一个特定的函数, 它是一组函数的统称, 它包括了execl()、execlp()、execv()、execle()、execve()、execvp()</p><p>fork是类Unix操作系统上<strong>创建进程</strong>的主要方法，fork用于创建子进程(等同于当前进程的副本)，新的进程要通过老的进程复制自身得到，Linux的进程都通过<strong>init进程或init的子进程</strong>fork(vfork)出来的</p><p>从上面我们已经知道了fork会创建一个子进程。子进程的是父进程的副本。</p><p>exec函数的作用就是：装载一个新的程序（可执行映像）覆盖当前进程内存空间中的映像，从而执行不同的任务，exec系列函数在执行时会直接替换掉当前进程的地址空间。</p><h1 id="copy-on-write实现原理"><a href="#copy-on-write实现原理" class="headerlink" title="copy-on-write实现原理"></a>copy-on-write实现原理</h1><h2 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h2><p>既然很多时候复制给子进程的数据是无效的，于是就有了Copy On Write这项技术了，原理也很简单：</p><p>fork创建出的子进程，<strong>与父进程共享内存空间</strong>。也就是说，如果<strong>子进程不对内存空间进行写入操作的话，内存空间中的数据并不会复制给子进程</strong>，这样创建子进程的速度就很快了！(不用复制，直接引用父进程的物理空间)。<br>并且如果在fork函数返回之后，子进程<strong>第一时间</strong>exec一个新的可执行映像，那么也不会浪费时间和内存空间了。</p><p>另外表达：在fork之后exec之前两个进程用的是相同的<strong>物理空间（内存区）</strong>，子进程的代码段、数据段、堆栈都是指向父进程的物理空间，也就是说，两者的虚拟空间不同，但其对应的物理空间是同一个，当<strong>父子进程中有更改相应段的行为</strong>发生时，再为子进程相应的段分配物理空间</p><h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>fork()之后，kernel把父进程中所有的内存页的权限都设为<strong>read-only</strong>，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发<strong>页异常中断（page-fault）</strong>，陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p><h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点：减少不必要的资源分配，节省宝贵的物理内存。</p><p>缺点：如果在子进程存在期间发生了大量写操作，那么会频繁地产生页面错误，不断陷入内核，复制页面。这反而会降低效率。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;copy-on-write机制&quot;&gt;&lt;a href=&quot;#copy-on-write机制&quot; class=&quot;headerlink&quot; title=&quot;copy-on-write机制&quot;&gt;&lt;/a&gt;copy-on-write机制&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://j</summary>
+      
+    
+    
+    
+    
+    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>GFS论文总结</title>

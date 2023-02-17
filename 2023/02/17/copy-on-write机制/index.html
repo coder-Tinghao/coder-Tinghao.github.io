@@ -20,30 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="EC及其演进LRC近期因为几门课程作业，阅读了一些论文，在此依次进行总结 参考链接1 参考链接2 参考链接3 如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code） 副本（Replication）副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证">
+    <meta name="description" content="copy-on-write机制参考链接 写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。 linux下的fork函数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）">
-<meta property="og:url" content="http://coder_tinghao.github.io/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/index.html">
+<meta property="og:title" content="copy-on-write机制">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
-<meta property="og:description" content="EC及其演进LRC近期因为几门课程作业，阅读了一些论文，在此依次进行总结 参考链接1 参考链接2 参考链接3 如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code） 副本（Replication）副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证">
+<meta property="og:description" content="copy-on-write机制参考链接 写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。 linux下的fork函数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200426195932950.png">
-<meta property="article:published_time" content="2023-01-11T10:17:21.000Z">
-<meta property="article:modified_time" content="2023-01-11T13:09:54.925Z">
+<meta property="article:published_time" content="2023-02-17T04:05:05.000Z">
+<meta property="article:modified_time" content="2023-02-17T06:52:10.847Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200426195932950.png">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/">
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/","path":"2023/01/11/纠删码（Erasure-Code）及其演进LRC（Locally-Repairable-Codes）/","title":"纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/","path":"2023/02/17/copy-on-write机制/","title":"copy-on-write机制"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes） | Feng's Blog</title>
+<title>copy-on-write机制 | Feng's Blog</title>
   
 
 
@@ -117,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EC%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC"><span class="nav-number">1.</span> <span class="nav-text">EC及其演进LRC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%EF%BC%88Replication%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">副本（Replication）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A0%E5%88%A0%E7%BC%96%E7%A0%81%EF%BC%88EC%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">纠删编码（EC）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E6%A0%A1%E9%AA%8C%E7%BC%96%E7%A0%81LRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">局部校验编码LRC（Locally Repairable Codes）</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#copy-on-write%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">copy-on-write机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux%E4%B8%8B%E7%9A%84fork%E5%87%BD%E6%95%B0%E5%92%8Cexec%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">linux下的fork函数和exec函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#copy-on-write%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">copy-on-write实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">设计原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.3.</span> <span class="nav-text">优缺点</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -173,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/profile.png">
@@ -186,12 +184,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes） | Feng's Blog">
+      <meta itemprop="name" content="copy-on-write机制 | Feng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）
+          copy-on-write机制
         </h1>
 
         <div class="post-meta-container">
@@ -203,7 +201,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-01-11 18:17:21 / 修改时间：21:09:54" itemprop="dateCreated datePublished" datetime="2023-01-11T18:17:21+08:00">2023-01-11</time>
+      <time title="创建时间：2023-02-17 12:05:05 / 修改时间：14:52:10" itemprop="dateCreated datePublished" datetime="2023-02-17T12:05:05+08:00">2023-02-17</time>
     </span>
 
   
@@ -223,27 +221,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="EC及其演进LRC"><a href="#EC及其演进LRC" class="headerlink" title="EC及其演进LRC"></a>EC及其演进LRC</h1><p>近期因为几门课程作业，阅读了一些论文，在此依次进行总结</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69374970">参考链接1</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tinoryj/p/Erasure-Codes-for-Storage-Systems-Summary.html">参考链接2</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cyq6239075/article/details/105775698">参考链接3</a></p>
-<p>如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code）</p>
-<h2 id="副本（Replication）"><a href="#副本（Replication）" class="headerlink" title="副本（Replication）"></a>副本（Replication）</h2><p>副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证在原始数据失效后，数据仍然可用并能通过副本数据恢复。多副本策略即将数据存储多个副本（一般是三副本，比如HDFS），当某个副本丢失时，可以通过其他副本复制回来。三副本的磁盘利用率为1&#x2F;3。</p>
-<h2 id="纠删编码（EC）"><a href="#纠删编码（EC）" class="headerlink" title="纠删编码（EC）"></a>纠删编码（EC）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>总数据块 &#x3D; 原始数据块 + 校验块</p>
-<p>n &#x3D; k + m</p>
-<p>从k个原始数据块中计算出m个校验块</p>
-<p>编码只需要乘法和加法，解码需要用高斯消除或矩阵求逆求的方法解一组线性方程。</p>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>在出现硬盘故障后，重建数据非常耗CPU，而且计算一个数据块需要通过网络读出k倍的数据并传输，网络负载成倍增加</p>
-<h2 id="局部校验编码LRC（Locally-Repairable-Codes）"><a href="#局部校验编码LRC（Locally-Repairable-Codes）" class="headerlink" title="局部校验编码LRC（Locally Repairable Codes）"></a>局部校验编码LRC（Locally Repairable Codes）</h2><p>局部校验编码：将校验块（parity block）分为全局校验块(global parity)、局部重建校验块(local reconstruction parity)，故障恢复时分组计算。</p>
-<p>例子：</p>
-<p>P1&#x3D;D1+D2</p>
-<p>P2&#x3D;D3+D4</p>
-<p>P3&#x3D; D1+D2+ D3+D4</p>
-<p>P1、P2是局部校验。P3是全局校验<br><img src="https://img-blog.csdnimg.cn/20200426195932950.png" alt="例子"></p>
-<p>当仅损坏一个数据块时，可以根据该数据在所在的分组，在组内对该数据块进行重建。损坏一个数据块时的最差情况就是全局校验块损坏，此时需要读全部数据块数据进行重建。</p>
-<p>当损坏两个数据块时情况分成组内和组外，不管哪种需要拉取全部数据进行重建，此时采用LRC方法并不能提升性能。</p>
-<p>当损坏三块数据时，如果这三个数据块在一个组内，例如P1、D1、D2。此时就无法进行数据重建，虽然我们这里是使用三个校验。</p>
-<p>所以LRC并不是100%保证数据不丢，并且还要多占用一部分存储空间</p>
+        <h1 id="copy-on-write机制"><a href="#copy-on-write机制" class="headerlink" title="copy-on-write机制"></a>copy-on-write机制</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903702373859335">参考链接</a></p>
+<p>写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。</p>
+<h1 id="linux下的fork函数和exec函数"><a href="#linux下的fork函数和exec函数" class="headerlink" title="linux下的fork函数和exec函数"></a>linux下的fork函数和exec函数</h1><p>在说明Linux下的copy-on-write机制前，首先要知道两个函数：fork()和exec()</p>
+<p>需要注意的是exec()并不是一个特定的函数, 它是一组函数的统称, 它包括了execl()、execlp()、execv()、execle()、execve()、execvp()</p>
+<p>fork是类Unix操作系统上<strong>创建进程</strong>的主要方法，fork用于创建子进程(等同于当前进程的副本)，新的进程要通过老的进程复制自身得到，Linux的进程都通过<strong>init进程或init的子进程</strong>fork(vfork)出来的</p>
+<p>从上面我们已经知道了fork会创建一个子进程。子进程的是父进程的副本。</p>
+<p>exec函数的作用就是：装载一个新的程序（可执行映像）覆盖当前进程内存空间中的映像，从而执行不同的任务，exec系列函数在执行时会直接替换掉当前进程的地址空间。</p>
+<h1 id="copy-on-write实现原理"><a href="#copy-on-write实现原理" class="headerlink" title="copy-on-write实现原理"></a>copy-on-write实现原理</h1><h2 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h2><p>既然很多时候复制给子进程的数据是无效的，于是就有了Copy On Write这项技术了，原理也很简单：</p>
+<p>fork创建出的子进程，<strong>与父进程共享内存空间</strong>。也就是说，如果<strong>子进程不对内存空间进行写入操作的话，内存空间中的数据并不会复制给子进程</strong>，这样创建子进程的速度就很快了！(不用复制，直接引用父进程的物理空间)。<br>并且如果在fork函数返回之后，子进程<strong>第一时间</strong>exec一个新的可执行映像，那么也不会浪费时间和内存空间了。</p>
+<p>另外表达：在fork之后exec之前两个进程用的是相同的<strong>物理空间（内存区）</strong>，子进程的代码段、数据段、堆栈都是指向父进程的物理空间，也就是说，两者的虚拟空间不同，但其对应的物理空间是同一个，当<strong>父子进程中有更改相应段的行为</strong>发生时，再为子进程相应的段分配物理空间</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>fork()之后，kernel把父进程中所有的内存页的权限都设为<strong>read-only</strong>，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发<strong>页异常中断（page-fault）</strong>，陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点：减少不必要的资源分配，节省宝贵的物理内存。</p>
+<p>缺点：如果在子进程存在期间发生了大量写操作，那么会频繁地产生页面错误，不断陷入内核，复制页面。这反而会降低效率。</p>
 
     </div>
 
@@ -260,14 +250,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/" rel="prev" title="零知识证明ZKP">
-                  <i class="fa fa-chevron-left"></i> 零知识证明ZKP
+                <a href="/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="prev" title="GFS论文总结">
+                  <i class="fa fa-chevron-left"></i> GFS论文总结
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/02/05/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="next" title="Mapreduce论文总结">
-                  Mapreduce论文总结 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
