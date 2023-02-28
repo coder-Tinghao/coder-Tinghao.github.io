@@ -200,7 +200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-28 19:41:21" itemprop="dateModified" datetime="2023-02-28T19:41:21+08:00">2023-02-28</time>
+      <time title="修改时间：2023-02-28 19:54:58" itemprop="dateModified" datetime="2023-02-28T19:54:58+08:00">2023-02-28</time>
     </span>
 
   
@@ -222,6 +222,11 @@
 <p><strong>复制状态机（Replicated State Machine）</strong></p>
 <p>将服务器看作是一个具有确定性状态的状态机，只要给定相同初始状态和同样顺序的确定输入，就能保持同样的状态。同步的是<strong>外部的事件 &#x2F; 操作 &#x2F; 输入</strong>；同步的内容通常较小，但是依赖主机的一些特性：比如指令执行的确定性（deterministic）。而在物理机上保证确定性很难，但是在 VM 上就简单的多，由于 hypervisor 有对 VM 有完全的控制权，因此可以通过某些手段来额外同步某些不确定性输入（比如类似随机数、系统时钟等）。</p>
 <p>Replicated State Machine 需要机器为<strong>单核</strong>，因为在多核机器上，指令的执行顺序本身是不确定的。那对于多核机器如何做同步？State Transfer </p>
+<h1 id="同步状态的层级"><a href="#同步状态的层级" class="headerlink" title="同步状态的层级"></a>同步状态的层级</h1><p>应用层（Application state）。如 GFS，更为高效，只需要发送高维操作即可，缺点是需要在应用层进行容错。<br>机器层（Machine level）。可以让运行在服务器上的应用无需改动而获取容错能力。但需要细粒度的同步机器事件（中断、DMA）；并且需要修改机器底层实现以发送这些事件。<br>而 VM-FT 选择了后者，能力更强大，但也做出了更多牺牲。</p>
+<p>VM-FT 系统使用一个额外的虚拟层 <strong>VMMonitor</strong>（ hypervisor &#x2F; (VMM)Virtual Machine Monitor），当 client 请求到达 Primary 时，VMMonitor 一方面向本机转发请求、一方面向 Backup 的 VMMonitor 同步请求。处理完请求得到结果时，Primary 的 VMMonitor 会回复 Client，而 Backup 的 VMMonitor 会丢弃 Backup 产生的回复。</p>
+<p>使用两种方法来检测 Primary 和 Backup 的健康状况：</p>
+<p>· 和 Primary&#x2F;Backup 进行心跳<br>· 监控<strong>logging channel</strong></p>
+<p>VMware FT论文中将<strong>Primary到Backup之间同步的数据流的通道称之为Log Channel</strong></p>
 
       
     </div>
