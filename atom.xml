@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-02-27T08:36:08.104Z</updated>
+  <updated>2023-02-28T11:41:21.327Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -21,11 +21,20 @@
     <link href="http://coder_tinghao.github.io/2023/02/27/vm-ft%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/"/>
     <id>http://coder_tinghao.github.io/2023/02/27/vm-ft%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</id>
     <published>2023-02-27T08:36:08.000Z</published>
-    <updated>2023-02-27T08:36:08.104Z</updated>
+    <updated>2023-02-28T11:41:21.327Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="容错与复制"><a href="#容错与复制" class="headerlink" title="容错与复制"></a>容错与复制</h1><p>这节课首先谈论了容错（Fault-Tolerance）技术中的<strong>复制（Replication）技术</strong></p><p>目前我知道的分布式存储手段有<strong>复制（Replication）</strong>和<strong>分片（Sharding）</strong>，复制技术主要用于解决<strong>fail-stop故障</strong>，比如 CPU 过热而关闭、主机或者网络断电、硬盘空间耗尽等问题。但是复制不能处理一些<strong>相关联（correlated，主副本机器会同时存在）的问题和软件中的bug和硬件设计中的缺陷</strong>。</p><p>至于是否值得使用复制技术，需要对业务场景和所需费用考量，是否真的需要进行 Replica。比如银行数据就需要多备份，而课程网站可能并不需要。</p><h1 id="状态转移和复制状态机"><a href="#状态转移和复制状态机" class="headerlink" title="状态转移和复制状态机"></a>状态转移和复制状态机</h1><p>论文首先介绍了两种进行状态备份的方式：</p><p><strong>状态转移（State transfer）</strong></p><p>Primary和Backup互为副本，Primary将自己完整状态，比如说内存中的内容，拷贝并发送给Backup。Backup会保存收到的<strong>最近一次状态</strong>。每过一会，Primary就会对自身的内存做一大份拷贝，并通过网络将其发送到Backup。为了提升效率，你可以想到每次同步只发送上次同步之后变更了的内存。</p><p><strong>复制状态机（Replicated State Machine）</strong></p><p>将服务器看作是一个具有确定性状态的状态机，只要给定相同初始状态和同样顺序的确定输入，就能保持同样的状态。同步的是<strong>外部的事件 &#x2F; 操作 &#x2F; 输入</strong>；同步的内容通常较小，但是依赖主机的一些特性：比如指令执行的确定性（deterministic）。而在物理机上保证确定性很难，但是在 VM 上就简单的多，由于 hypervisor 有对 VM 有完全的控制权，因此可以通过某些手段来额外同步某些不确定性输入（比如类似随机数、系统时钟等）。</p><p>Replicated State Machine 需要机器为<strong>单核</strong>，因为在多核机器上，指令的执行顺序本身是不确定的。那对于多核机器如何做同步？State Transfer </p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;容错与复制&quot;&gt;&lt;a href=&quot;#容错与复制&quot; class=&quot;headerlink&quot; title=&quot;容错与复制&quot;&gt;&lt;/a&gt;容错与复制&lt;/h1&gt;&lt;p&gt;这节课首先谈论了容错（Fault-Tolerance）技术中的&lt;strong&gt;复制（Replication）技术&lt;/</summary>
+      
     
     
     
     
+    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
