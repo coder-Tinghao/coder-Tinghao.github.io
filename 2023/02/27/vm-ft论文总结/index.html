@@ -29,8 +29,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/vm-ft_configuration.png?raw=true">
 <meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/wm-ft_workflow%20.png?raw=true">
+<meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/FT_protocol.png?raw=true">
 <meta property="article:published_time" content="2023-02-27T08:36:08.000Z">
-<meta property="article:modified_time" content="2023-03-02T12:26:37.022Z">
+<meta property="article:modified_time" content="2023-03-02T12:27:56.263Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
@@ -210,7 +211,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-02 20:26:37" itemprop="dateModified" datetime="2023-03-02T20:26:37+08:00">2023-03-02</time>
+      <time title="修改时间：2023-03-02 20:27:56" itemprop="dateModified" datetime="2023-03-02T20:27:56+08:00">2023-03-02</time>
     </span>
 
   
@@ -259,6 +260,7 @@
 <p>所有的事件都需要通过<strong>Log Channel</strong>，从Primary同步到Backup，对于不确定性操作，需要保留充足的信息到日志通道中，以使 Backup 可以进行同样的状态改变，并且产生同样输出。发送到日志通道的事件信息包括：<strong>事件发生时的指令序号、日志条目的类型、数据</strong></p>
 <p><strong>如何防止backup执行快于primary？</strong><br>VMware FT会维护一个来自于Primary的<strong>Log条目的等待缓冲区</strong>，如果缓冲区为空，Backup是不允许执行指令的。如果缓冲区不为空，那么它可以根据Log的信息知道Primary对应的指令序号，并且会强制Backup虚机最多执行指令到这个位置。</p>
 <h2 id="输出控制（OutPut-rule）"><a href="#输出控制（OutPut-rule）" class="headerlink" title="输出控制（OutPut rule）"></a>输出控制（OutPut rule）</h2><p>在Primary收到客户端请求并生成数据后，VMM不会无条件转发这个输出给客户端。</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/FT_protocol.png?raw=true" alt="FT_protocol"></p>
 <p><strong>Primary的VMM会等到之前的Log条目都被Backup虚机确认收到了才将输出转发给客户端</strong>。所以，包含了客户端输入的Log条目，会从Primary的VMM送到Backup的VMM，Backup的VMM不用等到Backup虚机实际执行这个输入，就会发送一个表明收到了这条Log的ACK报文给Primary的VMM。当Primary的VMM收到了这个ACK，才会将Primary虚机生成的输出转发到网络中。</p>
 <p><strong>核心：确保在客户端看到对于请求的响应时，Backup虚机一定也看到了对应的请求</strong></p>
 <h2 id="Test-and-Set服务"><a href="#Test-and-Set服务" class="headerlink" title="Test-and-Set服务"></a>Test-and-Set服务</h2><p>当Primary和Backup都在运行，但是它们之间的网络出现了问题，同时它们各自又能够与一些客户端通信。<strong>产生Split Brain现象</strong>，这篇论文的办法是：向一个<strong>外部的第三方权威机构求证，来决定Primary还是Backup允许上线</strong>。</p>
