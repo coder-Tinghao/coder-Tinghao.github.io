@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-03-02T12:27:56.263Z</updated>
+  <updated>2023-03-19T07:48:04.872Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>消息认证码Message Authentication Code(MAC)</title>
+    <link href="http://coder_tinghao.github.io/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/"/>
+    <id>http://coder_tinghao.github.io/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</id>
+    <published>2023-03-19T07:44:26.000Z</published>
+    <updated>2023-03-19T07:48:04.872Z</updated>
+    
+    <content type="html"><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>vm-ft论文总结</title>

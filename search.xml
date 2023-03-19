@@ -334,4 +334,13 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
         <tag>分布式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>消息认证码Message Authentication Code(MAC)</title>
+    <url>/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</url>
+    <content><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
 </search>
