@@ -83,6 +83,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2022/07/23/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>copy-on-write机制</title>
     <url>/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h1 id="copy-on-write机制"><a href="#copy-on-write机制" class="headerlink" title="copy-on-write机制"></a>copy-on-write机制</h1><p><a href="https://juejin.cn/post/6844903702373859335">参考链接</a></p>
@@ -111,32 +129,6 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
 ]]></content>
       <tags>
         <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2022/07/23/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>test</title>
-    <url>/2022/07/23/test/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>日常</tag>
       </tags>
   </entry>
   <entry>
@@ -182,6 +174,134 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
       </tags>
   </entry>
   <entry>
+    <title>test</title>
+    <url>/2022/07/23/test/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>日常</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>故障模型</title>
+    <url>/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p>
+<h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p>
+<p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p>
+<p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p>
+<p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p>
+<h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p>
+<p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p>
+<p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p>
+<p>Crash failure: Omission failure的特例；在omission failure的基础上，增加了节点停止响应的假设，也即持续性地omission failure。</p>
+<p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png?raw=true" alt="故障模型"></p>
+<p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p>
+<h2 id="fail-stop-故障-和-bugs"><a href="#fail-stop-故障-和-bugs" class="headerlink" title="fail-stop 故障 和 bugs"></a>fail-stop 故障 和 bugs</h2><p>简单来说复制能够处理单台计算机的fail-stop故障，如果某些东西出现故障，只是单纯的停止运行，而不是运算出错误结果。 比如电源线、服务器风扇导致CPU过热停止运行、网络等故障。网络隔离场景很有趣，因为从外界来看，这和服务器停止运行毫无区别。</p>
+<p>复制不能处理软件中的bug和硬件设计中的缺陷。 如果相同的程序，都计算出错误的结果，那么再多副本也都无法避免。我们也不能期望复制可以处理硬件的漏洞，当硬件有漏洞的时候会计算出错误的结果，至少基于复制这种技术，我们就无能为力了。</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>拜占庭容错--BFT</title>
+    <url>/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/</url>
+    <content><![CDATA[<h1 id="拜占庭容错系统中的N-gt-x3D-3f-1问题"><a href="#拜占庭容错系统中的N-gt-x3D-3f-1问题" class="headerlink" title="拜占庭容错系统中的N &gt;&#x3D; 3f+1问题"></a>拜占庭容错系统中的<strong>N &gt;&#x3D; 3f+1</strong>问题</h1><p><a href="https://decentralizedthoughts.github.io/start-here/">https://decentralizedthoughts.github.io/start-here/</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在上面的网站中学习区块链基础知识，昨天从<a href="https://zhuanlan.zhihu.com/p/36000412">https://zhuanlan.zhihu.com/p/36000412</a>看懂了N &gt;&#x3D; 3f+1的证明，在此进行总结：<br><br>解决拜占庭将军问题的共识算法有很多（如PBFT，QU，HQ等），但无论共识算法如何设计，所有的算法都需要遵守一个容忍攻击者数量的限制(这个限制是与某个具体的算法实现无关的)。该限制描述如下：结点总数量为N时，最多只能容纳f个拜占庭故障（叛徒）节点，令N &gt;&#x3D; 3f+1。</p>
+<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>quorum（法定人数），所谓quorum指的是做出一次决策至少需要的同意票数量<br><br>liveness（活性）：liveness这个术语来自论文<a href="https://link.zhihu.com/?target=https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">FLP impossibility</a>。liveness，又称guaranteed termination，就是说共识算法的执行过程中不能卡死，最终能按照算法流程一步步得到执行结果。<br><br>safety（安全性）:safety这个术语同样来自论文FLP impossibility。此处用通俗的话解释一下，所谓安全性又称linearizability，就是说，执行共识算法之后，所有节点的内容能保证一致</p>
+<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>设总结点数为N，作恶的拜占庭节点数为 f，法定人数为Q<br><br>要满足liveness必须有：<br><br>**Q &lt;&#x3D; N-f** <br><br>说明：如果共识算法需要的Q大于N-f，则当f个拜占庭故障节点都主动破坏时，算法必然不能执行下去<br></p>
+<p>要满足safety必须有：<br><br><strong>2Q - N &gt; f</strong> <br><br>说明：假设好人的意见分裂了，X个人倾向于方案A，剩余N-f-X个人倾向于方案B。根据safety的定义，坏人要使系统不safety，就要利用自己的f张投票使得方案A和B都能通过：X+f≥Q；N-f-X+f≥Q 。两式相加得证N+f≥2Q 是坏人能作恶的边界条件。</p>
+<p>因为除了leader节点之外的好人节点有可能会出现运行异常，对外表现为意见分裂。但好人节点与拜占庭节点最大的不同是，拜占庭节点可能同时支持正反两种观点，而好人节点只可能分裂（有人支持正有人支持反），但不会说两样话（即，既支持正也支持反）</p>
+<p>因此：</p>
+<p>N+f &lt; 2Q &lt;&#x3D; 2(N-f)<br><br>N &gt; 3f<br><br>if N&#x3D;3f+1 此时Q的最小值为：<br><br>Qmin &#x3D; 2f+1</p>
+<p>证毕</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于所有的拜占庭将军问题，在不更改假设前提时，无论算法怎么设计，当总结点数为N时，最多只能容忍f个作恶节点(拜占庭故障节点)，使N &gt; 3f + 1，此时Q &gt; 2f + 1</p>
+]]></content>
+      <tags>
+        <tag>共识算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）</title>
+    <url>/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="EC及其演进LRC"><a href="#EC及其演进LRC" class="headerlink" title="EC及其演进LRC"></a>EC及其演进LRC</h1><p>近期因为几门课程作业，阅读了一些论文，在此依次进行总结</p>
+<p><a href="https://zhuanlan.zhihu.com/p/69374970">参考链接1</a></p>
+<p><a href="https://www.cnblogs.com/tinoryj/p/Erasure-Codes-for-Storage-Systems-Summary.html">参考链接2</a></p>
+<p><a href="https://blog.csdn.net/cyq6239075/article/details/105775698">参考链接3</a></p>
+<p>如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code）</p>
+<h2 id="副本（Replication）"><a href="#副本（Replication）" class="headerlink" title="副本（Replication）"></a>副本（Replication）</h2><p>副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证在原始数据失效后，数据仍然可用并能通过副本数据恢复。多副本策略即将数据存储多个副本（一般是三副本，比如HDFS），当某个副本丢失时，可以通过其他副本复制回来。三副本的磁盘利用率为1&#x2F;3。</p>
+<h2 id="纠删编码（EC）"><a href="#纠删编码（EC）" class="headerlink" title="纠删编码（EC）"></a>纠删编码（EC）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>总数据块 &#x3D; 原始数据块 + 校验块</p>
+<p>n &#x3D; k + m</p>
+<p>从k个原始数据块中计算出m个校验块</p>
+<p>编码只需要乘法和加法，解码需要用高斯消除或矩阵求逆求的方法解一组线性方程。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>在出现硬盘故障后，重建数据非常耗CPU，而且计算一个数据块需要通过网络读出k倍的数据并传输，网络负载成倍增加</p>
+<h2 id="局部校验编码LRC（Locally-Repairable-Codes）"><a href="#局部校验编码LRC（Locally-Repairable-Codes）" class="headerlink" title="局部校验编码LRC（Locally Repairable Codes）"></a>局部校验编码LRC（Locally Repairable Codes）</h2><p>局部校验编码：将校验块（parity block）分为全局校验块(global parity)、局部重建校验块(local reconstruction parity)，故障恢复时分组计算。</p>
+<p>例子：</p>
+<p>P1&#x3D;D1+D2</p>
+<p>P2&#x3D;D3+D4</p>
+<p>P3&#x3D; D1+D2+ D3+D4</p>
+<p>P1、P2是局部校验。P3是全局校验<br><img data-src="https://img-blog.csdnimg.cn/20200426195932950.png" alt="例子"></p>
+<p>当仅损坏一个数据块时，可以根据该数据在所在的分组，在组内对该数据块进行重建。损坏一个数据块时的最差情况就是全局校验块损坏，此时需要读全部数据块数据进行重建。</p>
+<p>当损坏两个数据块时情况分成组内和组外，不管哪种需要拉取全部数据进行重建，此时采用LRC方法并不能提升性能。</p>
+<p>当损坏三块数据时，如果这三个数据块在一个组内，例如P1、D1、D2。此时就无法进行数据重建，虽然我们这里是使用三个校验。</p>
+<p>所以LRC并不是100%保证数据不丢，并且还要多占用一部分存储空间</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>消息认证码Message Authentication Code(MAC)</title>
+    <url>/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</url>
+    <content><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>
+<p>消息认证码的输入为任意长度的<strong>消息</strong>和一个发送者与接收者之间<strong>共享的密钥</strong>，它可以输出固定长度的数据，这个数据称为 MAC 值</p>
+<p>个人理解，消息认证码就是：传递一条消息，为了保证这个消息是你本人发的，把这个消息和共享密钥结合得到一个MAC值，同时传递过去，接收方通过接收消息，计算MAC值再与发送<br>方发来的MAC值对比即可验证。</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记hexo配置与部署</title>
+    <url>/2022/07/26/%E8%AE%B0hexo%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h1 id="记hexo配置与部署"><a href="#记hexo配置与部署" class="headerlink" title="记hexo配置与部署"></a>记hexo配置与部署</h1><p>hexo中文文档：<a href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p>
+<hr>
+<p>因为官方文档的一点小问题和我对Mac系统环境变量、终端类型等的不熟悉，这个安装过程比较坎坷。关于Git和Node.js的安装比较顺利，我又顺手安装了Homebrew（Mac下的包管理器）。</p>
+<hr>
+<h2 id="Hexo安装过程中的小问题"><a href="#Hexo安装过程中的小问题" class="headerlink" title="Hexo安装过程中的小问题"></a>Hexo安装过程中的小问题</h2><p>Hexo的安装首先如文档所说出现了EACCES权限错误，解决办法是将npm的<strong>全局</strong>安装包放到新创建的npm-global文件夹，并将npm-global的路径添加到环境变量，问题就出在环境变量的配置，Node.js的文档中提到将npm-global&#x2F;bin添加到环境变量的语句加入到<del>&#x2F;.profile 中，</del>&#x2F;.profile是<strong>bash终端</strong>的环境变量配置文件，而现在Mac系统默认为<strong>zsh终端</strong>，需要将上述语句加入.zshrc文件中，保证在打开终端后npm全局环境变量已经加载。否则，需要每次source ~&#x2F;.profile才可以执行 hexo &lt; command &gt; 命令。经过几个小时的排查最终发现。</p>
+<hr>
+<h2 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h2><p>hexo n “新博客”  创建新博客</p>
+<p>hexo clean      清理hexo缓存</p>
+<p>hexo g          生成博客</p>
+<p>hexo d          部署博客</p>
+]]></content>
+      <tags>
+        <tag>日常</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通信模型--同步、异步、部分同步</title>
+    <url>/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/</url>
+    <content><![CDATA[<h1 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在标准的分布式计算模型中，通信的不确定性被可以控制消息延迟的敌手捕获。通信模型定义了敌手延迟消息的能力的限制。</p>
+<p>在同步模型中，存在一些已知的有限时间界限Δ。 对于发送的任何消息，敌手最多可以将其传递延迟Δ。</p>
+<p>在异步模型中，对于发送的任何消息，敌手可以将其传递延迟任意有限的时间。 因此，一方面，传递消息的时间没有限制，但另一方面，每条消息最终都必须传递。</p>
+<p>部分同步模型（参见<a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf">DLS88</a>）旨在找到这两个模型之间的折中。 假设存在一些已知的有限时间界限 Δ 和一个称为 GST（Global Stabilization Time–全局稳定时间）的特殊事件，使得：敌手必须导致 GST 事件在某个未知的有限时间后最终发生。在时间 x 发送的任何消息必须在时间 Δ+max(x,GST) 之前交付。</p>
+<p>在部分同步模型中，系统在GST之前异步运行，在GST之后同步运行</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于同步模型：</p>
+<p>1.存在一个trade-off问题：有限时间界限Δ过长，造成长时间超时，会降低性能；有限时间界限Δ过短，会造成安全性违规问题。<br>2.假设找到了Δ的sweet spot，想象一个发送者向两个接收者广播一条消息，一个消息在Δ−ε时间后到达，另一个在Δ+ε后到达。在这里，真实世界的行为与模型不同，这可能再次导致安全问题。</p>
+<p>对于异步模型：</p>
+<p>异步模型的主要问题是该模型中的协议往往更复杂且更难推理。</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>零知识证明ZKP</title>
+    <url>/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>事务管理与并发控制</title>
     <url>/2022/11/14/%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E4%B8%8E%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/</url>
     <content><![CDATA[<p>最近看了看《数据库事务处理的艺术》，主要介绍事物原理和并发控制技术，之前有看过一些并发控制的博客，看的一头雾水，这本书相对更清晰一些</p>
@@ -221,126 +341,6 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
 <li>谓词锁</li>
 </ul>
 <h1 id="日志技术与恢复子系统"><a href="#日志技术与恢复子系统" class="headerlink" title="日志技术与恢复子系统"></a>日志技术与恢复子系统</h1>]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>拜占庭容错--BFT</title>
-    <url>/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/</url>
-    <content><![CDATA[<h1 id="拜占庭容错系统中的N-gt-x3D-3f-1问题"><a href="#拜占庭容错系统中的N-gt-x3D-3f-1问题" class="headerlink" title="拜占庭容错系统中的N &gt;&#x3D; 3f+1问题"></a>拜占庭容错系统中的<strong>N &gt;&#x3D; 3f+1</strong>问题</h1><p><a href="https://decentralizedthoughts.github.io/start-here/">https://decentralizedthoughts.github.io/start-here/</a></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在上面的网站中学习区块链基础知识，昨天从<a href="https://zhuanlan.zhihu.com/p/36000412">https://zhuanlan.zhihu.com/p/36000412</a>看懂了N &gt;&#x3D; 3f+1的证明，在此进行总结：<br><br>解决拜占庭将军问题的共识算法有很多（如PBFT，QU，HQ等），但无论共识算法如何设计，所有的算法都需要遵守一个容忍攻击者数量的限制(这个限制是与某个具体的算法实现无关的)。该限制描述如下：结点总数量为N时，最多只能容纳f个拜占庭故障（叛徒）节点，令N &gt;&#x3D; 3f+1。</p>
-<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>quorum（法定人数），所谓quorum指的是做出一次决策至少需要的同意票数量<br><br>liveness（活性）：liveness这个术语来自论文<a href="https://link.zhihu.com/?target=https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">FLP impossibility</a>。liveness，又称guaranteed termination，就是说共识算法的执行过程中不能卡死，最终能按照算法流程一步步得到执行结果。<br><br>safety（安全性）:safety这个术语同样来自论文FLP impossibility。此处用通俗的话解释一下，所谓安全性又称linearizability，就是说，执行共识算法之后，所有节点的内容能保证一致</p>
-<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>设总结点数为N，作恶的拜占庭节点数为 f，法定人数为Q<br><br>要满足liveness必须有：<br><br>**Q &lt;&#x3D; N-f** <br><br>说明：如果共识算法需要的Q大于N-f，则当f个拜占庭故障节点都主动破坏时，算法必然不能执行下去<br></p>
-<p>要满足safety必须有：<br><br><strong>2Q - N &gt; f</strong> <br><br>说明：假设好人的意见分裂了，X个人倾向于方案A，剩余N-f-X个人倾向于方案B。根据safety的定义，坏人要使系统不safety，就要利用自己的f张投票使得方案A和B都能通过：X+f≥Q；N-f-X+f≥Q 。两式相加得证N+f≥2Q 是坏人能作恶的边界条件。</p>
-<p>因为除了leader节点之外的好人节点有可能会出现运行异常，对外表现为意见分裂。但好人节点与拜占庭节点最大的不同是，拜占庭节点可能同时支持正反两种观点，而好人节点只可能分裂（有人支持正有人支持反），但不会说两样话（即，既支持正也支持反）</p>
-<p>因此：</p>
-<p>N+f &lt; 2Q &lt;&#x3D; 2(N-f)<br><br>N &gt; 3f<br><br>if N&#x3D;3f+1 此时Q的最小值为：<br><br>Qmin &#x3D; 2f+1</p>
-<p>证毕</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于所有的拜占庭将军问题，在不更改假设前提时，无论算法怎么设计，当总结点数为N时，最多只能容忍f个作恶节点(拜占庭故障节点)，使N &gt; 3f + 1，此时Q &gt; 2f + 1</p>
-]]></content>
-      <tags>
-        <tag>共识算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>故障模型</title>
-    <url>/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p>
-<h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p>
-<p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p>
-<p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p>
-<p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p>
-<h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p>
-<p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p>
-<p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p>
-<p>Crash failure: Omission failure的特例；在omission failure的基础上，增加了节点停止响应的假设，也即持续性地omission failure。</p>
-<p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png?raw=true" alt="故障模型"></p>
-<p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p>
-<h2 id="fail-stop-故障-和-bugs"><a href="#fail-stop-故障-和-bugs" class="headerlink" title="fail-stop 故障 和 bugs"></a>fail-stop 故障 和 bugs</h2><p>简单来说复制能够处理单台计算机的fail-stop故障，如果某些东西出现故障，只是单纯的停止运行，而不是运算出错误结果。 比如电源线、服务器风扇导致CPU过热停止运行、网络等故障。网络隔离场景很有趣，因为从外界来看，这和服务器停止运行毫无区别。</p>
-<p>复制不能处理软件中的bug和硬件设计中的缺陷。 如果相同的程序，都计算出错误的结果，那么再多副本也都无法避免。我们也不能期望复制可以处理硬件的漏洞，当硬件有漏洞的时候会计算出错误的结果，至少基于复制这种技术，我们就无能为力了。</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>消息认证码Message Authentication Code(MAC)</title>
-    <url>/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</url>
-    <content><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>
-<p>消息认证码的输入为任意长度的<strong>消息</strong>和一个发送者与接收者之间<strong>共享的密钥</strong>，它可以输出固定长度的数据，这个数据称为 MAC 值</p>
-<p>个人理解，消息认证码就是：传递一条消息，为了保证这个消息是你本人发的，把这个消息和共享密钥结合得到一个MAC值，同时传递过去，接收方通过接收消息，计算MAC值再与发送<br>方发来的MAC值对比即可验证。</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）</title>
-    <url>/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="EC及其演进LRC"><a href="#EC及其演进LRC" class="headerlink" title="EC及其演进LRC"></a>EC及其演进LRC</h1><p>近期因为几门课程作业，阅读了一些论文，在此依次进行总结</p>
-<p><a href="https://zhuanlan.zhihu.com/p/69374970">参考链接1</a></p>
-<p><a href="https://www.cnblogs.com/tinoryj/p/Erasure-Codes-for-Storage-Systems-Summary.html">参考链接2</a></p>
-<p><a href="https://blog.csdn.net/cyq6239075/article/details/105775698">参考链接3</a></p>
-<p>如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code）</p>
-<h2 id="副本（Replication）"><a href="#副本（Replication）" class="headerlink" title="副本（Replication）"></a>副本（Replication）</h2><p>副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证在原始数据失效后，数据仍然可用并能通过副本数据恢复。多副本策略即将数据存储多个副本（一般是三副本，比如HDFS），当某个副本丢失时，可以通过其他副本复制回来。三副本的磁盘利用率为1&#x2F;3。</p>
-<h2 id="纠删编码（EC）"><a href="#纠删编码（EC）" class="headerlink" title="纠删编码（EC）"></a>纠删编码（EC）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>总数据块 &#x3D; 原始数据块 + 校验块</p>
-<p>n &#x3D; k + m</p>
-<p>从k个原始数据块中计算出m个校验块</p>
-<p>编码只需要乘法和加法，解码需要用高斯消除或矩阵求逆求的方法解一组线性方程。</p>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>在出现硬盘故障后，重建数据非常耗CPU，而且计算一个数据块需要通过网络读出k倍的数据并传输，网络负载成倍增加</p>
-<h2 id="局部校验编码LRC（Locally-Repairable-Codes）"><a href="#局部校验编码LRC（Locally-Repairable-Codes）" class="headerlink" title="局部校验编码LRC（Locally Repairable Codes）"></a>局部校验编码LRC（Locally Repairable Codes）</h2><p>局部校验编码：将校验块（parity block）分为全局校验块(global parity)、局部重建校验块(local reconstruction parity)，故障恢复时分组计算。</p>
-<p>例子：</p>
-<p>P1&#x3D;D1+D2</p>
-<p>P2&#x3D;D3+D4</p>
-<p>P3&#x3D; D1+D2+ D3+D4</p>
-<p>P1、P2是局部校验。P3是全局校验<br><img data-src="https://img-blog.csdnimg.cn/20200426195932950.png" alt="例子"></p>
-<p>当仅损坏一个数据块时，可以根据该数据在所在的分组，在组内对该数据块进行重建。损坏一个数据块时的最差情况就是全局校验块损坏，此时需要读全部数据块数据进行重建。</p>
-<p>当损坏两个数据块时情况分成组内和组外，不管哪种需要拉取全部数据进行重建，此时采用LRC方法并不能提升性能。</p>
-<p>当损坏三块数据时，如果这三个数据块在一个组内，例如P1、D1、D2。此时就无法进行数据重建，虽然我们这里是使用三个校验。</p>
-<p>所以LRC并不是100%保证数据不丢，并且还要多占用一部分存储空间</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>零知识证明ZKP</title>
-    <url>/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>记hexo配置与部署</title>
-    <url>/2022/07/26/%E8%AE%B0hexo%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<h1 id="记hexo配置与部署"><a href="#记hexo配置与部署" class="headerlink" title="记hexo配置与部署"></a>记hexo配置与部署</h1><p>hexo中文文档：<a href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p>
-<hr>
-<p>因为官方文档的一点小问题和我对Mac系统环境变量、终端类型等的不熟悉，这个安装过程比较坎坷。关于Git和Node.js的安装比较顺利，我又顺手安装了Homebrew（Mac下的包管理器）。</p>
-<hr>
-<h2 id="Hexo安装过程中的小问题"><a href="#Hexo安装过程中的小问题" class="headerlink" title="Hexo安装过程中的小问题"></a>Hexo安装过程中的小问题</h2><p>Hexo的安装首先如文档所说出现了EACCES权限错误，解决办法是将npm的<strong>全局</strong>安装包放到新创建的npm-global文件夹，并将npm-global的路径添加到环境变量，问题就出在环境变量的配置，Node.js的文档中提到将npm-global&#x2F;bin添加到环境变量的语句加入到<del>&#x2F;.profile 中，</del>&#x2F;.profile是<strong>bash终端</strong>的环境变量配置文件，而现在Mac系统默认为<strong>zsh终端</strong>，需要将上述语句加入.zshrc文件中，保证在打开终端后npm全局环境变量已经加载。否则，需要每次source ~&#x2F;.profile才可以执行 hexo &lt; command &gt; 命令。经过几个小时的排查最终发现。</p>
-<hr>
-<h2 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h2><p>hexo n “新博客”  创建新博客</p>
-<p>hexo clean      清理hexo缓存</p>
-<p>hexo g          生成博客</p>
-<p>hexo d          部署博客</p>
-]]></content>
-      <tags>
-        <tag>日常</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通信模型--同步、异步、部分同步</title>
-    <url>/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/</url>
-    <content><![CDATA[<h1 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在标准的分布式计算模型中，通信的不确定性被可以控制消息延迟的敌手捕获。通信模型定义了敌手延迟消息的能力的限制。</p>
-<p>在同步模型中，存在一些已知的有限时间界限Δ。 对于发送的任何消息，敌手最多可以将其传递延迟Δ。</p>
-<p>在异步模型中，对于发送的任何消息，敌手可以将其传递延迟任意有限的时间。 因此，一方面，传递消息的时间没有限制，但另一方面，每条消息最终都必须传递。</p>
-<p>部分同步模型（参见<a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf">DLS88</a>）旨在找到这两个模型之间的折中。 假设存在一些已知的有限时间界限 Δ 和一个称为 GST（Global Stabilization Time–全局稳定时间）的特殊事件，使得：敌手必须导致 GST 事件在某个未知的有限时间后最终发生。在时间 x 发送的任何消息必须在时间 Δ+max(x,GST) 之前交付。</p>
-<p>在部分同步模型中，系统在GST之前异步运行，在GST之后同步运行</p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于同步模型：</p>
-<p>1.存在一个trade-off问题：有限时间界限Δ过长，造成长时间超时，会降低性能；有限时间界限Δ过短，会造成安全性违规问题。<br>2.假设找到了Δ的sweet spot，想象一个发送者向两个接收者广播一条消息，一个消息在Δ−ε时间后到达，另一个在Δ+ε后到达。在这里，真实世界的行为与模型不同，这可能再次导致安全问题。</p>
-<p>对于异步模型：</p>
-<p>异步模型的主要问题是该模型中的协议往往更复杂且更难推理。</p>
-]]></content>
       <tags>
         <tag>分布式</tag>
       </tags>
