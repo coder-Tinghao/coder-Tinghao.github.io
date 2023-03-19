@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>GFS论文总结</title>
+    <url>/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="GFS论文总结"><a href="#GFS论文总结" class="headerlink" title="GFS论文总结"></a>GFS论文总结</h1><p>GFS（The Google File System），Google的目标是构建一个大型的，快速的文件系统。并且这个文件系统是全局有效的，这样各种不同的应用程序都可以从中读取数据。从硬件到使用了GFS的软件都有讨论，并且它也是一个成功的现实世界的设计。尽管这是在学术会议上发表的学术论文，但是文章里介绍的东西（GFS）也相当成功，并且在现实世界中使用了相当长的时间。</p>
+<h1 id="分布式存储系统"><a href="#分布式存储系统" class="headerlink" title="分布式存储系统"></a>分布式存储系统</h1><p>存储是一种关键的抽象，可能有各种各样重要的抽象可以应用在分布式系统中，简单的存储接口往往非常有用且极其通用。所以，构建分布式系统大多都是关于如何设计存储系统，或是设计其它基于大型分布式存储的系统。所以我们会更加关注如何为大型分布式存储系统设计一个优秀的接口，以及如何设计存储系统的内部结构，这样系统才能良好运行。<br><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/distributed_system.png?raw=true" alt="分布式系统"></p>
+<p>1.对于分布式存储，为了获取更大的性能，利用数百台计算机的资源来同时完成大量工作</p>
+<p>2.将数据分割放到大量的服务器上，这样就可以并行的从多台服务器读取数据。我们将这种方式称之为分片（Sharding）</p>
+<p>3.分片导致常态的错误，需要自动化的方法而不是人工介入来修复错误，引出容错</p>
+<p>4.实现容错最有用的一种方法是使用复制，只需要维护2-3个数据的副本，当其中一个故障了，你就可以使用另一个。所以，如果想要容错能力，就得有复制（replication）</p>
+<p>5.如果有复制，那就有了两份数据的副本。可以确定的是，如果你不小心，它们就会不一致。获取到的数据内容也将取决于你向哪个副本请求数据。这对于应用程序来说就有些麻烦了。所以，如果我们有了复制，我们就有不一致的问题（inconsistency）</p>
+<p>6.避免不一致的问题，并且让数据看起来也表现的符合预期。但是为了达到这样的效果，你总是需要额外的工作，需要不同服务器之间通过网络额外的交互，而这样的交互会降低性能。所以如果你想要一致性，你的代价就是低性能。</p>
+<p><strong>通常，人们很少会乐意为好的一致性付出相应的性能代价。</strong></p>
+<h1 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h1><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_architecture.png?raw=true" alt="GFS结构"></p>
+<h2 id="GFS设计目标"><a href="#GFS设计目标" class="headerlink" title="GFS设计目标"></a>GFS设计目标</h2><p>为了获得大容量和高速的特性，每个包含了数据的文件会被GFS自动的分割并存放在多个服务器之上，这样读写操作自然就会变得很快。因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量。将文件分割存储还可以在存储系统中保存比单个磁盘还要大的文件。</p>
+<p><strong>GFS是为TB级别的文件而生。并且GFS只会顺序处理，不支持随机访问</strong></p>
+<h2 id="GFS-Master节点"><a href="#GFS-Master节点" class="headerlink" title="GFS Master节点"></a>GFS Master节点</h2><p>Master节点用来管理文件和Chunk的信息，而Chunk服务器用来存储实际的数据。Master节点知道每一个文件对应的所有的Chunk的ID，这些Chunk每个是64MB大小，它们共同构成了一个文件。如果我有一个1GB的文件，那么Master节点就知道文件的第一个Chunk存储在哪，第二个Chunk存储在哪，等等。当我想读取这个文件中的任意一个部分时，我需要向Master节点查询对应的Chunk在哪个服务器上，之后我可以直接从Chunk服务器读取对应的Chunk数据。</p>
+<p>Master节点主要保存了两个表单：</p>
+<p>1.文件名到Chunk ID或者Chunk Handle数组的对应。这个表单告诉你，文件对应了哪些Chunk。</p>
+<p>2.记录了Chunk ID到Chunk数据的对应关系。这里的数据又包括了：<br><strong>每个Chunk存储在哪些服务器上</strong>；<strong>每个Chunk当前的版本号</strong>；<strong>哪个Chunk服务器持有主Chunk</strong>，所有对于Chunk的写操作都必须在主Chunk（Primary Chunk）上顺序处理，主Chunk是Chunk的多个副本之一；<br><strong>主Chunk的租约过期时间</strong>，主Chunk只能在特定的租约时间内担任主Chunk</p>
+<p>Master会在磁盘上存储log，每次有数据变更时，Master会在磁盘的log中追加一条记录，并生成CheckPoint（类似于备份点）</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_Master.png?raw=true" alt="GFS_Master"></p>
+<p>有些数据需要存在磁盘上，而有些不用。它们分别是：<br>如图所示，需要保存在磁盘上的，标记为NV（non-volatile, 非易失）；不需要保存在磁盘上的标记为V</p>
+<p>任何时候，如果文件扩展到达了一个新的64MB，需要新增一个Chunk或者由于指定了新的主Chunk而导致版本号更新了，Master节点需要向磁盘中的Log追加一条记录。这里在磁盘中维护log而不是数据库的原因是，数据库本质上来说是某种B树（b-tree）或者hash table，相比之下，<strong>追加log会非常的高效</strong>，因为你可以将最近的<strong>多个log记录一次性的写入磁盘</strong>。因为这些数据都是向同一个地址追加，这样只需要等待磁盘的磁碟旋转一次。而对于B树来说，每一份数据都需要在磁盘中随机找个位置写入。</p>
+<p>Master节点重启时，会从log中的最近一个<strong>checkpoint</strong>开始恢复，再逐条执行从Checkpoint开始的log，最后恢复自己的状态。</p>
+<h2 id="GFS读文件"><a href="#GFS读文件" class="headerlink" title="GFS读文件"></a>GFS读文件</h2><p>读请求，意味着应用程序或者GFS客户端有一个文件名和它想从文件的某个位置读取的偏移量（offset），应用程序会将这些信息发送给Master节点。Master节点会从自己的file表单中查询文件名，得到Chunk ID的数组。因为每个Chunk是64MB，所以偏移量除以64MB就可以从数组中得到对应的Chunk ID。之后Master再从Chunk表单中找到存有Chunk的服务器列表，并将列表返回给客户端。所以，第一步是客户端（或者应用程序）将文件名和偏移量发送给Master。第二步，Master节点将Chunk Handle（也就是ID，记为H）和服务器列表发送给客户端。</p>
+<p>客户端可以从这些Chunk服务器中挑选一个来读取数据。GFS论文说，客户端会选择一个网络上最近的服务器（Google的数据中心中，IP地址是连续的，所以可以从IP地址的差异判断网络位置的远近），并将读请求发送到那个服务器。因为客户端每次可能只读取1MB或者64KB数据，所以，客户端可能会连续多次读取同一个Chunk的不同位置。所以，客户端会缓存Chunk和服务器的对应关系。</p>
+<p>客户端会与选出的Chunk服务器通信，将Chunk Handle和偏移量发送给那个Chunk服务器。Chunk服务器会在本地的硬盘上，将每个Chunk存储成独立的Linux文件，并通过普通的Linux文件系统管理</p>
+<h2 id="GFS写文件"><a href="#GFS写文件" class="headerlink" title="GFS写文件"></a>GFS写文件</h2><p>写文件，客户端会向Master节点发送请求说：我想向这个文件名对应的文件追加数据，请告诉我文件中<strong>最后一个Chunk的位置</strong>。这就是GFS论文中讨论的<strong>记录追加（Record Append）</strong></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_write.png?raw=true" alt="GFS写操作"></p>
+<p>GFS 使用了**租约(lease)**的手段，Master 会定期向 chunk 的某个 replica 所在的服务器进行授权（有超时时间，所以称为租约），拿到授权的副本称为主副本（primary replica），由其进行写入顺序的安排。</p>
+<p>对于读文件来说，可以从任何最新的Chunk副本读取数据，但是对于写文件来说，必须要通过Chunk的主副本（Primary Chunk）来写入。对于Master节点来说，如果发现Chunk的主副本不存在，Master会找出所有存有Chunk最新副本的Chunk服务器。每个Chunk可能同时有多个副本，最新的副本是指，副本中保存的版本号与Master中记录的Chunk的版本号一致。当客户端想要对文件进行追加，但是又不知道文件尾的Chunk对应的Primary在哪时，Master会等所有存储了最新Chunk版本的服务器集合完成，然后挑选一个作为Primary，其他的作为Secondary。</p>
+<p>现在我们有了一个Primary，它可以接收来自客户端的写请求，并将写请求应用在多个Chunk服务器中。这样Master可以将实际更新Chunk的能力转移给Primary服务器。并且在将版本号更新到Primary和Secondary服务器之后，如果Master节点故障重启，还是可以在相同的Primary和Secondary服务器上继续更新Chunk。</p>
+<h2 id="GFS一致性"><a href="#GFS一致性" class="headerlink" title="GFS一致性"></a>GFS一致性</h2><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_consistency.png?raw=true" alt="GFS一致性"></p>
+<p>如图所示，追加A成功，追加B时第三个副本失败，追加C成功，而后重新追加B会在C的后面追加。</p>
+<p>在GFS的这种工作方式下，如果Primary返回写入成功，那么一切都还好，如果Primary返回写入失败，就不是那么好了。Primary返回写入失败会导致不同的副本有完全不同的数据。</p>
+<h2 id="GFS问题"><a href="#GFS问题" class="headerlink" title="GFS问题"></a>GFS问题</h2><p>它最严重的局限可能在于，它只有一个Master节点，会带来以下问题：</p>
+<p>·Master节点必须为每个文件，每个Chunk维护表单，随着GFS的应用越来越多，涉及的文件也越来越多，最终Master会耗尽内存来存储文件表单。你可以增加内存，但是单台计算机的内存也是有上限的。</p>
+<p>·单个Master节点要承载数千个客户端的请求，而Master节点的CPU每秒只能处理数百个请求，尤其Master还需要将部分数据写入磁盘，很快，客户端数量超过了单个Master的能力。</p>
+<p>·应用程序发现很难处理GFS奇怪的语义（本节最开始介绍的GFS的副本数据的同步，或者可以说不同步）。</p>
+<p>·Master节点的故障切换不是自动的。GFS需要人工干预来处理已经永久故障的Master节点，并更换新的服务器，这可能需要几十分钟甚至更长的而时间来处理。对于某些应用程序来说，这个时间太长了。</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Mapreduce论文总结</title>
     <url>/2023/02/05/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近决定通过MIT6.824的分布式课程学习一下Google的三篇经典论文，Mapreduce、GFS、Raft。6.824课程相关链接如下：</p>
@@ -12,19 +57,19 @@
 <p>之后会发送给第二台服务器，因为相同的put请求需要发送给两个副本，这样这两个副本才能保持同步。但是就在客户端准备给第二台服务器发送相同请求时，这个客户端故障了，可能是电源故障或者操作系统的bug之类的。所以，现在我们处于一个不好的状态，我们发送了一个put请求，更新了一个副本的值是21，但是另一个副本的值仍然是20。</p>
 <p>如果现在某人通过get读取key为1的值，那么他可能获得21，也可能获得20，取决于get请求发送到了哪个服务器。即使规定了总是把请求先发送给第一个服务器，那么我们在构建容错系统时，如果第一台服务器故障了，请求也会发给第二台服务器。所以不管怎么样，总有一天你会面临暴露旧数据的风险。很可能是这样，最开始许多get请求都得到了21，之后过了一周突然一些get请求得到了一周之前的旧数据（20）。所以，这里不是很一致。并且，如果我们不小心的话，这个场景是可能发生的，所以，我们需要确定put&#x2F;get操作的一些规则。</p>
 <p>实际上，对于一致性有很多不同的定义。有一些非常直观，比如说get请求可以得到最近一次完成的put请求写入的值。这种一般也被称为强一致（Strong Consistency）。弱一致是指，不保证get请求可以得到最近一次完成的put请求写入的值。尽管有很多细节的工作要处理，强一致可以保证get得到的是put写入的最新的数据；而很多的弱一致系统不会做出类似的保证。所以在一个弱一致系统中，某人通过put请求写入了一个数据，但是你通过get看到的可能仍然是一个旧数据，而这个旧数据可能是很久之前写入的。</p>
-<p><img src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/consistency.png?raw=true" alt="一致性"></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/consistency.png?raw=true" alt="一致性"></p>
 <h1 id="Mapreduce论文"><a href="#Mapreduce论文" class="headerlink" title="Mapreduce论文"></a>Mapreduce论文</h1><h2 id="Mapreduce框架"><a href="#Mapreduce框架" class="headerlink" title="Mapreduce框架"></a>Mapreduce框架</h2><p>MapReduce的思想是：应用程序设计人员和分布式运算的使用者，只需要写简单的Map函数和Reduce函数，而不需要知道任何有关分布式的事情，MapReduce框架会处理剩下的事情。</p>
-<p><img src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce.png?raw=true" alt="Mapreduce框架"></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce.png?raw=true" alt="Mapreduce框架"></p>
 <p>Map函数以文件作为输入，文件是整个输入数据的一部分。Map函数的输出是一个key-value对的列表。假设我们在实现一个最简单的MapReduce Job：单词计数器。它会统计每个单词出现的次数。在这个例子中，Map函数会输出key-value对，其中key是单词，而value是1。Map函数会将输入中的每个单词拆分，并输出一个key-value对，key是该单词，value是1。最后需要对所有的key-value进行计数，以获得最终的输出。所以，假设输入文件1包含了单词a和单词b，Map函数的输出将会是key&#x3D;a，value&#x3D;1和key&#x3D;b，value&#x3D;1。第二个Map函数只从输入文件2看到了b，那么输出将会是key&#x3D;b，value&#x3D;1。第三个输入文件有一个a和一个c。</p>
-<p><img src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce_execution.png?raw=true" alt="Mapreduce执行过程"></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce_execution.png?raw=true" alt="Mapreduce执行过程"></p>
 <p>我们对所有的输入文件都运行了Map函数，并得到了论文中称之为中间输出（intermediate output），也就是每个Map函数输出的key-value对。<br>运算的第二阶段是运行Reduce函数。MapReduce框架会收集所有Map函数输出的每一个单词的统计。比如说，MapReduce框架会先收集每一个Map函数输出的key为a的key-value对。收集了之后，会将它们提交给Reduce函数。</p>
 <p>之后会收集所有的b。这里的收集是真正意义上的收集，因为b是由不同计算机上的不同Map函数生成，所以不仅仅是数据从一台计算机移动到另一台（如果Map只在一台计算机的一个实例里，可以直接通过一个RPC将数据从Map移到Reduce）。我们收集所有的b，并将它们提交给另一个Reduce函数。这个Reduce函数的入参是所有的key为b的key-value对。对c也是一样。所以，MapReduce框架会为所有Map函数输出的每一个key，调用一次Reduce函数。</p>
 <p>Job：整个MapReduce计算称为Job</p>
 <p>Task：每一次MapReduce调用称为Task</p>
 <h2 id="Map函数和Reduce函数"><a href="#Map函数和Reduce函数" class="headerlink" title="Map函数和Reduce函数"></a>Map函数和Reduce函数</h2><h3 id="Map函数"><a href="#Map函数" class="headerlink" title="Map函数"></a>Map函数</h3><p>入参中，key是输入文件的名字，通常会被忽略，因为我们不太关心文件名是什么，value是输入文件的内容。所以，对于一个单词计数器来说，value包含了要统计的文本，我们会将这个文本拆分成单词。之后对于每一个单词，我们都会调用emit。emit由MapReduce框架提供，并且这里的emit属于Map函数。emit会接收两个参数，其中一个是key，另一个是value。在单词计数器的例子中，emit入参的key是单词，value是字符串“1”。</p>
-<p><img src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/map.png?raw=true" alt="Map函数"></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/map.png?raw=true" alt="Map函数"></p>
 <h3 id="Reduce函数"><a href="#Reduce函数" class="headerlink" title="Reduce函数"></a>Reduce函数</h3><p>Reduce函数的入参是某个特定key的所有实例（Map输出中的key-value对中，出现了一次特定的key就可以算作一个实例）。所以Reduce函数也是使用一个key和一个value作为参数，其中value是一个数组，里面每一个元素是Map函数输出的key的一个实例的value。对于单词计数器来说，key就是单词，value就是由字符串“1”组成的数组，所以，我们不需要关心value的内容是什么，我们只需要关心value数组的长度。Reduce的emit函数只接受一个参数value，这个value会作为Reduce函数入参的key的最终输出。所以，对于单词计数器，我们会给emit传入数组的长度。</p>
-<p><img src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/reduce.png?raw=true" alt="Reduce函数"></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/reduce.png?raw=true" alt="Reduce函数"></p>
 <h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="Shuffle过程"><a href="#Shuffle过程" class="headerlink" title="Shuffle过程"></a>Shuffle过程</h3><p>Mapreduce框架中提到的从Map函数到Reduce函数的过程就是<strong>shuffle</strong>，根据课程中的讲解，这个过程如mapreduce图所示<strong>本质是从行存储到列存储的转换</strong>，也是mapreduce整个过程代价最大的部分</p>
 <p>这里的shuffle的重点是，这里实际上可能会有大量的网络通信。假设你在进行排序，排序的输入输出会有相同的大小。这样，如果你的输入是10TB，为了能排序，你需要将10TB的数据在网络上移动，并且输出也会是10TB，所以这里有大量的数据。这可能发生在任何MapReduce job中，尽管有一些MapReduce job在不同阶段的数据没有那么大。之前有人提过，想将Reduce的输出传给另一个MapReduce job，而这也是人们常做的事情。在一些场景中，Reduce的输出可能会非常巨大，比如排序，比如网页索引器。10TB的输入对应的是10TB的输出。所以，Reduce的输出也会存储在GFS上。但是Reduce只会生成key-value对，MapReduce框架会收集这些数据，并将它们写入到GFS的大文件中。</p>
 <h3 id="Mapreduce-GFS"><a href="#Mapreduce-GFS" class="headerlink" title="Mapreduce+GFS"></a>Mapreduce+GFS</h3><p>GFS是一个共享文件服务，并且它也运行在MapReduce的worker集群的物理服务器上。GFS会自动拆分你存储的任何大文件，并且以64MB的块存储在多个服务器之上。所以，如果你有了10TB的网页数据，你只需要将它们写入到GFS，甚至你写入的时候是作为一个大文件写入的，GFS会自动将这个大文件拆分成64MB的块，并将这些块平均的分布在所有的GFS服务器之上，而这是极好的，这正是我们所需要的。如果我们接下来想要对刚刚那10TB的网页数据运行MapReduce Job，数据已经均匀的分割存储在所有的服务器上了。如果我们有1000台服务器，我们会启动1000个Map worker，每个Map worker会读取1&#x2F;1000输入数据。这些Map worker可以并行的从1000个GFS文件服务器读取数据，并获取巨大的读取吞吐量，也就是1000台服务器能提供的吞吐量。</p>
@@ -32,6 +77,55 @@
 <p>The master pings every worker periodically. If no re- sponse is received from a worker in a certain amount of time, the master marks the worker as failed.</p>
 <p>The master runs an internal HTTP server and exports a set of status pages for human consumption.</p>
 <h3 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h3><p><a href="http://nil.csail.mit.edu/6.824/2020/labs/lab-mr.html">6.824lab1链接</a></p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/07/23/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>copy-on-write机制</title>
+    <url>/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="copy-on-write机制"><a href="#copy-on-write机制" class="headerlink" title="copy-on-write机制"></a>copy-on-write机制</h1><p><a href="https://juejin.cn/post/6844903702373859335">参考链接</a></p>
+<p>写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。</p>
+<h1 id="linux下的fork函数和exec函数"><a href="#linux下的fork函数和exec函数" class="headerlink" title="linux下的fork函数和exec函数"></a>linux下的fork函数和exec函数</h1><p>在说明Linux下的copy-on-write机制前，首先要知道两个函数：fork()和exec()</p>
+<p>需要注意的是exec()并不是一个特定的函数, 它是一组函数的统称, 它包括了execl()、execlp()、execv()、execle()、execve()、execvp()</p>
+<p>fork是类Unix操作系统上<strong>创建进程</strong>的主要方法，fork用于创建子进程(等同于当前进程的副本)，新的进程要通过老的进程复制自身得到，Linux的进程都通过<strong>init进程或init的子进程</strong>fork(vfork)出来的</p>
+<p>从上面我们已经知道了fork会创建一个子进程。子进程的是父进程的副本。</p>
+<p>exec函数的作用就是：装载一个新的程序（可执行映像）覆盖当前进程内存空间中的映像，从而执行不同的任务，exec系列函数在执行时会直接替换掉当前进程的地址空间。</p>
+<h1 id="copy-on-write实现原理"><a href="#copy-on-write实现原理" class="headerlink" title="copy-on-write实现原理"></a>copy-on-write实现原理</h1><h2 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h2><p>既然很多时候复制给子进程的数据是无效的，于是就有了Copy On Write这项技术了，原理也很简单：</p>
+<p>fork创建出的子进程，<strong>与父进程共享内存空间</strong>。也就是说，如果<strong>子进程不对内存空间进行写入操作的话，内存空间中的数据并不会复制给子进程</strong>，这样创建子进程的速度就很快了！(不用复制，直接引用父进程的物理空间)。<br>并且如果在fork函数返回之后，子进程<strong>第一时间</strong>exec一个新的可执行映像，那么也不会浪费时间和内存空间了。</p>
+<p>另外表达：在fork之后exec之前两个进程用的是相同的<strong>物理空间（内存区）</strong>，子进程的代码段、数据段、堆栈都是指向父进程的物理空间，也就是说，两者的虚拟空间不同，但其对应的物理空间是同一个，当<strong>父子进程中有更改相应段的行为</strong>发生时，再为子进程相应的段分配物理空间</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/copy-on-write_implement.png?raw=true" alt="实现原理"></p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>fork()之后，kernel把父进程中所有的内存页的权限都设为<strong>read-only</strong>，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发<strong>页异常中断（page-fault）</strong>，陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点：减少不必要的资源分配，节省宝贵的物理内存。</p>
+<p>缺点：如果在子进程存在期间发生了大量写操作，那么会频繁地产生页面错误，不断陷入内核，复制页面。这反而会降低效率。</p>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p><strong>语言中的应用:</strong><br>相比于传统的深层复制，能带来很大性能提升。比如 C++ 98 标准下的 std::string 就采用了写时复制的实现：</p>
+<pre><code>std::string x(&quot;Hello&quot;);
+std::string y = x;  // x、y 共享相同的 buffer
+y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buffer
+                    // x 依然使用旧的 buffer
+</code></pre>
+<p>Golang、PHP 中的 string、array 也是写时复制。在修改这些类型时，如果其引用计数非零，则会复制一个副本。因此我们在 golang、php 中可以将字符串、数组当作值类型（values type）进行传递，即不会有传值复制的开销，也能保证其 immutable 的特性。</p>
+<p><strong>文件系统中的应用：</strong><br>Copy-on-write在对数据进行修改的时候，不会直接在原来的数据位置上进行操作，而是重新找个位置修改，这样的好处是一旦系统突然断电，重启之后不需要做Fsck。好处就是能保证数据的完整性，掉电的话容易恢复。</p>
+<p>比如说：要修改数据块A的内容，先把A读出来，写到B块里面去。如果这时候断电了，原来A的内容还在！</p>
 ]]></content>
       <tags>
         <tag>分布式</tag>
@@ -90,209 +184,6 @@
       </tags>
   </entry>
   <entry>
-    <title>拜占庭容错--BFT</title>
-    <url>/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/</url>
-    <content><![CDATA[<h1 id="拜占庭容错系统中的N-gt-x3D-3f-1问题"><a href="#拜占庭容错系统中的N-gt-x3D-3f-1问题" class="headerlink" title="拜占庭容错系统中的N &gt;&#x3D; 3f+1问题"></a>拜占庭容错系统中的<strong>N &gt;&#x3D; 3f+1</strong>问题</h1><p><a href="https://decentralizedthoughts.github.io/start-here/">https://decentralizedthoughts.github.io/start-here/</a></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在上面的网站中学习区块链基础知识，昨天从<a href="https://zhuanlan.zhihu.com/p/36000412">https://zhuanlan.zhihu.com/p/36000412</a>看懂了N &gt;&#x3D; 3f+1的证明，在此进行总结：<br><br>解决拜占庭将军问题的共识算法有很多（如PBFT，QU，HQ等），但无论共识算法如何设计，所有的算法都需要遵守一个容忍攻击者数量的限制(这个限制是与某个具体的算法实现无关的)。该限制描述如下：结点总数量为N时，最多只能容纳f个拜占庭故障（叛徒）节点，令N &gt;&#x3D; 3f+1。</p>
-<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>quorum（法定人数），所谓quorum指的是做出一次决策至少需要的同意票数量<br><br>liveness（活性）：liveness这个术语来自论文<a href="https://link.zhihu.com/?target=https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">FLP impossibility</a>。liveness，又称guaranteed termination，就是说共识算法的执行过程中不能卡死，最终能按照算法流程一步步得到执行结果。<br><br>safety（安全性）:safety这个术语同样来自论文FLP impossibility。此处用通俗的话解释一下，所谓安全性又称linearizability，就是说，执行共识算法之后，所有节点的内容能保证一致</p>
-<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>设总结点数为N，作恶的拜占庭节点数为 f，法定人数为Q<br><br>要满足liveness必须有：<br><br>**Q &lt;&#x3D; N-f** <br><br>说明：如果共识算法需要的Q大于N-f，则当f个拜占庭故障节点都主动破坏时，算法必然不能执行下去<br></p>
-<p>要满足safety必须有：<br><br><strong>2Q - N &gt; f</strong> <br><br>说明：假设好人的意见分裂了，X个人倾向于方案A，剩余N-f-X个人倾向于方案B。根据safety的定义，坏人要使系统不safety，就要利用自己的f张投票使得方案A和B都能通过：X+f≥Q；N-f-X+f≥Q 。两式相加得证N+f≥2Q 是坏人能作恶的边界条件。</p>
-<p>因为除了leader节点之外的好人节点有可能会出现运行异常，对外表现为意见分裂。但好人节点与拜占庭节点最大的不同是，拜占庭节点可能同时支持正反两种观点，而好人节点只可能分裂（有人支持正有人支持反），但不会说两样话（即，既支持正也支持反）</p>
-<p>因此：</p>
-<p>N+f &lt; 2Q &lt;&#x3D; 2(N-f)<br><br>N &gt; 3f<br><br>if N&#x3D;3f+1 此时Q的最小值为：<br><br>Qmin &#x3D; 2f+1</p>
-<p>证毕</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于所有的拜占庭将军问题，在不更改假设前提时，无论算法怎么设计，当总结点数为N时，最多只能容忍f个作恶节点(拜占庭故障节点)，使N &gt; 3f + 1，此时Q &gt; 2f + 1</p>
-]]></content>
-      <tags>
-        <tag>共识算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）</title>
-    <url>/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="EC及其演进LRC"><a href="#EC及其演进LRC" class="headerlink" title="EC及其演进LRC"></a>EC及其演进LRC</h1><p>近期因为几门课程作业，阅读了一些论文，在此依次进行总结</p>
-<p><a href="https://zhuanlan.zhihu.com/p/69374970">参考链接1</a></p>
-<p><a href="https://www.cnblogs.com/tinoryj/p/Erasure-Codes-for-Storage-Systems-Summary.html">参考链接2</a></p>
-<p><a href="https://blog.csdn.net/cyq6239075/article/details/105775698">参考链接3</a></p>
-<p>如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code）</p>
-<h2 id="副本（Replication）"><a href="#副本（Replication）" class="headerlink" title="副本（Replication）"></a>副本（Replication）</h2><p>副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证在原始数据失效后，数据仍然可用并能通过副本数据恢复。多副本策略即将数据存储多个副本（一般是三副本，比如HDFS），当某个副本丢失时，可以通过其他副本复制回来。三副本的磁盘利用率为1&#x2F;3。</p>
-<h2 id="纠删编码（EC）"><a href="#纠删编码（EC）" class="headerlink" title="纠删编码（EC）"></a>纠删编码（EC）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>总数据块 &#x3D; 原始数据块 + 校验块</p>
-<p>n &#x3D; k + m</p>
-<p>从k个原始数据块中计算出m个校验块</p>
-<p>编码只需要乘法和加法，解码需要用高斯消除或矩阵求逆求的方法解一组线性方程。</p>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>在出现硬盘故障后，重建数据非常耗CPU，而且计算一个数据块需要通过网络读出k倍的数据并传输，网络负载成倍增加</p>
-<h2 id="局部校验编码LRC（Locally-Repairable-Codes）"><a href="#局部校验编码LRC（Locally-Repairable-Codes）" class="headerlink" title="局部校验编码LRC（Locally Repairable Codes）"></a>局部校验编码LRC（Locally Repairable Codes）</h2><p>局部校验编码：将校验块（parity block）分为全局校验块(global parity)、局部重建校验块(local reconstruction parity)，故障恢复时分组计算。</p>
-<p>例子：</p>
-<p>P1&#x3D;D1+D2</p>
-<p>P2&#x3D;D3+D4</p>
-<p>P3&#x3D; D1+D2+ D3+D4</p>
-<p>P1、P2是局部校验。P3是全局校验<br><img src="https://img-blog.csdnimg.cn/20200426195932950.png" alt="例子"></p>
-<p>当仅损坏一个数据块时，可以根据该数据在所在的分组，在组内对该数据块进行重建。损坏一个数据块时的最差情况就是全局校验块损坏，此时需要读全部数据块数据进行重建。</p>
-<p>当损坏两个数据块时情况分成组内和组外，不管哪种需要拉取全部数据进行重建，此时采用LRC方法并不能提升性能。</p>
-<p>当损坏三块数据时，如果这三个数据块在一个组内，例如P1、D1、D2。此时就无法进行数据重建，虽然我们这里是使用三个校验。</p>
-<p>所以LRC并不是100%保证数据不丢，并且还要多占用一部分存储空间</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2022/07/23/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>记hexo配置与部署</title>
-    <url>/2022/07/26/%E8%AE%B0hexo%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<h1 id="记hexo配置与部署"><a href="#记hexo配置与部署" class="headerlink" title="记hexo配置与部署"></a>记hexo配置与部署</h1><p>hexo中文文档：<a href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p>
-<hr>
-<p>因为官方文档的一点小问题和我对Mac系统环境变量、终端类型等的不熟悉，这个安装过程比较坎坷。关于Git和Node.js的安装比较顺利，我又顺手安装了Homebrew（Mac下的包管理器）。</p>
-<hr>
-<h2 id="Hexo安装过程中的小问题"><a href="#Hexo安装过程中的小问题" class="headerlink" title="Hexo安装过程中的小问题"></a>Hexo安装过程中的小问题</h2><p>Hexo的安装首先如文档所说出现了EACCES权限错误，解决办法是将npm的<strong>全局</strong>安装包放到新创建的npm-global文件夹，并将npm-global的路径添加到环境变量，问题就出在环境变量的配置，Node.js的文档中提到将npm-global&#x2F;bin添加到环境变量的语句加入到<del>&#x2F;.profile 中，</del>&#x2F;.profile是<strong>bash终端</strong>的环境变量配置文件，而现在Mac系统默认为<strong>zsh终端</strong>，需要将上述语句加入.zshrc文件中，保证在打开终端后npm全局环境变量已经加载。否则，需要每次source ~&#x2F;.profile才可以执行 hexo &lt; command &gt; 命令。经过几个小时的排查最终发现。</p>
-<hr>
-<h2 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h2><p>hexo n “新博客”  创建新博客</p>
-<p>hexo clean      清理hexo缓存</p>
-<p>hexo g          生成博客</p>
-<p>hexo d          部署博客</p>
-]]></content>
-      <tags>
-        <tag>日常</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>零知识证明ZKP</title>
-    <url>/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>通信模型--同步、异步、部分同步</title>
-    <url>/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/</url>
-    <content><![CDATA[<h1 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在标准的分布式计算模型中，通信的不确定性被可以控制消息延迟的敌手捕获。通信模型定义了敌手延迟消息的能力的限制。</p>
-<p>在同步模型中，存在一些已知的有限时间界限Δ。 对于发送的任何消息，敌手最多可以将其传递延迟Δ。</p>
-<p>在异步模型中，对于发送的任何消息，敌手可以将其传递延迟任意有限的时间。 因此，一方面，传递消息的时间没有限制，但另一方面，每条消息最终都必须传递。</p>
-<p>部分同步模型（参见<a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf">DLS88</a>）旨在找到这两个模型之间的折中。 假设存在一些已知的有限时间界限 Δ 和一个称为 GST（Global Stabilization Time–全局稳定时间）的特殊事件，使得：敌手必须导致 GST 事件在某个未知的有限时间后最终发生。在时间 x 发送的任何消息必须在时间 Δ+max(x,GST) 之前交付。</p>
-<p>在部分同步模型中，系统在GST之前异步运行，在GST之后同步运行</p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于同步模型：</p>
-<p>1.存在一个trade-off问题：有限时间界限Δ过长，造成长时间超时，会降低性能；有限时间界限Δ过短，会造成安全性违规问题。<br>2.假设找到了Δ的sweet spot，想象一个发送者向两个接收者广播一条消息，一个消息在Δ−ε时间后到达，另一个在Δ+ε后到达。在这里，真实世界的行为与模型不同，这可能再次导致安全问题。</p>
-<p>对于异步模型：</p>
-<p>异步模型的主要问题是该模型中的协议往往更复杂且更难推理。</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>故障模型</title>
-    <url>/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p>
-<h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p>
-<p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p>
-<p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p>
-<p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p>
-<h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p>
-<p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p>
-<p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p>
-<p>Crash failure: Omission failure的特例；在omission failure的基础上，增加了节点停止响应的假设，也即持续性地omission failure。</p>
-<p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png?raw=true" alt="故障模型"></p>
-<p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p>
-<h2 id="fail-stop-故障-和-bugs"><a href="#fail-stop-故障-和-bugs" class="headerlink" title="fail-stop 故障 和 bugs"></a>fail-stop 故障 和 bugs</h2><p>简单来说复制能够处理单台计算机的fail-stop故障，如果某些东西出现故障，只是单纯的停止运行，而不是运算出错误结果。 比如电源线、服务器风扇导致CPU过热停止运行、网络等故障。网络隔离场景很有趣，因为从外界来看，这和服务器停止运行毫无区别。</p>
-<p>复制不能处理软件中的bug和硬件设计中的缺陷。 如果相同的程序，都计算出错误的结果，那么再多副本也都无法避免。我们也不能期望复制可以处理硬件的漏洞，当硬件有漏洞的时候会计算出错误的结果，至少基于复制这种技术，我们就无能为力了。</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GFS论文总结</title>
-    <url>/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="GFS论文总结"><a href="#GFS论文总结" class="headerlink" title="GFS论文总结"></a>GFS论文总结</h1><p>GFS（The Google File System），Google的目标是构建一个大型的，快速的文件系统。并且这个文件系统是全局有效的，这样各种不同的应用程序都可以从中读取数据。从硬件到使用了GFS的软件都有讨论，并且它也是一个成功的现实世界的设计。尽管这是在学术会议上发表的学术论文，但是文章里介绍的东西（GFS）也相当成功，并且在现实世界中使用了相当长的时间。</p>
-<h1 id="分布式存储系统"><a href="#分布式存储系统" class="headerlink" title="分布式存储系统"></a>分布式存储系统</h1><p>存储是一种关键的抽象，可能有各种各样重要的抽象可以应用在分布式系统中，简单的存储接口往往非常有用且极其通用。所以，构建分布式系统大多都是关于如何设计存储系统，或是设计其它基于大型分布式存储的系统。所以我们会更加关注如何为大型分布式存储系统设计一个优秀的接口，以及如何设计存储系统的内部结构，这样系统才能良好运行。<br><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/distributed_system.png?raw=true" alt="分布式系统"></p>
-<p>1.对于分布式存储，为了获取更大的性能，利用数百台计算机的资源来同时完成大量工作</p>
-<p>2.将数据分割放到大量的服务器上，这样就可以并行的从多台服务器读取数据。我们将这种方式称之为分片（Sharding）</p>
-<p>3.分片导致常态的错误，需要自动化的方法而不是人工介入来修复错误，引出容错</p>
-<p>4.实现容错最有用的一种方法是使用复制，只需要维护2-3个数据的副本，当其中一个故障了，你就可以使用另一个。所以，如果想要容错能力，就得有复制（replication）</p>
-<p>5.如果有复制，那就有了两份数据的副本。可以确定的是，如果你不小心，它们就会不一致。获取到的数据内容也将取决于你向哪个副本请求数据。这对于应用程序来说就有些麻烦了。所以，如果我们有了复制，我们就有不一致的问题（inconsistency）</p>
-<p>6.避免不一致的问题，并且让数据看起来也表现的符合预期。但是为了达到这样的效果，你总是需要额外的工作，需要不同服务器之间通过网络额外的交互，而这样的交互会降低性能。所以如果你想要一致性，你的代价就是低性能。</p>
-<p><strong>通常，人们很少会乐意为好的一致性付出相应的性能代价。</strong></p>
-<h1 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h1><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_architecture.png?raw=true" alt="GFS结构"></p>
-<h2 id="GFS设计目标"><a href="#GFS设计目标" class="headerlink" title="GFS设计目标"></a>GFS设计目标</h2><p>为了获得大容量和高速的特性，每个包含了数据的文件会被GFS自动的分割并存放在多个服务器之上，这样读写操作自然就会变得很快。因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量。将文件分割存储还可以在存储系统中保存比单个磁盘还要大的文件。</p>
-<p><strong>GFS是为TB级别的文件而生。并且GFS只会顺序处理，不支持随机访问</strong></p>
-<h2 id="GFS-Master节点"><a href="#GFS-Master节点" class="headerlink" title="GFS Master节点"></a>GFS Master节点</h2><p>Master节点用来管理文件和Chunk的信息，而Chunk服务器用来存储实际的数据。Master节点知道每一个文件对应的所有的Chunk的ID，这些Chunk每个是64MB大小，它们共同构成了一个文件。如果我有一个1GB的文件，那么Master节点就知道文件的第一个Chunk存储在哪，第二个Chunk存储在哪，等等。当我想读取这个文件中的任意一个部分时，我需要向Master节点查询对应的Chunk在哪个服务器上，之后我可以直接从Chunk服务器读取对应的Chunk数据。</p>
-<p>Master节点主要保存了两个表单：</p>
-<p>1.文件名到Chunk ID或者Chunk Handle数组的对应。这个表单告诉你，文件对应了哪些Chunk。</p>
-<p>2.记录了Chunk ID到Chunk数据的对应关系。这里的数据又包括了：<br><strong>每个Chunk存储在哪些服务器上</strong>；<strong>每个Chunk当前的版本号</strong>；<strong>哪个Chunk服务器持有主Chunk</strong>，所有对于Chunk的写操作都必须在主Chunk（Primary Chunk）上顺序处理，主Chunk是Chunk的多个副本之一；<br><strong>主Chunk的租约过期时间</strong>，主Chunk只能在特定的租约时间内担任主Chunk</p>
-<p>Master会在磁盘上存储log，每次有数据变更时，Master会在磁盘的log中追加一条记录，并生成CheckPoint（类似于备份点）</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_Master.png?raw=true" alt="GFS_Master"></p>
-<p>有些数据需要存在磁盘上，而有些不用。它们分别是：<br>如图所示，需要保存在磁盘上的，标记为NV（non-volatile, 非易失）；不需要保存在磁盘上的标记为V</p>
-<p>任何时候，如果文件扩展到达了一个新的64MB，需要新增一个Chunk或者由于指定了新的主Chunk而导致版本号更新了，Master节点需要向磁盘中的Log追加一条记录。这里在磁盘中维护log而不是数据库的原因是，数据库本质上来说是某种B树（b-tree）或者hash table，相比之下，<strong>追加log会非常的高效</strong>，因为你可以将最近的<strong>多个log记录一次性的写入磁盘</strong>。因为这些数据都是向同一个地址追加，这样只需要等待磁盘的磁碟旋转一次。而对于B树来说，每一份数据都需要在磁盘中随机找个位置写入。</p>
-<p>Master节点重启时，会从log中的最近一个<strong>checkpoint</strong>开始恢复，再逐条执行从Checkpoint开始的log，最后恢复自己的状态。</p>
-<h2 id="GFS读文件"><a href="#GFS读文件" class="headerlink" title="GFS读文件"></a>GFS读文件</h2><p>读请求，意味着应用程序或者GFS客户端有一个文件名和它想从文件的某个位置读取的偏移量（offset），应用程序会将这些信息发送给Master节点。Master节点会从自己的file表单中查询文件名，得到Chunk ID的数组。因为每个Chunk是64MB，所以偏移量除以64MB就可以从数组中得到对应的Chunk ID。之后Master再从Chunk表单中找到存有Chunk的服务器列表，并将列表返回给客户端。所以，第一步是客户端（或者应用程序）将文件名和偏移量发送给Master。第二步，Master节点将Chunk Handle（也就是ID，记为H）和服务器列表发送给客户端。</p>
-<p>客户端可以从这些Chunk服务器中挑选一个来读取数据。GFS论文说，客户端会选择一个网络上最近的服务器（Google的数据中心中，IP地址是连续的，所以可以从IP地址的差异判断网络位置的远近），并将读请求发送到那个服务器。因为客户端每次可能只读取1MB或者64KB数据，所以，客户端可能会连续多次读取同一个Chunk的不同位置。所以，客户端会缓存Chunk和服务器的对应关系。</p>
-<p>客户端会与选出的Chunk服务器通信，将Chunk Handle和偏移量发送给那个Chunk服务器。Chunk服务器会在本地的硬盘上，将每个Chunk存储成独立的Linux文件，并通过普通的Linux文件系统管理</p>
-<h2 id="GFS写文件"><a href="#GFS写文件" class="headerlink" title="GFS写文件"></a>GFS写文件</h2><p>写文件，客户端会向Master节点发送请求说：我想向这个文件名对应的文件追加数据，请告诉我文件中<strong>最后一个Chunk的位置</strong>。这就是GFS论文中讨论的<strong>记录追加（Record Append）</strong></p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_write.png?raw=true" alt="GFS写操作"></p>
-<p>GFS 使用了**租约(lease)**的手段，Master 会定期向 chunk 的某个 replica 所在的服务器进行授权（有超时时间，所以称为租约），拿到授权的副本称为主副本（primary replica），由其进行写入顺序的安排。</p>
-<p>对于读文件来说，可以从任何最新的Chunk副本读取数据，但是对于写文件来说，必须要通过Chunk的主副本（Primary Chunk）来写入。对于Master节点来说，如果发现Chunk的主副本不存在，Master会找出所有存有Chunk最新副本的Chunk服务器。每个Chunk可能同时有多个副本，最新的副本是指，副本中保存的版本号与Master中记录的Chunk的版本号一致。当客户端想要对文件进行追加，但是又不知道文件尾的Chunk对应的Primary在哪时，Master会等所有存储了最新Chunk版本的服务器集合完成，然后挑选一个作为Primary，其他的作为Secondary。</p>
-<p>现在我们有了一个Primary，它可以接收来自客户端的写请求，并将写请求应用在多个Chunk服务器中。这样Master可以将实际更新Chunk的能力转移给Primary服务器。并且在将版本号更新到Primary和Secondary服务器之后，如果Master节点故障重启，还是可以在相同的Primary和Secondary服务器上继续更新Chunk。</p>
-<h2 id="GFS一致性"><a href="#GFS一致性" class="headerlink" title="GFS一致性"></a>GFS一致性</h2><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_consistency.png?raw=true" alt="GFS一致性"></p>
-<p>如图所示，追加A成功，追加B时第三个副本失败，追加C成功，而后重新追加B会在C的后面追加。</p>
-<p>在GFS的这种工作方式下，如果Primary返回写入成功，那么一切都还好，如果Primary返回写入失败，就不是那么好了。Primary返回写入失败会导致不同的副本有完全不同的数据。</p>
-<h2 id="GFS问题"><a href="#GFS问题" class="headerlink" title="GFS问题"></a>GFS问题</h2><p>它最严重的局限可能在于，它只有一个Master节点，会带来以下问题：</p>
-<p>·Master节点必须为每个文件，每个Chunk维护表单，随着GFS的应用越来越多，涉及的文件也越来越多，最终Master会耗尽内存来存储文件表单。你可以增加内存，但是单台计算机的内存也是有上限的。</p>
-<p>·单个Master节点要承载数千个客户端的请求，而Master节点的CPU每秒只能处理数百个请求，尤其Master还需要将部分数据写入磁盘，很快，客户端数量超过了单个Master的能力。</p>
-<p>·应用程序发现很难处理GFS奇怪的语义（本节最开始介绍的GFS的副本数据的同步，或者可以说不同步）。</p>
-<p>·Master节点的故障切换不是自动的。GFS需要人工干预来处理已经永久故障的Master节点，并更换新的服务器，这可能需要几十分钟甚至更长的而时间来处理。对于某些应用程序来说，这个时间太长了。</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>copy-on-write机制</title>
-    <url>/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h1 id="copy-on-write机制"><a href="#copy-on-write机制" class="headerlink" title="copy-on-write机制"></a>copy-on-write机制</h1><p><a href="https://juejin.cn/post/6844903702373859335">参考链接</a></p>
-<p>写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。</p>
-<h1 id="linux下的fork函数和exec函数"><a href="#linux下的fork函数和exec函数" class="headerlink" title="linux下的fork函数和exec函数"></a>linux下的fork函数和exec函数</h1><p>在说明Linux下的copy-on-write机制前，首先要知道两个函数：fork()和exec()</p>
-<p>需要注意的是exec()并不是一个特定的函数, 它是一组函数的统称, 它包括了execl()、execlp()、execv()、execle()、execve()、execvp()</p>
-<p>fork是类Unix操作系统上<strong>创建进程</strong>的主要方法，fork用于创建子进程(等同于当前进程的副本)，新的进程要通过老的进程复制自身得到，Linux的进程都通过<strong>init进程或init的子进程</strong>fork(vfork)出来的</p>
-<p>从上面我们已经知道了fork会创建一个子进程。子进程的是父进程的副本。</p>
-<p>exec函数的作用就是：装载一个新的程序（可执行映像）覆盖当前进程内存空间中的映像，从而执行不同的任务，exec系列函数在执行时会直接替换掉当前进程的地址空间。</p>
-<h1 id="copy-on-write实现原理"><a href="#copy-on-write实现原理" class="headerlink" title="copy-on-write实现原理"></a>copy-on-write实现原理</h1><h2 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h2><p>既然很多时候复制给子进程的数据是无效的，于是就有了Copy On Write这项技术了，原理也很简单：</p>
-<p>fork创建出的子进程，<strong>与父进程共享内存空间</strong>。也就是说，如果<strong>子进程不对内存空间进行写入操作的话，内存空间中的数据并不会复制给子进程</strong>，这样创建子进程的速度就很快了！(不用复制，直接引用父进程的物理空间)。<br>并且如果在fork函数返回之后，子进程<strong>第一时间</strong>exec一个新的可执行映像，那么也不会浪费时间和内存空间了。</p>
-<p>另外表达：在fork之后exec之前两个进程用的是相同的<strong>物理空间（内存区）</strong>，子进程的代码段、数据段、堆栈都是指向父进程的物理空间，也就是说，两者的虚拟空间不同，但其对应的物理空间是同一个，当<strong>父子进程中有更改相应段的行为</strong>发生时，再为子进程相应的段分配物理空间</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/copy-on-write_implement.png?raw=true" alt="实现原理"></p>
-<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>fork()之后，kernel把父进程中所有的内存页的权限都设为<strong>read-only</strong>，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发<strong>页异常中断（page-fault）</strong>，陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
-<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点：减少不必要的资源分配，节省宝贵的物理内存。</p>
-<p>缺点：如果在子进程存在期间发生了大量写操作，那么会频繁地产生页面错误，不断陷入内核，复制页面。这反而会降低效率。</p>
-<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p><strong>语言中的应用:</strong><br>相比于传统的深层复制，能带来很大性能提升。比如 C++ 98 标准下的 std::string 就采用了写时复制的实现：</p>
-<pre><code>std::string x(&quot;Hello&quot;);
-std::string y = x;  // x、y 共享相同的 buffer
-y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buffer
-                    // x 依然使用旧的 buffer
-</code></pre>
-<p>Golang、PHP 中的 string、array 也是写时复制。在修改这些类型时，如果其引用计数非零，则会复制一个副本。因此我们在 golang、php 中可以将字符串、数组当作值类型（values type）进行传递，即不会有传值复制的开销，也能保证其 immutable 的特性。</p>
-<p><strong>文件系统中的应用：</strong><br>Copy-on-write在对数据进行修改的时候，不会直接在原来的数据位置上进行操作，而是重新找个位置修改，这样的好处是一旦系统突然断电，重启之后不需要做Fsck。好处就是能保证数据的完整性，掉电的话容易恢复。</p>
-<p>比如说：要修改数据块A的内容，先把A读出来，写到B块里面去。如果这时候断电了，原来A的内容还在！</p>
-]]></content>
-      <tags>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vm-ft论文总结</title>
     <url>/2023/02/27/vm-ft%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="容错与复制"><a href="#容错与复制" class="headerlink" title="容错与复制"></a>容错与复制</h1><p>这节课首先谈论了容错（Fault-Tolerance）技术中的<strong>复制（Replication）技术</strong></p>
@@ -335,12 +226,123 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
       </tags>
   </entry>
   <entry>
-    <title>消息认证码Message Authentication Code(MAC)</title>
-    <url>/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</url>
-    <content><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>
+    <title>拜占庭容错--BFT</title>
+    <url>/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/</url>
+    <content><![CDATA[<h1 id="拜占庭容错系统中的N-gt-x3D-3f-1问题"><a href="#拜占庭容错系统中的N-gt-x3D-3f-1问题" class="headerlink" title="拜占庭容错系统中的N &gt;&#x3D; 3f+1问题"></a>拜占庭容错系统中的<strong>N &gt;&#x3D; 3f+1</strong>问题</h1><p><a href="https://decentralizedthoughts.github.io/start-here/">https://decentralizedthoughts.github.io/start-here/</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在上面的网站中学习区块链基础知识，昨天从<a href="https://zhuanlan.zhihu.com/p/36000412">https://zhuanlan.zhihu.com/p/36000412</a>看懂了N &gt;&#x3D; 3f+1的证明，在此进行总结：<br><br>解决拜占庭将军问题的共识算法有很多（如PBFT，QU，HQ等），但无论共识算法如何设计，所有的算法都需要遵守一个容忍攻击者数量的限制(这个限制是与某个具体的算法实现无关的)。该限制描述如下：结点总数量为N时，最多只能容纳f个拜占庭故障（叛徒）节点，令N &gt;&#x3D; 3f+1。</p>
+<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>quorum（法定人数），所谓quorum指的是做出一次决策至少需要的同意票数量<br><br>liveness（活性）：liveness这个术语来自论文<a href="https://link.zhihu.com/?target=https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">FLP impossibility</a>。liveness，又称guaranteed termination，就是说共识算法的执行过程中不能卡死，最终能按照算法流程一步步得到执行结果。<br><br>safety（安全性）:safety这个术语同样来自论文FLP impossibility。此处用通俗的话解释一下，所谓安全性又称linearizability，就是说，执行共识算法之后，所有节点的内容能保证一致</p>
+<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>设总结点数为N，作恶的拜占庭节点数为 f，法定人数为Q<br><br>要满足liveness必须有：<br><br>**Q &lt;&#x3D; N-f** <br><br>说明：如果共识算法需要的Q大于N-f，则当f个拜占庭故障节点都主动破坏时，算法必然不能执行下去<br></p>
+<p>要满足safety必须有：<br><br><strong>2Q - N &gt; f</strong> <br><br>说明：假设好人的意见分裂了，X个人倾向于方案A，剩余N-f-X个人倾向于方案B。根据safety的定义，坏人要使系统不safety，就要利用自己的f张投票使得方案A和B都能通过：X+f≥Q；N-f-X+f≥Q 。两式相加得证N+f≥2Q 是坏人能作恶的边界条件。</p>
+<p>因为除了leader节点之外的好人节点有可能会出现运行异常，对外表现为意见分裂。但好人节点与拜占庭节点最大的不同是，拜占庭节点可能同时支持正反两种观点，而好人节点只可能分裂（有人支持正有人支持反），但不会说两样话（即，既支持正也支持反）</p>
+<p>因此：</p>
+<p>N+f &lt; 2Q &lt;&#x3D; 2(N-f)<br><br>N &gt; 3f<br><br>if N&#x3D;3f+1 此时Q的最小值为：<br><br>Qmin &#x3D; 2f+1</p>
+<p>证毕</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于所有的拜占庭将军问题，在不更改假设前提时，无论算法怎么设计，当总结点数为N时，最多只能容忍f个作恶节点(拜占庭故障节点)，使N &gt; 3f + 1，此时Q &gt; 2f + 1</p>
+]]></content>
+      <tags>
+        <tag>共识算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>故障模型</title>
+    <url>/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p>
+<h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p>
+<p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p>
+<p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p>
+<p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p>
+<h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p>
+<p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p>
+<p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p>
+<p>Crash failure: Omission failure的特例；在omission failure的基础上，增加了节点停止响应的假设，也即持续性地omission failure。</p>
+<p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png?raw=true" alt="故障模型"></p>
+<p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p>
+<h2 id="fail-stop-故障-和-bugs"><a href="#fail-stop-故障-和-bugs" class="headerlink" title="fail-stop 故障 和 bugs"></a>fail-stop 故障 和 bugs</h2><p>简单来说复制能够处理单台计算机的fail-stop故障，如果某些东西出现故障，只是单纯的停止运行，而不是运算出错误结果。 比如电源线、服务器风扇导致CPU过热停止运行、网络等故障。网络隔离场景很有趣，因为从外界来看，这和服务器停止运行毫无区别。</p>
+<p>复制不能处理软件中的bug和硬件设计中的缺陷。 如果相同的程序，都计算出错误的结果，那么再多副本也都无法避免。我们也不能期望复制可以处理硬件的漏洞，当硬件有漏洞的时候会计算出错误的结果，至少基于复制这种技术，我们就无能为力了。</p>
 ]]></content>
       <tags>
         <tag>分布式</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>消息认证码Message Authentication Code(MAC)</title>
+    <url>/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</url>
+    <content><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>
+<p>消息认证码的输入为任意长度的<strong>消息</strong>和一个发送者与接收者之间<strong>共享的密钥</strong>，它可以输出固定长度的数据，这个数据称为 MAC 值</p>
+<p>个人理解，消息认证码就是：传递一条消息，为了保证这个消息是你本人发的，把这个消息和共享密钥结合得到一个MAC值，同时传递过去，接收方通过接收消息，计算MAC值再与发送<br>方发来的MAC值对比即可验证。</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）</title>
+    <url>/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="EC及其演进LRC"><a href="#EC及其演进LRC" class="headerlink" title="EC及其演进LRC"></a>EC及其演进LRC</h1><p>近期因为几门课程作业，阅读了一些论文，在此依次进行总结</p>
+<p><a href="https://zhuanlan.zhihu.com/p/69374970">参考链接1</a></p>
+<p><a href="https://www.cnblogs.com/tinoryj/p/Erasure-Codes-for-Storage-Systems-Summary.html">参考链接2</a></p>
+<p><a href="https://blog.csdn.net/cyq6239075/article/details/105775698">参考链接3</a></p>
+<p>如何保证存储可靠性、数据可用性是大规模存储系统的难点和要点。数据冗余是保障存储可靠性、数据可用性的最有效手段。传统的冗余机制主要有副本（Replication）和纠删编码（Erasure Code）</p>
+<h2 id="副本（Replication）"><a href="#副本（Replication）" class="headerlink" title="副本（Replication）"></a>副本（Replication）</h2><p>副本是将每个原始数据分块都镜像复制到另一存储介质上，从而保证在原始数据失效后，数据仍然可用并能通过副本数据恢复。多副本策略即将数据存储多个副本（一般是三副本，比如HDFS），当某个副本丢失时，可以通过其他副本复制回来。三副本的磁盘利用率为1&#x2F;3。</p>
+<h2 id="纠删编码（EC）"><a href="#纠删编码（EC）" class="headerlink" title="纠删编码（EC）"></a>纠删编码（EC）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>总数据块 &#x3D; 原始数据块 + 校验块</p>
+<p>n &#x3D; k + m</p>
+<p>从k个原始数据块中计算出m个校验块</p>
+<p>编码只需要乘法和加法，解码需要用高斯消除或矩阵求逆求的方法解一组线性方程。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>在出现硬盘故障后，重建数据非常耗CPU，而且计算一个数据块需要通过网络读出k倍的数据并传输，网络负载成倍增加</p>
+<h2 id="局部校验编码LRC（Locally-Repairable-Codes）"><a href="#局部校验编码LRC（Locally-Repairable-Codes）" class="headerlink" title="局部校验编码LRC（Locally Repairable Codes）"></a>局部校验编码LRC（Locally Repairable Codes）</h2><p>局部校验编码：将校验块（parity block）分为全局校验块(global parity)、局部重建校验块(local reconstruction parity)，故障恢复时分组计算。</p>
+<p>例子：</p>
+<p>P1&#x3D;D1+D2</p>
+<p>P2&#x3D;D3+D4</p>
+<p>P3&#x3D; D1+D2+ D3+D4</p>
+<p>P1、P2是局部校验。P3是全局校验<br><img data-src="https://img-blog.csdnimg.cn/20200426195932950.png" alt="例子"></p>
+<p>当仅损坏一个数据块时，可以根据该数据在所在的分组，在组内对该数据块进行重建。损坏一个数据块时的最差情况就是全局校验块损坏，此时需要读全部数据块数据进行重建。</p>
+<p>当损坏两个数据块时情况分成组内和组外，不管哪种需要拉取全部数据进行重建，此时采用LRC方法并不能提升性能。</p>
+<p>当损坏三块数据时，如果这三个数据块在一个组内，例如P1、D1、D2。此时就无法进行数据重建，虽然我们这里是使用三个校验。</p>
+<p>所以LRC并不是100%保证数据不丢，并且还要多占用一部分存储空间</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记hexo配置与部署</title>
+    <url>/2022/07/26/%E8%AE%B0hexo%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h1 id="记hexo配置与部署"><a href="#记hexo配置与部署" class="headerlink" title="记hexo配置与部署"></a>记hexo配置与部署</h1><p>hexo中文文档：<a href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p>
+<hr>
+<p>因为官方文档的一点小问题和我对Mac系统环境变量、终端类型等的不熟悉，这个安装过程比较坎坷。关于Git和Node.js的安装比较顺利，我又顺手安装了Homebrew（Mac下的包管理器）。</p>
+<hr>
+<h2 id="Hexo安装过程中的小问题"><a href="#Hexo安装过程中的小问题" class="headerlink" title="Hexo安装过程中的小问题"></a>Hexo安装过程中的小问题</h2><p>Hexo的安装首先如文档所说出现了EACCES权限错误，解决办法是将npm的<strong>全局</strong>安装包放到新创建的npm-global文件夹，并将npm-global的路径添加到环境变量，问题就出在环境变量的配置，Node.js的文档中提到将npm-global&#x2F;bin添加到环境变量的语句加入到<del>&#x2F;.profile 中，</del>&#x2F;.profile是<strong>bash终端</strong>的环境变量配置文件，而现在Mac系统默认为<strong>zsh终端</strong>，需要将上述语句加入.zshrc文件中，保证在打开终端后npm全局环境变量已经加载。否则，需要每次source ~&#x2F;.profile才可以执行 hexo &lt; command &gt; 命令。经过几个小时的排查最终发现。</p>
+<hr>
+<h2 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h2><p>hexo n “新博客”  创建新博客</p>
+<p>hexo clean      清理hexo缓存</p>
+<p>hexo g          生成博客</p>
+<p>hexo d          部署博客</p>
+]]></content>
+      <tags>
+        <tag>日常</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通信模型--同步、异步、部分同步</title>
+    <url>/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/</url>
+    <content><![CDATA[<h1 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在标准的分布式计算模型中，通信的不确定性被可以控制消息延迟的敌手捕获。通信模型定义了敌手延迟消息的能力的限制。</p>
+<p>在同步模型中，存在一些已知的有限时间界限Δ。 对于发送的任何消息，敌手最多可以将其传递延迟Δ。</p>
+<p>在异步模型中，对于发送的任何消息，敌手可以将其传递延迟任意有限的时间。 因此，一方面，传递消息的时间没有限制，但另一方面，每条消息最终都必须传递。</p>
+<p>部分同步模型（参见<a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf">DLS88</a>）旨在找到这两个模型之间的折中。 假设存在一些已知的有限时间界限 Δ 和一个称为 GST（Global Stabilization Time–全局稳定时间）的特殊事件，使得：敌手必须导致 GST 事件在某个未知的有限时间后最终发生。在时间 x 发送的任何消息必须在时间 Δ+max(x,GST) 之前交付。</p>
+<p>在部分同步模型中，系统在GST之前异步运行，在GST之后同步运行</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于同步模型：</p>
+<p>1.存在一个trade-off问题：有限时间界限Δ过长，造成长时间超时，会降低性能；有限时间界限Δ过短，会造成安全性违规问题。<br>2.假设找到了Δ的sweet spot，想象一个发送者向两个接收者广播一条消息，一个消息在Δ−ε时间后到达，另一个在Δ+ε后到达。在这里，真实世界的行为与模型不同，这可能再次导致安全问题。</p>
+<p>对于异步模型：</p>
+<p>异步模型的主要问题是该模型中的协议往往更复杂且更难推理。</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>零知识证明ZKP</title>
+    <url>/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
