@@ -255,7 +255,9 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
     <url>/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</url>
     <content><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>
 <p>消息认证码的输入为任意长度的<strong>消息</strong>和一个发送者与接收者之间<strong>共享的密钥</strong>，它可以输出固定长度的数据，这个数据称为 MAC 值</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/message_authentication_code.png?raw=true" alt="消息认证码"></p>
 <p>个人理解，消息认证码就是：传递一条消息，为了保证这个消息是你本人发的，把这个消息和共享密钥结合得到一个MAC值，同时传递过去，接收方通过接收消息，计算MAC值再与发送<br>方发来的MAC值对比即可验证。</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/message_authentication_code_example.png?raw=true" alt="例子"></p>
 ]]></content>
       <tags>
         <tag>分布式</tag>
