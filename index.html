@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">14</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">15</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,88 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/04/Paxos%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">Paxos原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-04-04 16:20:00 / 修改时间：17:43:35" itemprop="dateCreated datePublished" datetime="2023-04-04T16:20:00+08:00">2023-04-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Paxos共识协议"><a href="#Paxos共识协议" class="headerlink" title="Paxos共识协议"></a>Paxos共识协议</h1><p>Paxos就是一个在<strong>异步通信</strong>环境，并容忍在只有<strong>多数派</strong>机器存活的情况下，仍然能完成一个一致性写入的协议</p>
+<p>学习过程比较痛苦，multi-Paxos根本看不懂…以后有机会再补充</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="http://dinghao.li/2018/12/Paxos/">共识算法系列：Paxos&#x2F;Multi-Paxos算法关键点综述、优缺点总结</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI4NDMyNTU2Mw==&mid=2247483695&idx=1&sn=91ea422913fc62579e020e941d1d059e#rd">微信自研生产级paxos类库PhxPaxos实现原理介绍</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/21438357">Paxos理论介绍(1): 朴素Paxos算法理论推导与证明</a></p>
+<h2 id="Paxos算法基本概念"><a href="#Paxos算法基本概念" class="headerlink" title="Paxos算法基本概念"></a>Paxos算法基本概念</h2><p>Paxos的目标——<strong>“确定一个值”、“确定多个值”、“有序的确定多个值”</strong><br>Paxos协议中的角色包括：<strong>Acceptor、Proposer、Learner、State machine</strong><br>Proposer——提出提议；Acceptor——接受提议；Learner——做instance对齐</p>
+<p>Proposer只需要与<strong>多数派</strong>的Acceptor交互，即可完成一个值的确定，但一旦这个值被确定下来后，无论Proposer再发起任何值的写入，Data数据都不会再被修改。Chosen value即是被确定的值，永远不会被修改。 </p>
+<p><strong>有序的确定多个值</strong>：<br>只要我们通过paxos完成一个<strong>多机一致的有序的操作系列</strong>，就能保证Paxos算法的一致性：</p>
+<p>1 给实例一个编号，定义为i，i从0开始，只增不减，由本机器生成，不依赖网络<br>2 我们保证一台机器任一时刻只能有一个实例在工作<br>3 当编号为i的实例获知已经确定好一个值之后，这个实例将会被销毁，进而产生一个编号为i+1的实例</p>
+<p><strong>实例的对齐</strong>：<br>回去询问别的机器的相同编号的实例<br>如果这个实例已经被销毁了，那说明值已经确定好了，直接把这个值拉回来写到当前实例里面，直接由Learner直接学习得到即可。</p>
+<p><strong>状态机</strong><br>状态机必须记录下来输入过的最大实例编号<br><strong>启动重放</strong>：把这些chosen value一个一个输入到状态机，那么状态机的状态就会更新到y了</p>
+<h2 id="朴素Paxos算法"><a href="#朴素Paxos算法" class="headerlink" title="朴素Paxos算法"></a>朴素Paxos算法</h2><p>个人理解朴素Paxos算法就是做一个instance中值的确定的算法过程。</p>
+<p>其中包括三个投票的约束，通过反证法可以证明得到一致性结论，比较重要的是MaxVote的定义</p>
+<p>问题：为什么需要多轮投票？</p>
+<h2 id="Multi-Paxos算法"><a href="#Multi-Paxos算法" class="headerlink" title="Multi-Paxos算法"></a>Multi-Paxos算法</h2><p>暂时没看懂</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -960,85 +1042,6 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
 <p>1.存在一个trade-off问题：有限时间界限Δ过长，造成长时间超时，会降低性能；有限时间界限Δ过短，会造成安全性违规问题。<br>2.假设找到了Δ的sweet spot，想象一个发送者向两个接收者广播一条消息，一个消息在Δ−ε时间后到达，另一个在Δ+ε后到达。在这里，真实世界的行为与模型不同，这可能再次导致安全问题。</p>
 <p>对于异步模型：</p>
 <p>异步模型的主要问题是该模型中的协议往往更复杂且更难推理。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/" class="post-title-link" itemprop="url">拜占庭容错--BFT</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-12-25 13:07:54 / 修改时间：13:41:58" itemprop="dateCreated datePublished" datetime="2022-12-25T13:07:54+08:00">2022-12-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="拜占庭容错系统中的N-gt-x3D-3f-1问题"><a href="#拜占庭容错系统中的N-gt-x3D-3f-1问题" class="headerlink" title="拜占庭容错系统中的N &gt;&#x3D; 3f+1问题"></a>拜占庭容错系统中的<strong>N &gt;&#x3D; 3f+1</strong>问题</h1><p><a target="_blank" rel="noopener" href="https://decentralizedthoughts.github.io/start-here/">https://decentralizedthoughts.github.io/start-here/</a></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在上面的网站中学习区块链基础知识，昨天从<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36000412">https://zhuanlan.zhihu.com/p/36000412</a>看懂了N &gt;&#x3D; 3f+1的证明，在此进行总结：<br><br>解决拜占庭将军问题的共识算法有很多（如PBFT，QU，HQ等），但无论共识算法如何设计，所有的算法都需要遵守一个容忍攻击者数量的限制(这个限制是与某个具体的算法实现无关的)。该限制描述如下：结点总数量为N时，最多只能容纳f个拜占庭故障（叛徒）节点，令N &gt;&#x3D; 3f+1。</p>
-<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>quorum（法定人数），所谓quorum指的是做出一次决策至少需要的同意票数量<br><br>liveness（活性）：liveness这个术语来自论文<a href="https://link.zhihu.com/?target=https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">FLP impossibility</a>。liveness，又称guaranteed termination，就是说共识算法的执行过程中不能卡死，最终能按照算法流程一步步得到执行结果。<br><br>safety（安全性）:safety这个术语同样来自论文FLP impossibility。此处用通俗的话解释一下，所谓安全性又称linearizability，就是说，执行共识算法之后，所有节点的内容能保证一致</p>
-<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>设总结点数为N，作恶的拜占庭节点数为 f，法定人数为Q<br><br>要满足liveness必须有：<br><br>**Q &lt;&#x3D; N-f** <br><br>说明：如果共识算法需要的Q大于N-f，则当f个拜占庭故障节点都主动破坏时，算法必然不能执行下去<br></p>
-<p>要满足safety必须有：<br><br><strong>2Q - N &gt; f</strong> <br><br>说明：假设好人的意见分裂了，X个人倾向于方案A，剩余N-f-X个人倾向于方案B。根据safety的定义，坏人要使系统不safety，就要利用自己的f张投票使得方案A和B都能通过：X+f≥Q；N-f-X+f≥Q 。两式相加得证N+f≥2Q 是坏人能作恶的边界条件。</p>
-<p>因为除了leader节点之外的好人节点有可能会出现运行异常，对外表现为意见分裂。但好人节点与拜占庭节点最大的不同是，拜占庭节点可能同时支持正反两种观点，而好人节点只可能分裂（有人支持正有人支持反），但不会说两样话（即，既支持正也支持反）</p>
-<p>因此：</p>
-<p>N+f &lt; 2Q &lt;&#x3D; 2(N-f)<br><br>N &gt; 3f<br><br>if N&#x3D;3f+1 此时Q的最小值为：<br><br>Qmin &#x3D; 2f+1</p>
-<p>证毕</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于所有的拜占庭将军问题，在不更改假设前提时，无论算法怎么设计，当总结点数为N时，最多只能容忍f个作恶节点(拜占庭故障节点)，使N &gt; 3f + 1，此时Q &gt; 2f + 1</p>
 
       
     </div>

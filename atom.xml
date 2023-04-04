@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-03-20T05:56:57.598Z</updated>
+  <updated>2023-04-04T09:43:35.985Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Paxos原理</title>
+    <link href="http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/"/>
+    <id>http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/</id>
+    <published>2023-04-04T08:20:00.000Z</published>
+    <updated>2023-04-04T09:43:35.985Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Paxos共识协议"><a href="#Paxos共识协议" class="headerlink" title="Paxos共识协议"></a>Paxos共识协议</h1><p>Paxos就是一个在<strong>异步通信</strong>环境，并容忍在只有<strong>多数派</strong>机器存活的情况下，仍然能完成一个一致性写入的协议</p><p>学习过程比较痛苦，multi-Paxos根本看不懂…以后有机会再补充</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://dinghao.li/2018/12/Paxos/">共识算法系列：Paxos&#x2F;Multi-Paxos算法关键点综述、优缺点总结</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzI4NDMyNTU2Mw==&mid=2247483695&idx=1&sn=91ea422913fc62579e020e941d1d059e#rd">微信自研生产级paxos类库PhxPaxos实现原理介绍</a><br><a href="https://zhuanlan.zhihu.com/p/21438357">Paxos理论介绍(1): 朴素Paxos算法理论推导与证明</a></p><h2 id="Paxos算法基本概念"><a href="#Paxos算法基本概念" class="headerlink" title="Paxos算法基本概念"></a>Paxos算法基本概念</h2><p>Paxos的目标——<strong>“确定一个值”、“确定多个值”、“有序的确定多个值”</strong><br>Paxos协议中的角色包括：<strong>Acceptor、Proposer、Learner、State machine</strong><br>Proposer——提出提议；Acceptor——接受提议；Learner——做instance对齐</p><p>Proposer只需要与<strong>多数派</strong>的Acceptor交互，即可完成一个值的确定，但一旦这个值被确定下来后，无论Proposer再发起任何值的写入，Data数据都不会再被修改。Chosen value即是被确定的值，永远不会被修改。 </p><p><strong>有序的确定多个值</strong>：<br>只要我们通过paxos完成一个<strong>多机一致的有序的操作系列</strong>，就能保证Paxos算法的一致性：</p><p>1 给实例一个编号，定义为i，i从0开始，只增不减，由本机器生成，不依赖网络<br>2 我们保证一台机器任一时刻只能有一个实例在工作<br>3 当编号为i的实例获知已经确定好一个值之后，这个实例将会被销毁，进而产生一个编号为i+1的实例</p><p><strong>实例的对齐</strong>：<br>回去询问别的机器的相同编号的实例<br>如果这个实例已经被销毁了，那说明值已经确定好了，直接把这个值拉回来写到当前实例里面，直接由Learner直接学习得到即可。</p><p><strong>状态机</strong><br>状态机必须记录下来输入过的最大实例编号<br><strong>启动重放</strong>：把这些chosen value一个一个输入到状态机，那么状态机的状态就会更新到y了</p><h2 id="朴素Paxos算法"><a href="#朴素Paxos算法" class="headerlink" title="朴素Paxos算法"></a>朴素Paxos算法</h2><p>个人理解朴素Paxos算法就是做一个instance中值的确定的算法过程。</p><p>其中包括三个投票的约束，通过反证法可以证明得到一致性结论，比较重要的是MaxVote的定义</p><p>问题：为什么需要多轮投票？</p><h2 id="Multi-Paxos算法"><a href="#Multi-Paxos算法" class="headerlink" title="Multi-Paxos算法"></a>Multi-Paxos算法</h2><p>暂时没看懂</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Paxos共识协议&quot;&gt;&lt;a href=&quot;#Paxos共识协议&quot; class=&quot;headerlink&quot; title=&quot;Paxos共识协议&quot;&gt;&lt;/a&gt;Paxos共识协议&lt;/h1&gt;&lt;p&gt;Paxos就是一个在&lt;strong&gt;异步通信&lt;/strong&gt;环境，并容忍在只有&lt;s</summary>
+      
+    
+    
+    
+    
+    <category term="共识算法" scheme="http://coder_tinghao.github.io/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>消息认证码Message Authentication Code(MAC)</title>
