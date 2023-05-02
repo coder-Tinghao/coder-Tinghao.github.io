@@ -1,3 +1,4 @@
+http://coder_tinghao.github.io/2023/05/02/Exponential-backoff-%E6%8C%87%E6%95%B0%E8%A1%A5%E5%81%BF/
 http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/
 http://coder_tinghao.github.io/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/
 http://coder_tinghao.github.io/2023/02/27/vm-ft%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/

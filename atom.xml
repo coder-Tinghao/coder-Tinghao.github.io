@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-04-04T09:43:35.985Z</updated>
+  <updated>2023-05-02T07:47:14.063Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Exponential backoff--指数补偿</title>
+    <link href="http://coder_tinghao.github.io/2023/05/02/Exponential-backoff-%E6%8C%87%E6%95%B0%E8%A1%A5%E5%81%BF/"/>
+    <id>http://coder_tinghao.github.io/2023/05/02/Exponential-backoff-%E6%8C%87%E6%95%B0%E8%A1%A5%E5%81%BF/</id>
+    <published>2023-05-02T07:40:00.000Z</published>
+    <updated>2023-05-02T07:47:14.063Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://en.wikipedia.org/wiki/Exponential_backoff">wiki百科</a><br><a href="http://note.huangz.me/algorithm/arithmetic/exponential-backoff.html">指数补偿 —— Exponential backoff</a></p><h2 id="指数补偿"><a href="#指数补偿" class="headerlink" title="指数补偿"></a>指数补偿</h2><p>指数补偿指的是，在执行事件时，通过反馈，逐渐降低某个过程的速率，从而最终<strong>找到一个合适的速率</strong>（来处理事件）。</p><p>指数补偿通常用于网络和传输协议，比如在进行网络连接时，如果第一次请求失败，那么可以等待 t1之后重试，如果再次请求还是失败，那么等待 t2之后重试。</p><p>重试可以一直继续下去，或者等待次数或等待时间超过特定值为止。</p><p>等待的时间 tn可以是随机选择，也可以随着重试的次数而逐渐加大，诸如此类。</p><p>指数退避算法是闭环控制系统的一种形式，可降低受控过程响应不良事件的速率。例如，如果智能手机应用程序无法连接到其服务器，它可能会在 1 秒后重试，如果再次失败，则在 2 秒后，然后 4 等。每次暂停都乘以固定数量（在此情况 2)。在这种情况下，不利事件是无法连接到服务器。不良事件的其他示例包括网络流量冲突、来自服务的错误响应或降低速率的明确请求（即“回退”）。</p><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>《UNIX 环境高级编程，第二版》（APUE，2E） 16.4 节提供了一个带重试的 socket 连接程序， 如果连接失败， 那么程序就睡眠一段时间再尝试， 每失败一次睡眠的时间就延长一些：</p><pre><code>#include &quot;apue.h&quot;#include &lt;sys/socket.h&gt;#define MAXSLEEP 128int connect_retry(int sockfd, const struct sockaddr *addr, socklen_talen)&#123;int nsec;for (nsec = 1; nsec &lt; MAXSLEEP; nsec &lt;&lt;=1) &#123;    if (connect(sockfd, addr, alen) == 0) &#123;        // connect accepted.        return 0;    &#125;    if (nsec &lt;= MAXSLEEP/2)        sleep(nsec);    &#125;    return -1;&#125;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;参考链接&quot;&gt;&lt;a href=&quot;#参考链接&quot; class=&quot;headerlink&quot; title=&quot;参考链接&quot;&gt;&lt;/a&gt;参考链接&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Exponential_backoff&quot;&gt;wi</summary>
+      
+    
+    
+    
+    
+    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>Paxos原理</title>
