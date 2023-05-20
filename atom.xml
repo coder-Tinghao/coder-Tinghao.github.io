@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-05-02T07:47:14.063Z</updated>
+  <updated>2023-05-20T02:43:08.299Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux-futex</title>
+    <link href="http://coder_tinghao.github.io/2023/05/18/linux-futex/"/>
+    <id>http://coder_tinghao.github.io/2023/05/18/linux-futex/</id>
+    <published>2023-05-18T03:30:29.000Z</published>
+    <updated>2023-05-20T02:43:08.299Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Futex"><a href="#Futex" class="headerlink" title="Futex"></a>Futex</h1><p> futex：a sort of fast, user-space mutual exclusion primitive.</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jianshu.com/p/d534f6c1fc5d">futex机制介绍</a><br><a href="https://zhuanlan.zhihu.com/p/454244967">内核实现大致逻辑</a></p><h2 id="机制介绍"><a href="#机制介绍" class="headerlink" title="机制介绍"></a>机制介绍</h2><p>Futex是一种用户态和内核态混合的同步机制。首先，同步的进程间通过mmap共享一段内存，futex变量就位于这段共享的内存中且操作是原子的，<strong>当进程尝试进入互斥区或者退出互斥区的时候，先去查看共享内存中的futex变量，如果没有竞争发生，则只修改futex,而不用再执行系统调用了</strong>。当通过访问futex变量告诉进程有竞争发生，则还是得执行系统调用去完成相应的处理(wait 或者 wake up)。简单的说，futex就是通过在用户态的检查，（motivation）如果了解到没有竞争就不用陷入内核了，大大提高了low-contention时候的效率</p><h3 id="为什么要有futex，他解决什么问题？何时加入内核的？"><a href="#为什么要有futex，他解决什么问题？何时加入内核的？" class="headerlink" title="为什么要有futex，他解决什么问题？何时加入内核的？"></a>为什么要有futex，他解决什么问题？何时加入内核的？</h3><p>经研究发现，很多同步是无竞争的，即某个进程进入互斥区，到再从某个互斥区出来这段时间，常常是没有进程也要进这个互斥区或者请求同一同步变量的。但是在这种情况下，这个进程也要陷入内核去看看有没有人和它竞争，退出的时侯还要陷入内核去看看有没有进程等待在同一同步变量上。这些不必要的系统调用(或者说内核陷入)造成了大量的性能开销。为了解决这个问题，Futex就应运而生。</p><h2 id="futex-wait-和futex-wake"><a href="#futex-wait-和futex-wake" class="headerlink" title="futex_wait 和futex_wake"></a>futex_wait 和futex_wake</h2><p>总地来说，futex 包含两种基本操作（futex_op）：futex_wait 和futex_wake ：</p><p><strong>FUTEX_WAIT</strong> 判断保存在地址addr 的值是否等于val，如果等于，则将当前线程休眠，不等于则返回错误码EWOULDBLOCK。</p><p><strong>FUTEX_WAKE</strong> 则是唤醒在地址addr上数量为val个线程</p><p>uaddr 和 val 是futex 最重要的两个变量，uaddr 是一个4 字节大小值（futex word）的地址，这个地址一般通过共享内存由多个进（线）程共享，<strong>每个进（线）程在进入futex()后将判断该地址的值和自己期望的值val （expected value）是否相同</strong></p><p><strong>具体实现步骤见上文链接</strong></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Futex&quot;&gt;&lt;a href=&quot;#Futex&quot; class=&quot;headerlink&quot; title=&quot;Futex&quot;&gt;&lt;/a&gt;Futex&lt;/h1&gt;&lt;p&gt; futex：a sort of fast, user-space mutual exclusion primiti</summary>
+      
+    
+    
+    
+    
+    <category term="linux" scheme="http://coder_tinghao.github.io/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Exponential backoff--指数补偿</title>
