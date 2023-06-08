@@ -20,16 +20,20 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="article">
+    <meta name="description" content="参考链接 背景由于在多处理器环境中某些资源的有限性，有时需要互斥访问(mutual exclusion)，这时候就需要引入锁的概念，只有获取了锁的线程才能够对资源进行访问，由于多线程的核心是CPU的时间分片，所以同一时刻只能有一个线程获取到锁。那么就面临一个问题，那么没有获取到锁的线程应该怎么办？ 通常有两种处理方式：一种是没有获取到锁的线程就一直循环等待判断该资源是否已经释放锁，这种锁叫做自旋锁">
+<meta property="og:type" content="article">
 <meta property="og:title" content="自旋锁——spinlock">
 <meta property="og:url" content="http://coder_tinghao.github.io/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="参考链接 背景由于在多处理器环境中某些资源的有限性，有时需要互斥访问(mutual exclusion)，这时候就需要引入锁的概念，只有获取了锁的线程才能够对资源进行访问，由于多线程的核心是CPU的时间分片，所以同一时刻只能有一个线程获取到锁。那么就面临一个问题，那么没有获取到锁的线程应该怎么办？ 通常有两种处理方式：一种是没有获取到锁的线程就一直循环等待判断该资源是否已经释放锁，这种锁叫做自旋锁">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/spinlock.png?raw=true">
 <meta property="article:published_time" content="2023-06-08T09:05:11.000Z">
-<meta property="article:modified_time" content="2023-06-08T09:07:13.887Z">
+<meta property="article:modified_time" content="2023-06-08T09:16:05.900Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/spinlock.png?raw=true">
 
 
 <link rel="canonical" href="http://coder_tinghao.github.io/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/">
@@ -100,7 +104,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -113,6 +117,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -198,7 +203,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-06-08 17:05:11 / 修改时间：17:07:13" itemprop="dateCreated datePublished" datetime="2023-06-08T17:05:11+08:00">2023-06-08</time>
+      <time title="创建时间：2023-06-08 17:05:11 / 修改时间：17:16:05" itemprop="dateCreated datePublished" datetime="2023-06-08T17:05:11+08:00">2023-06-08</time>
     </span>
 
   
@@ -218,7 +223,42 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cxuanBlog/p/11679883.html">参考链接</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>由于在多处理器环境中某些资源的有限性，有时需要互斥访问(mutual exclusion)，这时候就需要引入锁的概念，只有获取了锁的线程才能够对资源进行访问，由于多线程的核心是CPU的时间分片，所以同一时刻只能有一个线程获取到锁。那么就面临一个问题，那么没有获取到锁的线程应该怎么办？</p>
+<p>通常有两种处理方式：<br>一种是没有获取到锁的线程就一直循环等待判断该资源是否已经释放锁，这种锁叫做<strong>自旋锁</strong>，它不用将线程阻塞起来(NON-BLOCKING)；<br>还有一种处理方式就是把自己阻塞起来，等待重新调度请求，这种叫做<strong>互斥锁</strong>。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><strong>自旋锁</strong>的定义：当一个线程尝试去获取某一把锁的时候，如果这个锁此时已经被别人获取(占用)，那么此线程就无法获取到这把锁，该线程将会等待，间隔一段时间后会再次尝试获取。这种采用<strong>循环加锁 -&gt; 等待的机制</strong>被称为自旋锁(spinlock)。</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/spinlock.png?raw=true" alt="自旋锁示意图"></p>
+<p>如果持有锁的线程能<strong>在短时间内释放锁资源</strong>，那么那些等待竞争锁的线程就不需要做内核态和用户态之间的切换进入阻塞状态，它们只需要等一等(自旋)，等到持有锁的线程释放锁之后即可获取，这样就避免了用户进程和内核切换的消耗。</p>
+<p>自旋锁尽可能的减少线程的阻塞，这对于锁的竞争不激烈，且占用锁时间非常短的代码块来说性能能大幅度的提升，因为自旋的消耗会小于线程阻塞挂起再唤醒的操作的消耗，这些操作会导致线程发生两次上下文切换！</p>
+<p>但是如果锁的竞争激烈，或者持有锁的线程需要长时间占用锁执行同步块，这时候就不适合使用自旋锁了，因为自旋锁在获取锁前一直都是占用 cpu 做无用功，同时有大量线程在竞争一个锁，会导致获取锁的时间很长，线程自旋的消耗大于线程阻塞挂起操作的消耗，其它需要 cpu 的线程又不能获取到 cpu，造成 cpu 的浪费。所以这种情况下我们要关闭自旋锁。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre><code>public class SpinLockTest &#123;
+
+    private AtomicBoolean available = new AtomicBoolean(false);
+
+    public void lock()&#123;
+
+        // 循环检测尝试获取锁
+        while (!tryLock())&#123;
+            // doSomething...
+        &#125;
+
+    &#125;
+
+    public boolean tryLock()&#123;
+        // 尝试获取锁，成功返回true，失败返回false
+        return available.compareAndSet(false,true);
+    &#125;
+
+    public void unLock()&#123;
+        if(!available.compareAndSet(true,false))&#123;
+            throw new RuntimeException(&quot;释放锁失败&quot;);
+        &#125;
+    &#125;
+
+&#125;
+</code></pre>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><strong>无法保证多线程竞争的公平性</strong></p>
+
     </div>
 
     
