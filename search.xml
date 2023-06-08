@@ -421,4 +421,12 @@ for (nsec = 1; nsec &lt; MAXSLEEP; nsec &lt;&lt;=1) &#123;
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>自旋锁——spinlock</title>
+    <url>/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
 </search>

@@ -1,3 +1,4 @@
+http://coder_tinghao.github.io/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/
 http://coder_tinghao.github.io/2023/05/18/linux-futex/
 http://coder_tinghao.github.io/2023/05/02/Exponential-backoff-%E6%8C%87%E6%95%B0%E8%A1%A5%E5%81%BF/
 http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/
