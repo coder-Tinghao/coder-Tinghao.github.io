@@ -464,4 +464,9 @@ for (nsec = 1; nsec &lt; MAXSLEEP; nsec &lt;&lt;=1) &#123;
         <tag>分布式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>经典原子操作——atomic operation</title>
+    <url>/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>

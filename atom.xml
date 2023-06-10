@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-06-08T09:16:05.900Z</updated>
+  <updated>2023-06-10T05:49:48.389Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>经典原子操作——atomic operation</title>
+    <link href="http://coder_tinghao.github.io/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/"/>
+    <id>http://coder_tinghao.github.io/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/</id>
+    <published>2023-06-10T05:49:48.000Z</published>
+    <updated>2023-06-10T05:49:48.389Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>自旋锁——spinlock</title>
