@@ -20,23 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Feng&#39;s Blog">
-<meta property="og:url" content="http://coder_tinghao.github.io/archives/2022/index.html">
+    <meta name="description" content="参考链接 单调前缀一致性——monotonic prefix consistency在读论文C5:cloned并发控制协议论文时遇到monotonic prefix consistency，故记录在此 前缀一致性 Consistent Prefix：副本之间的同步过程中，会存在一些副本接收数据的顺序并不一致。「前缀一致性」是说所有用户读到的数据顺序的前缀永远是一致的。 「前缀」是指程序在执行写操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单调前缀一致性——monotonic prefix consistency">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="参考链接 单调前缀一致性——monotonic prefix consistency在读论文C5:cloned并发控制协议论文时遇到monotonic prefix consistency，故记录在此 前缀一致性 Consistent Prefix：副本之间的同步过程中，会存在一些副本接收数据的顺序并不一致。「前缀一致性」是说所有用户读到的数据顺序的前缀永远是一致的。 「前缀」是指程序在执行写操作">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-11T13:00:06.000Z">
+<meta property="article:modified_time" content="2023-06-11T13:04:32.330Z">
 <meta property="article:author" content="Fength">
+<meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/archives/2022/">
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/2022/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/","path":"2023/06/11/单调前缀一致性——monotonic-prefix-consistency/","title":"单调前缀一致性——monotonic prefix consistency"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | Feng's Blog</title>
+<title>单调前缀一致性——monotonic prefix consistency | Feng's Blog</title>
   
 
 
@@ -70,7 +75,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Feng's Blog</h1>
+      <p class="site-title">Feng's Blog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">passion</p>
@@ -97,7 +102,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -110,6 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency"><span class="nav-number">1.</span> <span class="nav-text">单调前缀一致性——monotonic prefix consistency</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -154,169 +160,105 @@
 
     </div>
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 20 篇日志。 继续努力。</span>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="单调前缀一致性——monotonic prefix consistency | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          单调前缀一致性——monotonic prefix consistency
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+
+      <time title="创建时间：2023-06-11 21:00:06 / 修改时间：21:04:32" itemprop="dateCreated datePublished" datetime="2023-06-11T21:00:06+08:00">2023-06-11</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://thiscute.world/posts/consistency-and-consensus-algorithm/">参考链接</a></p>
+<h2 id="单调前缀一致性——monotonic-prefix-consistency"><a href="#单调前缀一致性——monotonic-prefix-consistency" class="headerlink" title="单调前缀一致性——monotonic prefix consistency"></a>单调前缀一致性——monotonic prefix consistency</h2><p>在读论文C5:cloned并发控制协议论文时遇到monotonic prefix consistency，故记录在此</p>
+<p><strong>前缀一致性 Consistent Prefix</strong>：副本之间的同步过程中，会存在一些副本接收数据的顺序并不一致。「前缀一致性」是说所有用户读到的数据顺序的前缀永远是一致的。</p>
+<p>「前缀」是指程序在执行写操作时，需要显式声明其「前缀」事件，这样每个事件就都存在一个由其他写事件排列而成的前缀。比如当前有写事件排列「A B C D」，那所有用户读到的数据都拥有同样的写事件前缀，比如「A」、「A B」、「A B C」、「A B C D」，但不可能出现「A C」或者「C A」等结果。</p>
+<p>它解决的是<strong>分片分布式数据库的一致性问题</strong>：A B C 因为地域区别读写的是不同的副本，B 在抖音评论区问了个问题，然后 A 作出了回答。但是问题跟回答两个数据如果处于不同的分片，副本同步时这两个数据的顺序是无法保证的，C 可能会先读到回答信息，之后才刷新出 B 的提问，历史事件的顺序就乱了。<br>实现方式：需要程序主动为<strong>消息之间添加显式的依赖关系</strong>，再据此控制其读取顺序，实现比较复杂。<br>存在的问题：只有被显式定义了因果关系的事件，它们之间的顺序才能被保证。</p>
+<p>问题与答案之间是有因果关系的，但这种关系在复制的过程中被忽略了，于是出现了异常。<br>保持这种因果关系的一致性，被称为前缀读或前缀一致性</p>
+<p><strong>前缀一致性：在每个会话内保证了单调读，会话之间不保证</strong></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-12-30T10:17:24+08:00"
-              content="2022-12-30">
-          12-30
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/" itemprop="url">
-            <span itemprop="name">零知识证明ZKP</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"># 分布式</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/" rel="prev" title="经典原子操作——atomic operation">
+                  <i class="fa fa-chevron-left"></i> 经典原子操作——atomic operation
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-12-25T14:19:46+08:00"
-              content="2022-12-25">
-          12-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/" itemprop="url">
-            <span itemprop="name">通信模型--同步、异步、部分同步</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-12-25T13:07:54+08:00"
-              content="2022-12-25">
-          12-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/" itemprop="url">
-            <span itemprop="name">拜占庭容错--BFT</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-11-14T21:44:02+08:00"
-              content="2022-11-14">
-          11-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/11/14/%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E4%B8%8E%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" itemprop="url">
-            <span itemprop="name">事务管理与并发控制</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-07-26T12:53:22+08:00"
-              content="2022-07-26">
-          07-26
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/26/%E8%AE%B0hexo%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%83%A8%E7%BD%B2/" itemprop="url">
-            <span itemprop="name">记hexo配置与部署</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-07-23T17:05:10+08:00"
-              content="2022-07-23">
-          07-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/23/test/" itemprop="url">
-            <span itemprop="name">test</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-07-23T17:01:52+08:00"
-              content="2022-07-23">
-          07-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/23/hello-world/" itemprop="url">
-            <span itemprop="name">Hello World</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 </div>
   </main>

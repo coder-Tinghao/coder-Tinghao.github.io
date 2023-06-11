@@ -1,3 +1,4 @@
+http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/
 http://coder_tinghao.github.io/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/
 http://coder_tinghao.github.io/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/
 http://coder_tinghao.github.io/2023/05/18/linux-futex/

@@ -489,4 +489,19 @@ while (test_and_set(lock) == 1);
         <tag>分布式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>单调前缀一致性——monotonic prefix consistency</title>
+    <url>/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/</url>
+    <content><![CDATA[<p><a href="https://thiscute.world/posts/consistency-and-consensus-algorithm/">参考链接</a></p>
+<h2 id="单调前缀一致性——monotonic-prefix-consistency"><a href="#单调前缀一致性——monotonic-prefix-consistency" class="headerlink" title="单调前缀一致性——monotonic prefix consistency"></a>单调前缀一致性——monotonic prefix consistency</h2><p>在读论文C5:cloned并发控制协议论文时遇到monotonic prefix consistency，故记录在此</p>
+<p><strong>前缀一致性 Consistent Prefix</strong>：副本之间的同步过程中，会存在一些副本接收数据的顺序并不一致。「前缀一致性」是说所有用户读到的数据顺序的前缀永远是一致的。</p>
+<p>「前缀」是指程序在执行写操作时，需要显式声明其「前缀」事件，这样每个事件就都存在一个由其他写事件排列而成的前缀。比如当前有写事件排列「A B C D」，那所有用户读到的数据都拥有同样的写事件前缀，比如「A」、「A B」、「A B C」、「A B C D」，但不可能出现「A C」或者「C A」等结果。</p>
+<p>它解决的是<strong>分片分布式数据库的一致性问题</strong>：A B C 因为地域区别读写的是不同的副本，B 在抖音评论区问了个问题，然后 A 作出了回答。但是问题跟回答两个数据如果处于不同的分片，副本同步时这两个数据的顺序是无法保证的，C 可能会先读到回答信息，之后才刷新出 B 的提问，历史事件的顺序就乱了。<br>实现方式：需要程序主动为<strong>消息之间添加显式的依赖关系</strong>，再据此控制其读取顺序，实现比较复杂。<br>存在的问题：只有被显式定义了因果关系的事件，它们之间的顺序才能被保证。</p>
+<p>问题与答案之间是有因果关系的，但这种关系在复制的过程中被忽略了，于是出现了异常。<br>保持这种因果关系的一致性，被称为前缀读或前缀一致性</p>
+<p><strong>前缀一致性：在每个会话内保证了单调读，会话之间不保证</strong></p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
 </search>
