@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-06-11T13:04:32.330Z</updated>
+  <updated>2023-09-17T06:20:04.751Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>c++学习笔记——9.15</title>
+    <link href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/"/>
+    <id>http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/</id>
+    <published>2023-09-15T06:44:37.000Z</published>
+    <updated>2023-09-17T06:20:04.751Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="缓冲区（buffer）"><a href="#缓冲区（buffer）" class="headerlink" title="缓冲区（buffer）"></a>缓冲区（buffer）</h3><p>一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区</p><h3 id="iostream对象"><a href="#iostream对象" class="headerlink" title="iostream对象"></a>iostream对象</h3><p><strong>cerr</strong>  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容</p><p><strong>clog</strong> ostream对象，标准错误流，有缓冲，用于报告程序执行信息</p><h3 id="endl与’-n’区别"><a href="#endl与’-n’区别" class="headerlink" title="endl与’\n’区别"></a>endl与’\n’区别</h3><p>endl相当于 ‘\n’+flush()</p><h3 id="类型选择"><a href="#类型选择" class="headerlink" title="类型选择"></a>类型选择</h3><p>1 明确数值不可能为负时，选无符号<br>2 选int做整数运算，超过int用long long<br>3 选double做浮点数运算</p><h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象是具有某种数据类型的内存空间</p><h3 id="分离式编译"><a href="#分离式编译" class="headerlink" title="分离式编译"></a>分离式编译</h3><ol><li>每个源文件（.cpp .cc等）都是一个<strong>独立的编译单元</strong>，都会被编译一遍，并生成中间文件。在 main.cpp 里，include用来【编译】时找函数声明，中间文件用来【链接】时找函数原型。</li><li>include简单的说就是复制粘贴而已，每个正常的头文件都会预防重复包含，如使用 #pramga once，#ifndef 等。</li></ol><p><strong>声明与定义</strong><br>c++将声明和定义区分开</p><p>声明 (declaration)使得名字为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明</p><p>定义(definition)负责<strong>创建</strong>与名字关联的实体</p><p>如果想声明一个变量而非定义它，就在变量名前添加关键字 extern，而且不要显式地初始化变量</p><pre><code>extern int i  //声明i，非定义iint j  // 声明并定义j</code></pre><p>另外，任何包含了显式初始化的声明即成为定义，如下：<br>    extern double pi &#x3D; 3.1416  &#x2F;&#x2F; 定义</p><h3 id="初始化建议"><a href="#初始化建议" class="headerlink" title="初始化建议"></a>初始化建议</h3><p>初始化每一个内置类型的变量</p><h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;缓冲区（buffer）&quot;&gt;&lt;a href=&quot;#缓冲区（buffer）&quot; class=&quot;headerlink&quot; title=&quot;缓冲区（buffer）&quot;&gt;&lt;/a&gt;缓冲区（buffer）&lt;/h3&gt;&lt;p&gt;一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲</summary>
+      
+    
+    
+    
+    
+    <category term="c++" scheme="http://coder_tinghao.github.io/tags/c/"/>
+    
+  </entry>
   
   <entry>
     <title>单调前缀一致性——monotonic prefix consistency</title>
@@ -421,26 +443,6 @@
     
     
     <category term="日常" scheme="http://coder_tinghao.github.io/tags/%E6%97%A5%E5%B8%B8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://coder_tinghao.github.io/2022/07/23/hello-world/"/>
-    <id>http://coder_tinghao.github.io/2022/07/23/hello-world/</id>
-    <published>2022-07-23T09:01:52.597Z</published>
-    <updated>2022-12-06T12:35:12.371Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
     
   </entry>
   

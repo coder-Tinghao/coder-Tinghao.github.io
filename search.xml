@@ -504,4 +504,31 @@ while (test_and_set(lock) == 1);
         <tag>分布式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>c++学习笔记——9.15</title>
+    <url>/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/</url>
+    <content><![CDATA[<h3 id="缓冲区（buffer）"><a href="#缓冲区（buffer）" class="headerlink" title="缓冲区（buffer）"></a>缓冲区（buffer）</h3><p>一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区</p>
+<h3 id="iostream对象"><a href="#iostream对象" class="headerlink" title="iostream对象"></a>iostream对象</h3><p><strong>cerr</strong>  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容</p>
+<p><strong>clog</strong> ostream对象，标准错误流，有缓冲，用于报告程序执行信息</p>
+<h3 id="endl与’-n’区别"><a href="#endl与’-n’区别" class="headerlink" title="endl与’\n’区别"></a>endl与’\n’区别</h3><p>endl相当于 ‘\n’+flush()</p>
+<h3 id="类型选择"><a href="#类型选择" class="headerlink" title="类型选择"></a>类型选择</h3><p>1 明确数值不可能为负时，选无符号<br>2 选int做整数运算，超过int用long long<br>3 选double做浮点数运算</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象是具有某种数据类型的内存空间</p>
+<h3 id="分离式编译"><a href="#分离式编译" class="headerlink" title="分离式编译"></a>分离式编译</h3><ol>
+<li>每个源文件（.cpp .cc等）都是一个<strong>独立的编译单元</strong>，都会被编译一遍，并生成中间文件。在 main.cpp 里，include用来【编译】时找函数声明，中间文件用来【链接】时找函数原型。</li>
+<li>include简单的说就是复制粘贴而已，每个正常的头文件都会预防重复包含，如使用 #pramga once，#ifndef 等。</li>
+</ol>
+<p><strong>声明与定义</strong><br>c++将声明和定义区分开</p>
+<p>声明 (declaration)使得名字为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明</p>
+<p>定义(definition)负责<strong>创建</strong>与名字关联的实体</p>
+<p>如果想声明一个变量而非定义它，就在变量名前添加关键字 extern，而且不要显式地初始化变量</p>
+<pre><code>extern int i  //声明i，非定义i
+int j  // 声明并定义j
+</code></pre>
+<p>另外，任何包含了显式初始化的声明即成为定义，如下：<br>    extern double pi &#x3D; 3.1416  &#x2F;&#x2F; 定义</p>
+<h3 id="初始化建议"><a href="#初始化建议" class="headerlink" title="初始化建议"></a>初始化建议</h3><p>初始化每一个内置类型的变量</p>
+<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3>]]></content>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
 </search>

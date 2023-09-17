@@ -1,3 +1,4 @@
+http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/
 http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/
 http://coder_tinghao.github.io/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/
 http://coder_tinghao.github.io/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/
@@ -24,3 +25,4 @@ http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/
 http://coder_tinghao.github.io/tags/%E6%97%A5%E5%B8%B8/
 http://coder_tinghao.github.io/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/
 http://coder_tinghao.github.io/tags/linux/
+http://coder_tinghao.github.io/tags/c/
