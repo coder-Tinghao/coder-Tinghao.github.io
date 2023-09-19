@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">22</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,101 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/" class="post-title-link" itemprop="url">c++学习笔记——9.17</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-17 14:20:55" itemprop="dateCreated datePublished" datetime="2023-09-17T14:20:55+08:00">2023-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-19 20:25:47" itemprop="dateModified" datetime="2023-09-19T20:25:47+08:00">2023-09-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h3><p>c++ 静态类型语言，在编译阶段检查类型</p>
+<h3 id="赋值和指针"><a href="#赋值和指针" class="headerlink" title="赋值和指针"></a>赋值和指针</h3><p><strong>赋值永远改变的是等号左侧的对象</strong></p>
+<h3 id="const引用"><a href="#const引用" class="headerlink" title="const引用"></a>const引用</h3><p>引用类型必须与其所引用对象的类型一致<br>        const int ci &#x3D; 1024;<br>        const int &amp;r1 &#x3D; ci;</p>
+<p>常量引用：常量引用是对const的引用</p>
+<p>对const的引用可能引用一个非const对象：<br>常量引用，即对引用加const，只是<strong>限定了引用可参与的操作</strong>，对于引用的对象本身没有限定<br>        int i &#x3D; 42;<br>        const int &amp;r1 &#x3D; i;<br>        r1 &#x3D; 0;  &#x2F;&#x2F; <strong>非法，常量引用不能修改</strong></p>
+<h4 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h4><p>指向常量的指针和常量引用类似，<br>        const int i &#x3D; 42;<br>        const int *i &#x3D; &amp;i;<br>        *i &#x3D; 0;  &#x2F;&#x2F; <strong>非法，不能修改值</strong></p>
+<h4 id="const指针"><a href="#const指针" class="headerlink" title="const指针"></a>const指针</h4><pre><code>    const int i = 42;
+    const int *const r1 = &amp;i;
+</code></pre>
+<p>*<strong>const为const指针，不变的是指针本身的值，而指向的值</strong></p>
+<h3 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h3><p>顶层 const 表示指针本身是个常量；<br>底层 const 表示指针所指的对象是一个常量<br>or<br>被修饰的变量本身无法改变的 const 是顶层 const；<br>通过指针或引用等间接途径来限制目标内容不可变的 const 是底层 const</p>
+<h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3><p>常量表达式：值不会改变，编译过程就能得到计算结果的表达式</p>
+<p>C++11:constexpr，如果认定变量是常量表达式，就声明为constexpr</p>
+<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>别名声明<br>    using SI &#x3D; Sales_item;  &#x2F;&#x2F; SI是Sales_item的同义词（Sales_item是一个类型）</p>
+<h3 id="预处理器概述"><a href="#预处理器概述" class="headerlink" title="预处理器概述"></a>预处理器概述</h3><p>预处理功能 #include，当预处理器看到#include标记时就会用指定的头文件内容代替#include</p>
+<h3 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符"></a>decltype类型指示符</h3><p>选择并返回操作数的数据类型<br>使用情况：希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量</p>
+<h3 id="string-size-type类型"><a href="#string-size-type类型" class="headerlink" title="string::size_type类型"></a>string::size_type类型</h3><p>string类的配套类型，<strong>无符号类型</strong>，能足够存放下任何string对象的大小（通常等于 std::size_t）<br>访问string对象的下标也是size_type类型，<strong>使用该类型访问string中的字符可以保证安全（无符号）</strong></p>
+<p>注：size()函数无符号，要避免和int类型混用带来的问题</p>
+<h3 id="int类型和unsigned-int类型混用问题"><a href="#int类型和unsigned-int类型混用问题" class="headerlink" title="int类型和unsigned int类型混用问题"></a>int类型和unsigned int类型混用问题</h3><p>int和unsigned int类型进行混合算数运算时，运算结果为<strong>非负数时，结果不会出现异常</strong>，当运算结果为<strong>负数时就会出现异常结果，往往异常结果值会很大</strong></p>
+<h3 id="字面值与string对象"><a href="#字面值与string对象" class="headerlink" title="字面值与string对象"></a>字面值与string对象</h3><p>字符串字面值和string是不同的类型<br>        string s1 &#x3D; “hello”;<br>        string s2 &#x3D; s1 + “test”;  &#x2F;&#x2F; 正确，会转化为string类型<br>        string “hello” + “test”;  &#x2F;&#x2F; 错误，两个都不是string类型</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -950,98 +1045,6 @@ for (nsec = 1; nsec &lt; MAXSLEEP; nsec &lt;&lt;=1) &#123;
 <p><strong>核心：确保在客户端看到对于请求的响应时，Backup虚机一定也看到了对应的请求</strong></p>
 <h2 id="Test-and-Set服务"><a href="#Test-and-Set服务" class="headerlink" title="Test-and-Set服务"></a>Test-and-Set服务</h2><p>当Primary和Backup都在运行，但是它们之间的网络出现了问题，同时它们各自又能够与一些客户端通信。<strong>产生Split Brain现象</strong>，这篇论文的办法是：向一个<strong>外部的第三方权威机构求证，来决定Primary还是Backup允许上线</strong>。</p>
 <p>Test-and-Set服务不运行在Primary和Backup的物理服务器上，VMware FT需要通过网络支持Test-and-Set服务。Test-and-Set请求会设置<strong>标志位</strong>，并且返回旧的值。Primary和Backup都需要获取Test-and-Set标志位，当第一个请求送达时，Test-and-Set服务会说，这个标志位之前是0，现在是1。第二个请求送达时，Test-and-Set服务会说，标志位已经是1了，你不允许成为Primary。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">copy-on-write机制</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-02-17 12:05:05 / 修改时间：15:07:07" itemprop="dateCreated datePublished" datetime="2023-02-17T12:05:05+08:00">2023-02-17</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="copy-on-write机制"><a href="#copy-on-write机制" class="headerlink" title="copy-on-write机制"></a>copy-on-write机制</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903702373859335">参考链接</a></p>
-<p>写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。</p>
-<h1 id="linux下的fork函数和exec函数"><a href="#linux下的fork函数和exec函数" class="headerlink" title="linux下的fork函数和exec函数"></a>linux下的fork函数和exec函数</h1><p>在说明Linux下的copy-on-write机制前，首先要知道两个函数：fork()和exec()</p>
-<p>需要注意的是exec()并不是一个特定的函数, 它是一组函数的统称, 它包括了execl()、execlp()、execv()、execle()、execve()、execvp()</p>
-<p>fork是类Unix操作系统上<strong>创建进程</strong>的主要方法，fork用于创建子进程(等同于当前进程的副本)，新的进程要通过老的进程复制自身得到，Linux的进程都通过<strong>init进程或init的子进程</strong>fork(vfork)出来的</p>
-<p>从上面我们已经知道了fork会创建一个子进程。子进程的是父进程的副本。</p>
-<p>exec函数的作用就是：装载一个新的程序（可执行映像）覆盖当前进程内存空间中的映像，从而执行不同的任务，exec系列函数在执行时会直接替换掉当前进程的地址空间。</p>
-<h1 id="copy-on-write实现原理"><a href="#copy-on-write实现原理" class="headerlink" title="copy-on-write实现原理"></a>copy-on-write实现原理</h1><h2 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h2><p>既然很多时候复制给子进程的数据是无效的，于是就有了Copy On Write这项技术了，原理也很简单：</p>
-<p>fork创建出的子进程，<strong>与父进程共享内存空间</strong>。也就是说，如果<strong>子进程不对内存空间进行写入操作的话，内存空间中的数据并不会复制给子进程</strong>，这样创建子进程的速度就很快了！(不用复制，直接引用父进程的物理空间)。<br>并且如果在fork函数返回之后，子进程<strong>第一时间</strong>exec一个新的可执行映像，那么也不会浪费时间和内存空间了。</p>
-<p>另外表达：在fork之后exec之前两个进程用的是相同的<strong>物理空间（内存区）</strong>，子进程的代码段、数据段、堆栈都是指向父进程的物理空间，也就是说，两者的虚拟空间不同，但其对应的物理空间是同一个，当<strong>父子进程中有更改相应段的行为</strong>发生时，再为子进程相应的段分配物理空间</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/copy-on-write_implement.png?raw=true" alt="实现原理"></p>
-<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>fork()之后，kernel把父进程中所有的内存页的权限都设为<strong>read-only</strong>，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发<strong>页异常中断（page-fault）</strong>，陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
-<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点：减少不必要的资源分配，节省宝贵的物理内存。</p>
-<p>缺点：如果在子进程存在期间发生了大量写操作，那么会频繁地产生页面错误，不断陷入内核，复制页面。这反而会降低效率。</p>
-<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p><strong>语言中的应用:</strong><br>相比于传统的深层复制，能带来很大性能提升。比如 C++ 98 标准下的 std::string 就采用了写时复制的实现：</p>
-<pre><code>std::string x(&quot;Hello&quot;);
-std::string y = x;  // x、y 共享相同的 buffer
-y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buffer
-                    // x 依然使用旧的 buffer
-</code></pre>
-<p>Golang、PHP 中的 string、array 也是写时复制。在修改这些类型时，如果其引用计数非零，则会复制一个副本。因此我们在 golang、php 中可以将字符串、数组当作值类型（values type）进行传递，即不会有传值复制的开销，也能保证其 immutable 的特性。</p>
-<p><strong>文件系统中的应用：</strong><br>Copy-on-write在对数据进行修改的时候，不会直接在原来的数据位置上进行操作，而是重新找个位置修改，这样的好处是一旦系统突然断电，重启之后不需要做Fsck。好处就是能保证数据的完整性，掉电的话容易恢复。</p>
-<p>比如说：要修改数据块A的内容，先把A读出来，写到B块里面去。如果这时候断电了，原来A的内容还在！</p>
 
       
     </div>

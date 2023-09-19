@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="缓冲区（buffer）一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区 iostream对象cerr  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容 clog ostream对象，标准错误流，有缓冲，用于报告程序执行信息 endl与’\n’区别endl相当于 ‘\n’+flush() 类型选择1 明确数值">
+    <meta name="description" content="静态类型c++ 静态类型语言，在编译阶段检查类型 赋值和指针赋值永远改变的是等号左侧的对象 const引用引用类型必须与其所引用对象的类型一致        const int ci &#x3D; 1024;        const int &amp;r1 &#x3D; ci; 常量引用：常量引用是对const的引用 对const的引用可能引用一个非const对象：常量引用，即对引用加const">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++学习笔记——9.15">
-<meta property="og:url" content="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/index.html">
+<meta property="og:title" content="c++学习笔记——9.17">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
-<meta property="og:description" content="缓冲区（buffer）一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区 iostream对象cerr  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容 clog ostream对象，标准错误流，有缓冲，用于报告程序执行信息 endl与’\n’区别endl相当于 ‘\n’+flush() 类型选择1 明确数值">
+<meta property="og:description" content="静态类型c++ 静态类型语言，在编译阶段检查类型 赋值和指针赋值永远改变的是等号左侧的对象 const引用引用类型必须与其所引用对象的类型一致        const int ci &#x3D; 1024;        const int &amp;r1 &#x3D; ci; 常量引用：常量引用是对const的引用 对const的引用可能引用一个非const对象：常量引用，即对引用加const">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-09-15T06:44:37.000Z">
-<meta property="article:modified_time" content="2023-09-17T06:20:04.751Z">
+<meta property="article:published_time" content="2023-09-17T06:20:55.000Z">
+<meta property="article:modified_time" content="2023-09-19T12:25:47.336Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/">
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/","path":"2023/09/15/c-学习笔记——9-15/","title":"c++学习笔记——9.15"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/","path":"2023/09/17/c-学习笔记——9-17/","title":"c++学习笔记——9.17"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>c++学习笔记——9.15 | Feng's Blog</title>
+<title>c++学习笔记——9.17 | Feng's Blog</title>
   
 
 
@@ -115,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%88buffer%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">缓冲区（buffer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iostream%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">iostream对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#endl%E4%B8%8E%E2%80%99-n%E2%80%99%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">endl与’\n’区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-number">4.</span> <span class="nav-text">类型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%A6%BB%E5%BC%8F%E7%BC%96%E8%AF%91"><span class="nav-number">6.</span> <span class="nav-text">分离式编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="nav-number">7.</span> <span class="nav-text">初始化建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">列表初始化</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">静态类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E5%92%8C%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">赋值和指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const%E5%BC%95%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">const引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8Cconst"><span class="nav-number">3.1.</span> <span class="nav-text">指针和const</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const%E6%8C%87%E9%92%88"><span class="nav-number">3.2.</span> <span class="nav-text">const指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B6%E5%B1%82const%E5%92%8C%E5%BA%95%E5%B1%82const"><span class="nav-number">4.</span> <span class="nav-text">顶层const和底层const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constexpr"><span class="nav-number">5.</span> <span class="nav-text">constexpr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%AB%E5%90%8D"><span class="nav-number">6.</span> <span class="nav-text">别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E6%A6%82%E8%BF%B0"><span class="nav-number">7.</span> <span class="nav-text">预处理器概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decltype%E7%B1%BB%E5%9E%8B%E6%8C%87%E7%A4%BA%E7%AC%A6"><span class="nav-number">8.</span> <span class="nav-text">decltype类型指示符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string-size-type%E7%B1%BB%E5%9E%8B"><span class="nav-number">9.</span> <span class="nav-text">string::size_type类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#int%E7%B1%BB%E5%9E%8B%E5%92%8Cunsigned-int%E7%B1%BB%E5%9E%8B%E6%B7%B7%E7%94%A8%E9%97%AE%E9%A2%98"><span class="nav-number">10.</span> <span class="nav-text">int类型和unsigned int类型混用问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E9%9D%A2%E5%80%BC%E4%B8%8Estring%E5%AF%B9%E8%B1%A1"><span class="nav-number">11.</span> <span class="nav-text">字面值与string对象</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/profile.png">
@@ -184,12 +184,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="c++学习笔记——9.15 | Feng's Blog">
+      <meta itemprop="name" content="c++学习笔记——9.17 | Feng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          c++学习笔记——9.15
+          c++学习笔记——9.17
         </h1>
 
         <div class="post-meta-container">
@@ -200,14 +200,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-09-15 14:44:37" itemprop="dateCreated datePublished" datetime="2023-09-15T14:44:37+08:00">2023-09-15</time>
+      <time title="创建时间：2023-09-17 14:20:55" itemprop="dateCreated datePublished" datetime="2023-09-17T14:20:55+08:00">2023-09-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-17 14:20:04" itemprop="dateModified" datetime="2023-09-17T14:20:04+08:00">2023-09-17</time>
+      <time title="修改时间：2023-09-19 20:25:47" itemprop="dateModified" datetime="2023-09-19T20:25:47+08:00">2023-09-19</time>
     </span>
 
   
@@ -227,26 +227,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="缓冲区（buffer）"><a href="#缓冲区（buffer）" class="headerlink" title="缓冲区（buffer）"></a>缓冲区（buffer）</h3><p>一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区</p>
-<h3 id="iostream对象"><a href="#iostream对象" class="headerlink" title="iostream对象"></a>iostream对象</h3><p><strong>cerr</strong>  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容</p>
-<p><strong>clog</strong> ostream对象，标准错误流，有缓冲，用于报告程序执行信息</p>
-<h3 id="endl与’-n’区别"><a href="#endl与’-n’区别" class="headerlink" title="endl与’\n’区别"></a>endl与’\n’区别</h3><p>endl相当于 ‘\n’+flush()</p>
-<h3 id="类型选择"><a href="#类型选择" class="headerlink" title="类型选择"></a>类型选择</h3><p>1 明确数值不可能为负时，选无符号<br>2 选int做整数运算，超过int用long long<br>3 选double做浮点数运算</p>
-<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象是具有某种数据类型的内存空间</p>
-<h3 id="分离式编译"><a href="#分离式编译" class="headerlink" title="分离式编译"></a>分离式编译</h3><ol>
-<li>每个源文件（.cpp .cc等）都是一个<strong>独立的编译单元</strong>，都会被编译一遍，并生成中间文件。在 main.cpp 里，include用来【编译】时找函数声明，中间文件用来【链接】时找函数原型。</li>
-<li>include简单的说就是复制粘贴而已，每个正常的头文件都会预防重复包含，如使用 #pramga once，#ifndef 等。</li>
-</ol>
-<p><strong>声明与定义</strong><br>c++将声明和定义区分开</p>
-<p>声明 (declaration)使得名字为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明</p>
-<p>定义(definition)负责<strong>创建</strong>与名字关联的实体</p>
-<p>如果想声明一个变量而非定义它，就在变量名前添加关键字 extern，而且不要显式地初始化变量</p>
-<pre><code>extern int i  //声明i，非定义i
-int j  // 声明并定义j
+        <h3 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h3><p>c++ 静态类型语言，在编译阶段检查类型</p>
+<h3 id="赋值和指针"><a href="#赋值和指针" class="headerlink" title="赋值和指针"></a>赋值和指针</h3><p><strong>赋值永远改变的是等号左侧的对象</strong></p>
+<h3 id="const引用"><a href="#const引用" class="headerlink" title="const引用"></a>const引用</h3><p>引用类型必须与其所引用对象的类型一致<br>        const int ci &#x3D; 1024;<br>        const int &amp;r1 &#x3D; ci;</p>
+<p>常量引用：常量引用是对const的引用</p>
+<p>对const的引用可能引用一个非const对象：<br>常量引用，即对引用加const，只是<strong>限定了引用可参与的操作</strong>，对于引用的对象本身没有限定<br>        int i &#x3D; 42;<br>        const int &amp;r1 &#x3D; i;<br>        r1 &#x3D; 0;  &#x2F;&#x2F; <strong>非法，常量引用不能修改</strong></p>
+<h4 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h4><p>指向常量的指针和常量引用类似，<br>        const int i &#x3D; 42;<br>        const int *i &#x3D; &amp;i;<br>        *i &#x3D; 0;  &#x2F;&#x2F; <strong>非法，不能修改值</strong></p>
+<h4 id="const指针"><a href="#const指针" class="headerlink" title="const指针"></a>const指针</h4><pre><code>    const int i = 42;
+    const int *const r1 = &amp;i;
 </code></pre>
-<p>另外，任何包含了显式初始化的声明即成为定义，如下：<br>    extern double pi &#x3D; 3.1416  &#x2F;&#x2F; 定义</p>
-<h3 id="初始化建议"><a href="#初始化建议" class="headerlink" title="初始化建议"></a>初始化建议</h3><p>初始化每一个内置类型的变量</p>
-<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3>
+<p>*<strong>const为const指针，不变的是指针本身的值，而指向的值</strong></p>
+<h3 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h3><p>顶层 const 表示指针本身是个常量；<br>底层 const 表示指针所指的对象是一个常量<br>or<br>被修饰的变量本身无法改变的 const 是顶层 const；<br>通过指针或引用等间接途径来限制目标内容不可变的 const 是底层 const</p>
+<h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3><p>常量表达式：值不会改变，编译过程就能得到计算结果的表达式</p>
+<p>C++11:constexpr，如果认定变量是常量表达式，就声明为constexpr</p>
+<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>别名声明<br>    using SI &#x3D; Sales_item;  &#x2F;&#x2F; SI是Sales_item的同义词（Sales_item是一个类型）</p>
+<h3 id="预处理器概述"><a href="#预处理器概述" class="headerlink" title="预处理器概述"></a>预处理器概述</h3><p>预处理功能 #include，当预处理器看到#include标记时就会用指定的头文件内容代替#include</p>
+<h3 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符"></a>decltype类型指示符</h3><p>选择并返回操作数的数据类型<br>使用情况：希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量</p>
+<h3 id="string-size-type类型"><a href="#string-size-type类型" class="headerlink" title="string::size_type类型"></a>string::size_type类型</h3><p>string类的配套类型，<strong>无符号类型</strong>，能足够存放下任何string对象的大小（通常等于 std::size_t）<br>访问string对象的下标也是size_type类型，<strong>使用该类型访问string中的字符可以保证安全（无符号）</strong></p>
+<p>注：size()函数无符号，要避免和int类型混用带来的问题</p>
+<h3 id="int类型和unsigned-int类型混用问题"><a href="#int类型和unsigned-int类型混用问题" class="headerlink" title="int类型和unsigned int类型混用问题"></a>int类型和unsigned int类型混用问题</h3><p>int和unsigned int类型进行混合算数运算时，运算结果为<strong>非负数时，结果不会出现异常</strong>，当运算结果为<strong>负数时就会出现异常结果，往往异常结果值会很大</strong></p>
+<h3 id="字面值与string对象"><a href="#字面值与string对象" class="headerlink" title="字面值与string对象"></a>字面值与string对象</h3><p>字符串字面值和string是不同的类型<br>        string s1 &#x3D; “hello”;<br>        string s2 &#x3D; s1 + “test”;  &#x2F;&#x2F; 正确，会转化为string类型<br>        string “hello” + “test”;  &#x2F;&#x2F; 错误，两个都不是string类型</p>
+
     </div>
 
     
@@ -262,14 +263,11 @@ int j  // 声明并定义j
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/" rel="prev" title="单调前缀一致性——monotonic prefix consistency">
-                  <i class="fa fa-chevron-left"></i> 单调前缀一致性——monotonic prefix consistency
+                <a href="/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/" rel="prev" title="c++学习笔记——9.15">
+                  <i class="fa fa-chevron-left"></i> c++学习笔记——9.15
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/" rel="next" title="c++学习笔记——9.17">
-                  c++学习笔记——9.17 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
