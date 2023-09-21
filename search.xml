@@ -559,4 +559,25 @@ int j  // 声明并定义j
         <tag>c++</tag>
       </tags>
   </entry>
+  <entry>
+    <title>c++学习笔记——9.20</title>
+    <url>/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/</url>
+    <content><![CDATA[<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>对于c++的迭代器，<strong>只有!&#x3D;</strong> 没有&lt;</p>
+<p>迭代器分为两种：<br>        vector<int>::iterator it1;  &#x2F;&#x2F; 能读写<br>        vector<int>::const_iterator it2;  &#x2F;&#x2F; 只读，不能写<br>若想得到const_iterator，有<strong>cbegin(),cend();</strong></p>
+<p><strong>但凡使用迭代器的循环体，都不要向容器添加元素</strong></p>
+<p><strong>std::difference_type</strong> 是C++标准库中的一种类型，通常与容器迭代器相关。它是一个有符号整数类型，用于表示两个迭代器之间的距离（差异）</p>
+<p>与size_type()函数类似 <strong>目的是确保在不同平台和编译器中，容器迭代器的距离计算都能正确工作，因为不同的平台和编译器可能会有不同的整数大小，保证可移植性</strong></p>
+<h3 id="size-t和size-type的区别（来自chatgpt，未完全理解）"><a href="#size-t和size-type的区别（来自chatgpt，未完全理解）" class="headerlink" title="size_t和size_type的区别（来自chatgpt，未完全理解）"></a>size_t和size_type的区别（来自chatgpt，未完全理解）</h3><p><strong>size_t：</strong> size_t是C和C++<strong>标准库</strong>中定义的一种无符号整数类型，通常用于表示对象的大小、元素数量或者数组的索引，它不是一个特定容器或类型的成员</p>
+<p><strong>size_type：</strong> size_type是一些<strong>标准库容器类</strong>的成员类型，例如 std::vector、std::string、std::deque等，是<strong>容器类特定</strong>的无符号整数类型，用于表示容器的大小、元素数量或者迭代器之间的距离。</p>
+<p>在使用容器的成员函数时，应该使用容器的 size_type 类型，以确保代码在容器的上下文中正常工作。例如，在使用 std::vector 时，应该使用 std::vector::size_type 来表示容器的大小。</p>
+<h3 id="箭头运算符-gt"><a href="#箭头运算符-gt" class="headerlink" title="箭头运算符 -&gt;"></a>箭头运算符 -&gt;</h3><p>箭头运算符 &#x3D; 解引用 + 成员访问<br>        it-&gt;mem<br>        (*it).mem<br>上面两句意思相同</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>编译时维度已知，所以维度必须是一个<strong>常量表达式</strong></p>
+<p><strong>字符数组：用字符串字面值初始化字符数组时，字符串字面值的结尾有一个空字符</strong><br>        char a[] &#x3D; “Daniel”； &#x2F;&#x2F; 自动添加表示空字符串结束的空字符，所以维度为7</p>
+<p><strong>使用数组下标时，通常定义为size_t类型</strong>，是一种机器相关的<strong>无符号类型</strong><br>size_t 的大小在不同的编译器和平台上可能会有所不同，但它的目的是确保能够安全地表示当前系统上的最大对象大小<br>通常被用于与内存分配和数据结构相关的操作，以确保代码的可移植性</p>
+<h3 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h3><p>从内向外看<br>int *ptr[10]; &#x2F;&#x2F; ptr是含有10个整型指针的数组<br>int (*ptr)[10] &#x3D; &amp;arr; &#x2F;&#x2F; ptr指向一个含有10个整数的数组</p>
+]]></content>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
 </search>

@@ -20,25 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="article">
-<meta property="og:title" content="零知识证明ZKP">
-<meta property="og:url" content="http://coder_tinghao.github.io/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/index.html">
+    <meta name="description" content="迭代器对于c++的迭代器，只有!&#x3D; 没有&lt; 迭代器分为两种：        vector::iterator it1;  &#x2F;&#x2F; 能读写        vector::const_iterator it2;  &#x2F;&#x2F; 只读，不能写若想得到const_iterator，有cbegin(),cend(); 但凡使用迭代器的循环体，都不要向容器添加元素">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++学习笔记——9.20">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="迭代器对于c++的迭代器，只有!&#x3D; 没有&lt; 迭代器分为两种：        vector::iterator it1;  &#x2F;&#x2F; 能读写        vector::const_iterator it2;  &#x2F;&#x2F; 只读，不能写若想得到const_iterator，有cbegin(),cend(); 但凡使用迭代器的循环体，都不要向容器添加元素">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-12-30T02:17:24.000Z">
-<meta property="article:modified_time" content="2022-12-30T02:17:24.344Z">
+<meta property="article:published_time" content="2023-09-20T02:27:06.000Z">
+<meta property="article:modified_time" content="2023-09-20T04:03:56.277Z">
 <meta property="article:author" content="Fength">
+<meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/">
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/","path":"2022/12/30/零知识证明ZKP/","title":"零知识证明ZKP"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/","path":"2023/09/20/c-学习笔记——9-20/","title":"c++学习笔记——9.20"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>零知识证明ZKP | Feng's Blog</title>
+<title>c++学习笔记——9.20 | Feng's Blog</title>
   
 
 
@@ -99,7 +102,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -112,6 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-t%E5%92%8Csize-type%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88%E6%9D%A5%E8%87%AAchatgpt%EF%BC%8C%E6%9C%AA%E5%AE%8C%E5%85%A8%E7%90%86%E8%A7%A3%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">size_t和size_type的区别（来自chatgpt，未完全理解）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E8%BF%90%E7%AE%97%E7%AC%A6-gt"><span class="nav-number">3.</span> <span class="nav-text">箭头运算符 -&gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88"><span class="nav-number">5.</span> <span class="nav-text">数组指针</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -167,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2022/12/30/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8EZKP/">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/profile.png">
@@ -180,12 +184,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="零知识证明ZKP | Feng's Blog">
+      <meta itemprop="name" content="c++学习笔记——9.20 | Feng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          零知识证明ZKP
+          c++学习笔记——9.20
         </h1>
 
         <div class="post-meta-container">
@@ -195,8 +199,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-12-30 10:17:24" itemprop="dateCreated datePublished" datetime="2022-12-30T10:17:24+08:00">2022-12-30</time>
+      <time title="创建时间：2023-09-20 10:27:06 / 修改时间：12:03:56" itemprop="dateCreated datePublished" datetime="2023-09-20T10:27:06+08:00">2023-09-20</time>
     </span>
 
   
@@ -216,7 +221,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>对于c++的迭代器，<strong>只有!&#x3D;</strong> 没有&lt;</p>
+<p>迭代器分为两种：<br>        vector<int>::iterator it1;  &#x2F;&#x2F; 能读写<br>        vector<int>::const_iterator it2;  &#x2F;&#x2F; 只读，不能写<br>若想得到const_iterator，有<strong>cbegin(),cend();</strong></p>
+<p><strong>但凡使用迭代器的循环体，都不要向容器添加元素</strong></p>
+<p><strong>std::difference_type</strong> 是C++标准库中的一种类型，通常与容器迭代器相关。它是一个有符号整数类型，用于表示两个迭代器之间的距离（差异）</p>
+<p>与size_type()函数类似 <strong>目的是确保在不同平台和编译器中，容器迭代器的距离计算都能正确工作，因为不同的平台和编译器可能会有不同的整数大小，保证可移植性</strong></p>
+<h3 id="size-t和size-type的区别（来自chatgpt，未完全理解）"><a href="#size-t和size-type的区别（来自chatgpt，未完全理解）" class="headerlink" title="size_t和size_type的区别（来自chatgpt，未完全理解）"></a>size_t和size_type的区别（来自chatgpt，未完全理解）</h3><p><strong>size_t：</strong> size_t是C和C++<strong>标准库</strong>中定义的一种无符号整数类型，通常用于表示对象的大小、元素数量或者数组的索引，它不是一个特定容器或类型的成员</p>
+<p><strong>size_type：</strong> size_type是一些<strong>标准库容器类</strong>的成员类型，例如 std::vector、std::string、std::deque等，是<strong>容器类特定</strong>的无符号整数类型，用于表示容器的大小、元素数量或者迭代器之间的距离。</p>
+<p>在使用容器的成员函数时，应该使用容器的 size_type 类型，以确保代码在容器的上下文中正常工作。例如，在使用 std::vector 时，应该使用 std::vector::size_type 来表示容器的大小。</p>
+<h3 id="箭头运算符-gt"><a href="#箭头运算符-gt" class="headerlink" title="箭头运算符 -&gt;"></a>箭头运算符 -&gt;</h3><p>箭头运算符 &#x3D; 解引用 + 成员访问<br>        it-&gt;mem<br>        (*it).mem<br>上面两句意思相同</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>编译时维度已知，所以维度必须是一个<strong>常量表达式</strong></p>
+<p><strong>字符数组：用字符串字面值初始化字符数组时，字符串字面值的结尾有一个空字符</strong><br>        char a[] &#x3D; “Daniel”； &#x2F;&#x2F; 自动添加表示空字符串结束的空字符，所以维度为7</p>
+<p><strong>使用数组下标时，通常定义为size_t类型</strong>，是一种机器相关的<strong>无符号类型</strong><br>size_t 的大小在不同的编译器和平台上可能会有所不同，但它的目的是确保能够安全地表示当前系统上的最大对象大小<br>通常被用于与内存分配和数据结构相关的操作，以确保代码的可移植性</p>
+<h3 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h3><p>从内向外看<br>int *ptr[10]; &#x2F;&#x2F; ptr是含有10个整型指针的数组<br>int (*ptr)[10] &#x3D; &amp;arr; &#x2F;&#x2F; ptr指向一个含有10个整数的数组</p>
+
     </div>
 
     
@@ -224,19 +242,19 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/" rel="prev" title="通信模型--同步、异步、部分同步">
-                  <i class="fa fa-chevron-left"></i> 通信模型--同步、异步、部分同步
+                <a href="/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/" rel="prev" title="c++学习笔记——9.17">
+                  <i class="fa fa-chevron-left"></i> c++学习笔记——9.17
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/01/11/%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%88Erasure-Code%EF%BC%89%E5%8F%8A%E5%85%B6%E6%BC%94%E8%BF%9BLRC%EF%BC%88Locally-Repairable-Codes%EF%BC%89/" rel="next" title="纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes）">
-                  纠删码（Erasure Code）及其演进LRC（Locally Repairable Codes） <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
