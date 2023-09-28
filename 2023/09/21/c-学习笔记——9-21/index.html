@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="缓冲区（buffer）一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区 iostream对象cerr  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容 clog ostream对象，标准错误流，有缓冲，用于报告程序执行信息 endl与’\n’区别endl相当于 ‘\n’+flush() 类型选择1 明确数值">
+    <meta name="description" content="标准库函数begin和end    int ia[] &#x3D; &amp;#123;0, 1, 2, 3&amp;#125;;     int *beg &#x3D; begin(ia); &#x2F;&#x2F; 指向ia首元素的指针     int *last &#x3D; end(ia); &#x2F;&#x2F; 指向ia尾元素的下一个位置的指针  左值和右值当一个对象被用作右值，用的是对象的值（内容）当一个对象被用作左值，用的是对象的身份（在内存中的位置） 自增 自减">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++学习笔记——9.15">
-<meta property="og:url" content="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/index.html">
+<meta property="og:title" content="c++学习笔记——9.21">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
-<meta property="og:description" content="缓冲区（buffer）一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区 iostream对象cerr  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容 clog ostream对象，标准错误流，有缓冲，用于报告程序执行信息 endl与’\n’区别endl相当于 ‘\n’+flush() 类型选择1 明确数值">
+<meta property="og:description" content="标准库函数begin和end    int ia[] &#x3D; &amp;#123;0, 1, 2, 3&amp;#125;;     int *beg &#x3D; begin(ia); &#x2F;&#x2F; 指向ia首元素的指针     int *last &#x3D; end(ia); &#x2F;&#x2F; 指向ia尾元素的下一个位置的指针  左值和右值当一个对象被用作右值，用的是对象的值（内容）当一个对象被用作左值，用的是对象的身份（在内存中的位置） 自增 自减">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-09-15T06:44:37.000Z">
-<meta property="article:modified_time" content="2023-09-17T06:20:04.751Z">
+<meta property="article:published_time" content="2023-09-21T00:55:01.000Z">
+<meta property="article:modified_time" content="2023-09-21T04:42:53.932Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/">
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/","path":"2023/09/15/c-学习笔记——9-15/","title":"c++学习笔记——9.15"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/","path":"2023/09/21/c-学习笔记——9-21/","title":"c++学习笔记——9.21"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>c++学习笔记——9.15 | Feng's Blog</title>
+<title>c++学习笔记——9.21 | Feng's Blog</title>
   
 
 
@@ -115,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%88buffer%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">缓冲区（buffer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iostream%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">iostream对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#endl%E4%B8%8E%E2%80%99-n%E2%80%99%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">endl与’\n’区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-number">4.</span> <span class="nav-text">类型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%A6%BB%E5%BC%8F%E7%BC%96%E8%AF%91"><span class="nav-number">6.</span> <span class="nav-text">分离式编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="nav-number">7.</span> <span class="nav-text">初始化建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">列表初始化</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BA%93%E5%87%BD%E6%95%B0begin%E5%92%8Cend"><span class="nav-number">1.</span> <span class="nav-text">标准库函数begin和end</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A6%E5%80%BC%E5%92%8C%E5%8F%B3%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">左值和右值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%A2%9E-%E8%87%AA%E5%87%8F%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">3.</span> <span class="nav-text">自增 自减运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const%E5%BD%A2%E5%8F%82%E5%92%8C%E5%AE%9E%E5%8F%82"><span class="nav-number">4.</span> <span class="nav-text">const形参和实参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AB%E6%9C%89%E5%8F%AF%E5%8F%98%E5%BD%A2%E5%8F%82%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">含有可变形参的函数</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/profile.png">
@@ -184,12 +184,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="c++学习笔记——9.15 | Feng's Blog">
+      <meta itemprop="name" content="c++学习笔记——9.21 | Feng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          c++学习笔记——9.15
+          c++学习笔记——9.21
         </h1>
 
         <div class="post-meta-container">
@@ -199,15 +199,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-09-15 14:44:37" itemprop="dateCreated datePublished" datetime="2023-09-15T14:44:37+08:00">2023-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-17 14:20:04" itemprop="dateModified" datetime="2023-09-17T14:20:04+08:00">2023-09-17</time>
+      <time title="创建时间：2023-09-21 08:55:01 / 修改时间：12:42:53" itemprop="dateCreated datePublished" datetime="2023-09-21T08:55:01+08:00">2023-09-21</time>
     </span>
 
   
@@ -227,26 +221,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="缓冲区（buffer）"><a href="#缓冲区（buffer）" class="headerlink" title="缓冲区（buffer）"></a>缓冲区（buffer）</h3><p>一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区</p>
-<h3 id="iostream对象"><a href="#iostream对象" class="headerlink" title="iostream对象"></a>iostream对象</h3><p><strong>cerr</strong>  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容</p>
-<p><strong>clog</strong> ostream对象，标准错误流，有缓冲，用于报告程序执行信息</p>
-<h3 id="endl与’-n’区别"><a href="#endl与’-n’区别" class="headerlink" title="endl与’\n’区别"></a>endl与’\n’区别</h3><p>endl相当于 ‘\n’+flush()</p>
-<h3 id="类型选择"><a href="#类型选择" class="headerlink" title="类型选择"></a>类型选择</h3><p>1 明确数值不可能为负时，选无符号<br>2 选int做整数运算，超过int用long long<br>3 选double做浮点数运算</p>
-<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象是具有某种数据类型的内存空间</p>
-<h3 id="分离式编译"><a href="#分离式编译" class="headerlink" title="分离式编译"></a>分离式编译</h3><ol>
-<li>每个源文件（.cpp .cc等）都是一个<strong>独立的编译单元</strong>，都会被编译一遍，并生成中间文件。在 main.cpp 里，include用来【编译】时找函数声明，中间文件用来【链接】时找函数原型。</li>
-<li>include简单的说就是复制粘贴而已，每个正常的头文件都会预防重复包含，如使用 #pramga once，#ifndef 等。</li>
-</ol>
-<p><strong>声明与定义</strong><br>c++将声明和定义区分开</p>
-<p>声明 (declaration)使得名字为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明</p>
-<p>定义(definition)负责<strong>创建</strong>与名字关联的实体</p>
-<p>如果想声明一个变量而非定义它，就在变量名前添加关键字 extern，而且不要显式地初始化变量</p>
-<pre><code>extern int i  //声明i，非定义i
-int j  // 声明并定义j
+        <h3 id="标准库函数begin和end"><a href="#标准库函数begin和end" class="headerlink" title="标准库函数begin和end"></a>标准库函数begin和end</h3><pre><code>    int ia[] = &#123;0, 1, 2, 3&#125;;
+    int *beg = begin(ia); // 指向ia首元素的指针
+    int *last = end(ia); // 指向ia尾元素的下一个位置的指针
 </code></pre>
-<p>另外，任何包含了显式初始化的声明即成为定义，如下：<br>    extern double pi &#x3D; 3.1416  &#x2F;&#x2F; 定义</p>
-<h3 id="初始化建议"><a href="#初始化建议" class="headerlink" title="初始化建议"></a>初始化建议</h3><p>初始化每一个内置类型的变量</p>
-<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3>
+<h3 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h3><p>当一个对象被用作右值，用的是对象的<strong>值（内容）</strong><br>当一个对象被用作左值，用的是对象的<strong>身份（在内存中的位置）</strong></p>
+<h3 id="自增-自减运算符"><a href="#自增-自减运算符" class="headerlink" title="自增 自减运算符"></a>自增 自减运算符</h3><p><strong>除非必须，否则不用自增自减运算符的后置版本（i++）</strong><br>原因：后置版本会先将原始值存储下来，不必要</p>
+<h3 id="const形参和实参"><a href="#const形参和实参" class="headerlink" title="const形参和实参"></a>const形参和实参</h3><p>函数中不会改变的形参定义为<strong>常量引用</strong></p>
+<h3 id="含有可变形参的函数"><a href="#含有可变形参的函数" class="headerlink" title="含有可变形参的函数"></a>含有可变形参的函数</h3><p>1 如果所有实参类型相同，可用initialzer_list（标准库类型），initialzer_list是一个模版类型<br>        void error_msg(initialzer_list<string> i) {<br>            …<br>        }</p>
+<p>2 如果实参类型不同，</p>
+
     </div>
 
     
@@ -262,13 +246,13 @@ int j  // 声明并定义j
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/" rel="prev" title="单调前缀一致性——monotonic prefix consistency">
-                  <i class="fa fa-chevron-left"></i> 单调前缀一致性——monotonic prefix consistency
+                <a href="/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/" rel="prev" title="c++学习笔记——9.20">
+                  <i class="fa fa-chevron-left"></i> c++学习笔记——9.20
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/" rel="next" title="c++学习笔记——9.17">
-                  c++学习笔记——9.17 <i class="fa fa-chevron-right"></i>
+                <a href="/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/" rel="next" title="java学习笔记——9.26">
+                  java学习笔记——9.26 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

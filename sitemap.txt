@@ -1,3 +1,5 @@
+http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/
+http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/
 http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/
 http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/
 http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/
@@ -28,3 +30,4 @@ http://coder_tinghao.github.io/tags/%E6%97%A5%E5%B8%B8/
 http://coder_tinghao.github.io/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/
 http://coder_tinghao.github.io/tags/linux/
 http://coder_tinghao.github.io/tags/c/
+http://coder_tinghao.github.io/tags/java/

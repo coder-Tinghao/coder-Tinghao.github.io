@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="缓冲区（buffer）一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区 iostream对象cerr  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容 clog ostream对象，标准错误流，有缓冲，用于报告程序执行信息 endl与’\n’区别endl相当于 ‘\n’+flush() 类型选择1 明确数值">
+    <meta name="description" content="字符串java字符串，String类对象不可变 优点：编译器可以让字符串共享 字符串字面值存放在常量池（也是在堆内存中）     String s1 &#x3D; &quot;abc&quot;; &#x2F;&#x2F; 通过赋值的方式初始化     String s2 &#x3D; &quot;abc&quot;;     System.out.println(s1&#x3D;&#x3D;s2); &#x2F;&#x2F; 返回true，说明在常量池的同一个地方  若通过">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++学习笔记——9.15">
-<meta property="og:url" content="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/index.html">
+<meta property="og:title" content="java学习笔记——9.26">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
-<meta property="og:description" content="缓冲区（buffer）一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区 iostream对象cerr  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容 clog ostream对象，标准错误流，有缓冲，用于报告程序执行信息 endl与’\n’区别endl相当于 ‘\n’+flush() 类型选择1 明确数值">
+<meta property="og:description" content="字符串java字符串，String类对象不可变 优点：编译器可以让字符串共享 字符串字面值存放在常量池（也是在堆内存中）     String s1 &#x3D; &quot;abc&quot;; &#x2F;&#x2F; 通过赋值的方式初始化     String s2 &#x3D; &quot;abc&quot;;     System.out.println(s1&#x3D;&#x3D;s2); &#x2F;&#x2F; 返回true，说明在常量池的同一个地方  若通过">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-09-15T06:44:37.000Z">
-<meta property="article:modified_time" content="2023-09-17T06:20:04.751Z">
+<meta property="article:published_time" content="2023-09-26T12:28:45.000Z">
+<meta property="article:modified_time" content="2023-09-28T17:06:30.632Z">
 <meta property="article:author" content="Fength">
-<meta property="article:tag" content="c++">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/">
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/","path":"2023/09/15/c-学习笔记——9-15/","title":"c++学习笔记——9.15"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/","path":"2023/09/26/java学习笔记——9-26/","title":"java学习笔记——9.26"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>c++学习笔记——9.15 | Feng's Blog</title>
+<title>java学习笔记——9.26 | Feng's Blog</title>
   
 
 
@@ -115,7 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%88buffer%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">缓冲区（buffer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iostream%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">iostream对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#endl%E4%B8%8E%E2%80%99-n%E2%80%99%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">endl与’\n’区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-number">4.</span> <span class="nav-text">类型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%A6%BB%E5%BC%8F%E7%BC%96%E8%AF%91"><span class="nav-number">6.</span> <span class="nav-text">分离式编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="nav-number">7.</span> <span class="nav-text">初始化建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">列表初始化</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E7%AD%89"><span class="nav-number">1.1.</span> <span class="nav-text">检测字符串相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E4%B8%B2%E4%B8%8Enull"><span class="nav-number">1.2.</span> <span class="nav-text">空串与null</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA"><span class="nav-number">1.3.</span> <span class="nav-text">构建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">2.</span> <span class="nav-text">块作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">3.</span> <span class="nav-text">数组</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/profile.png">
@@ -184,12 +184,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="c++学习笔记——9.15 | Feng's Blog">
+      <meta itemprop="name" content="java学习笔记——9.26 | Feng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          c++学习笔记——9.15
+          java学习笔记——9.26
         </h1>
 
         <div class="post-meta-container">
@@ -200,14 +200,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-09-15 14:44:37" itemprop="dateCreated datePublished" datetime="2023-09-15T14:44:37+08:00">2023-09-15</time>
+      <time title="创建时间：2023-09-26 20:28:45" itemprop="dateCreated datePublished" datetime="2023-09-26T20:28:45+08:00">2023-09-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-17 14:20:04" itemprop="dateModified" datetime="2023-09-17T14:20:04+08:00">2023-09-17</time>
+      <time title="修改时间：2023-09-29 01:06:30" itemprop="dateModified" datetime="2023-09-29T01:06:30+08:00">2023-09-29</time>
     </span>
 
   
@@ -227,26 +227,45 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="缓冲区（buffer）"><a href="#缓冲区（buffer）" class="headerlink" title="缓冲区（buffer）"></a>缓冲区（buffer）</h3><p>一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区</p>
-<h3 id="iostream对象"><a href="#iostream对象" class="headerlink" title="iostream对象"></a>iostream对象</h3><p><strong>cerr</strong>  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容</p>
-<p><strong>clog</strong> ostream对象，标准错误流，有缓冲，用于报告程序执行信息</p>
-<h3 id="endl与’-n’区别"><a href="#endl与’-n’区别" class="headerlink" title="endl与’\n’区别"></a>endl与’\n’区别</h3><p>endl相当于 ‘\n’+flush()</p>
-<h3 id="类型选择"><a href="#类型选择" class="headerlink" title="类型选择"></a>类型选择</h3><p>1 明确数值不可能为负时，选无符号<br>2 选int做整数运算，超过int用long long<br>3 选double做浮点数运算</p>
-<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象是具有某种数据类型的内存空间</p>
-<h3 id="分离式编译"><a href="#分离式编译" class="headerlink" title="分离式编译"></a>分离式编译</h3><ol>
-<li>每个源文件（.cpp .cc等）都是一个<strong>独立的编译单元</strong>，都会被编译一遍，并生成中间文件。在 main.cpp 里，include用来【编译】时找函数声明，中间文件用来【链接】时找函数原型。</li>
-<li>include简单的说就是复制粘贴而已，每个正常的头文件都会预防重复包含，如使用 #pramga once，#ifndef 等。</li>
-</ol>
-<p><strong>声明与定义</strong><br>c++将声明和定义区分开</p>
-<p>声明 (declaration)使得名字为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明</p>
-<p>定义(definition)负责<strong>创建</strong>与名字关联的实体</p>
-<p>如果想声明一个变量而非定义它，就在变量名前添加关键字 extern，而且不要显式地初始化变量</p>
-<pre><code>extern int i  //声明i，非定义i
-int j  // 声明并定义j
+        <h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p>
+<p>优点：编译器可以让字符串<strong>共享</strong></p>
+<p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p>
+<pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化
+    String s2 = &quot;abc&quot;;
+    System.out.println(s1==s2); // 返回true，说明在常量池的同一个地方
 </code></pre>
-<p>另外，任何包含了显式初始化的声明即成为定义，如下：<br>    extern double pi &#x3D; 3.1416  &#x2F;&#x2F; 定义</p>
-<h3 id="初始化建议"><a href="#初始化建议" class="headerlink" title="初始化建议"></a>初始化建议</h3><p>初始化每一个内置类型的变量</p>
-<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3>
+<p>若通过new初始化，则在堆内存中，不在常量池中</p>
+<pre><code>    String s1 = new String(&quot;abc&quot;);
+    String s2 = new String(&quot;abc&quot;);
+    System.out.println(s1==s2); // 返回false，说明s2创建时，在堆内存中又新建了一个“abc”对象
+</code></pre>
+<p>所以，通过直接赋值的方式进行初始化还可以节省空间</p>
+<h4 id="检测字符串相等"><a href="#检测字符串相等" class="headerlink" title="检测字符串相等"></a>检测字符串相等</h4><p>用.equals()方法检测</p>
+<p>&#x3D;&#x3D; 运算符只能确定两个字符串是否存放在同一位置<br>只有字符串字面值会共享，+和substring得到的字符串不共享</p>
+<h4 id="空串与null"><a href="#空串与null" class="headerlink" title="空串与null"></a>空串与null</h4><p>空串是一个对象，长度为0，内容为空</p>
+<pre><code>    str.length() == 0;
+    str.equals(&quot;&quot;);
+</code></pre>
+<p>null表示没有任何对象与该变量相关联</p>
+<pre><code>    str === null
+</code></pre>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder<br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p>
+<pre><code>    StringBuilder sb = new StringBuilder();
+    sb.append(str1);
+    sb.append(str2);
+    String ret = sb.toString();
+</code></pre>
+<p>StringBuffer<br>效率不如StringBuilder，但是支持<strong>多线程编辑操作</strong></p>
+<h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p>
+<pre><code>    int[] a = new int[100];
+    System.out.println(Arrays.toString(a));
+</code></pre>
+<p>快速打印二维数组</p>
+<pre><code>    int[] a = new int[100][100];
+    System.out.println(Arrays.deeptoString(a));
+</code></pre>
+
     </div>
 
     
@@ -255,21 +274,18 @@ int j  // 声明并定义j
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/java/" rel="tag"># java</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/" rel="prev" title="单调前缀一致性——monotonic prefix consistency">
-                  <i class="fa fa-chevron-left"></i> 单调前缀一致性——monotonic prefix consistency
+                <a href="/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/" rel="prev" title="c++学习笔记——9.21">
+                  <i class="fa fa-chevron-left"></i> c++学习笔记——9.21
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/" rel="next" title="c++学习笔记——9.17">
-                  c++学习笔记——9.17 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

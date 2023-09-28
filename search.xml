@@ -580,4 +580,67 @@ int j  // 声明并定义j
         <tag>c++</tag>
       </tags>
   </entry>
+  <entry>
+    <title>c++学习笔记——9.21</title>
+    <url>/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/</url>
+    <content><![CDATA[<h3 id="标准库函数begin和end"><a href="#标准库函数begin和end" class="headerlink" title="标准库函数begin和end"></a>标准库函数begin和end</h3><pre><code>    int ia[] = &#123;0, 1, 2, 3&#125;;
+    int *beg = begin(ia); // 指向ia首元素的指针
+    int *last = end(ia); // 指向ia尾元素的下一个位置的指针
+</code></pre>
+<h3 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h3><p>当一个对象被用作右值，用的是对象的<strong>值（内容）</strong><br>当一个对象被用作左值，用的是对象的<strong>身份（在内存中的位置）</strong></p>
+<h3 id="自增-自减运算符"><a href="#自增-自减运算符" class="headerlink" title="自增 自减运算符"></a>自增 自减运算符</h3><p><strong>除非必须，否则不用自增自减运算符的后置版本（i++）</strong><br>原因：后置版本会先将原始值存储下来，不必要</p>
+<h3 id="const形参和实参"><a href="#const形参和实参" class="headerlink" title="const形参和实参"></a>const形参和实参</h3><p>函数中不会改变的形参定义为<strong>常量引用</strong></p>
+<h3 id="含有可变形参的函数"><a href="#含有可变形参的函数" class="headerlink" title="含有可变形参的函数"></a>含有可变形参的函数</h3><p>1 如果所有实参类型相同，可用initialzer_list（标准库类型），initialzer_list是一个模版类型<br>        void error_msg(initialzer_list<string> i) {<br>            …<br>        }</p>
+<p>2 如果实参类型不同，</p>
+]]></content>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记——9.26</title>
+    <url>/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/</url>
+    <content><![CDATA[<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p>
+<p>优点：编译器可以让字符串<strong>共享</strong></p>
+<p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p>
+<pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化
+    String s2 = &quot;abc&quot;;
+    System.out.println(s1==s2); // 返回true，说明在常量池的同一个地方
+</code></pre>
+<p>若通过new初始化，则在堆内存中，不在常量池中</p>
+<pre><code>    String s1 = new String(&quot;abc&quot;);
+    String s2 = new String(&quot;abc&quot;);
+    System.out.println(s1==s2); // 返回false，说明s2创建时，在堆内存中又新建了一个“abc”对象
+</code></pre>
+<p>所以，通过直接赋值的方式进行初始化还可以节省空间</p>
+<h4 id="检测字符串相等"><a href="#检测字符串相等" class="headerlink" title="检测字符串相等"></a>检测字符串相等</h4><p>用.equals()方法检测</p>
+<p>&#x3D;&#x3D; 运算符只能确定两个字符串是否存放在同一位置<br>只有字符串字面值会共享，+和substring得到的字符串不共享</p>
+<h4 id="空串与null"><a href="#空串与null" class="headerlink" title="空串与null"></a>空串与null</h4><p>空串是一个对象，长度为0，内容为空</p>
+<pre><code>    str.length() == 0;
+    str.equals(&quot;&quot;);
+</code></pre>
+<p>null表示没有任何对象与该变量相关联</p>
+<pre><code>    str === null
+</code></pre>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder<br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p>
+<pre><code>    StringBuilder sb = new StringBuilder();
+    sb.append(str1);
+    sb.append(str2);
+    String ret = sb.toString();
+</code></pre>
+<p>StringBuffer<br>效率不如StringBuilder，但是支持<strong>多线程编辑操作</strong></p>
+<h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p>
+<pre><code>    int[] a = new int[100];
+    System.out.println(Arrays.toString(a));
+</code></pre>
+<p>快速打印二维数组</p>
+<pre><code>    int[] a = new int[100][100];
+    System.out.println(Arrays.deeptoString(a));
+</code></pre>
+]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
 </search>
