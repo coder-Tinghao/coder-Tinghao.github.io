@@ -269,7 +269,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-29 17:50:31" itemprop="dateModified" datetime="2023-09-29T17:50:31+08:00">2023-09-29</time>
+      <time title="修改时间：2023-09-29 18:38:13" itemprop="dateModified" datetime="2023-09-29T18:38:13+08:00">2023-09-29</time>
     </span>
 
   
@@ -311,6 +311,8 @@
     sb.append(str2);
     String ret = sb.toString();
 </code></pre>
+<p><strong>源码分析</strong><br>长度 .length() ：实际存了多少<br>容量 .capacity() :最多可以存多少<br>初始容量为<strong>指定字符串 +16</strong>，若初始化时为空，容量就是16；也可以指定容量</p>
+<h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><p>若不够，先扩容为2倍+2；若还不够，扩容为字符串实际长度<br>扩容就是创建一个新容量的byte数组，把字符串内容复制进去，再返回</p>
 <p><strong>StringBuffer</strong><br>与StringBuilder类似，没有StringBuilder速度快，多数情况下用Builder<br>但是，StringBuilder不是线程安全的，<strong>若要求线程安全必须用StringBuffer</strong></p>
 <p><strong>原因</strong>：StringBuffer中所有方法都是synchronized修饰的，同一时间只能有一个线程访问，StringBuilder中的操作有非原子操作。但是实际情况中，String的构建几乎不涉及多线程场景</p>
 <p><strong>StringJoiner</strong><br>StringJoiner基于StringBuilder构建的适用于<strong>字符拼接</strong>的场景</p>
