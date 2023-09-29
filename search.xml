@@ -637,6 +637,13 @@ int j  // 声明并定义j
     String result = sj.toString(); // 转换为字符串
     System.out.println(result); // 张三,李四,王五
 </code></pre>
+<h3 id="字符串拼接底层原理"><a href="#字符串拼接底层原理" class="headerlink" title="字符串拼接底层原理"></a>字符串拼接底层原理</h3><p>如果没有变量参与，编译时会进行优化，<strong>编译时拼接起来，会复用常量池中的字符串</strong></p>
+<pre><code>    String s1 = &quot;abc&quot;;
+    String s2 = &quot;a&quot; + &quot;b&quot; + &quot;c&quot;;
+    System.out.println(s1==s2); // 返回true，
+</code></pre>
+<p>如果有变量参与，每一行拼接都会在内存中创建新字符串对象，浪费内存</p>
+<h4 id="StringBuilder优化原理"><a href="#StringBuilder优化原理" class="headerlink" title="StringBuilder优化原理"></a>StringBuilder优化原理</h4><p>创建一次StringBuilder对象，所有要拼接的都往这一个对象放，节约内存</p>
 <h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p>
 <pre><code>    int[] a = new int[100];
