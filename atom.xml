@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-09-28T17:06:30.632Z</updated>
+  <updated>2023-09-29T03:45:41.931Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -17,13 +17,28 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>java学习笔记——9.29</title>
+    <link href="http://coder_tinghao.github.io/2023/09/29/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-29/"/>
+    <id>http://coder_tinghao.github.io/2023/09/29/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-29/</id>
+    <published>2023-09-29T03:45:19.000Z</published>
+    <updated>2023-09-29T03:45:41.931Z</updated>
+    
+    
+    
+    
+    
+    <category term="java" scheme="http://coder_tinghao.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>java学习笔记——9.26</title>
     <link href="http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/"/>
     <id>http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/</id>
     <published>2023-09-26T12:28:45.000Z</published>
-    <updated>2023-09-28T17:06:30.632Z</updated>
+    <updated>2023-09-29T09:30:33.156Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p><p>优点：编译器可以让字符串<strong>共享</strong></p><p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p><pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化    String s2 = &quot;abc&quot;;    System.out.println(s1==s2); // 返回true，说明在常量池的同一个地方</code></pre><p>若通过new初始化，则在堆内存中，不在常量池中</p><pre><code>    String s1 = new String(&quot;abc&quot;);    String s2 = new String(&quot;abc&quot;);    System.out.println(s1==s2); // 返回false，说明s2创建时，在堆内存中又新建了一个“abc”对象</code></pre><p>所以，通过直接赋值的方式进行初始化还可以节省空间</p><h4 id="检测字符串相等"><a href="#检测字符串相等" class="headerlink" title="检测字符串相等"></a>检测字符串相等</h4><p>用.equals()方法检测</p><p>&#x3D;&#x3D; 运算符只能确定两个字符串是否存放在同一位置<br>只有字符串字面值会共享，+和substring得到的字符串不共享</p><h4 id="空串与null"><a href="#空串与null" class="headerlink" title="空串与null"></a>空串与null</h4><p>空串是一个对象，长度为0，内容为空</p><pre><code>    str.length() == 0;    str.equals(&quot;&quot;);</code></pre><p>null表示没有任何对象与该变量相关联</p><pre><code>    str === null</code></pre><h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder<br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p><pre><code>    StringBuilder sb = new StringBuilder();    sb.append(str1);    sb.append(str2);    String ret = sb.toString();</code></pre><p>StringBuffer<br>效率不如StringBuilder，但是支持<strong>多线程编辑操作</strong></p><h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p><pre><code>    int[] a = new int[100];    System.out.println(Arrays.toString(a));</code></pre><p>快速打印二维数组</p><pre><code>    int[] a = new int[100][100];    System.out.println(Arrays.deeptoString(a));</code></pre>]]></content>
+    <content type="html"><![CDATA[<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p><p>优点：编译器可以让字符串<strong>共享</strong></p><p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p><pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化    String s2 = &quot;abc&quot;;    System.out.println(s1==s2); // 返回true，说明在常量池的同一个地方</code></pre><p>若通过new初始化，则在堆内存中，不在常量池中</p><pre><code>    String s1 = new String(&quot;abc&quot;);    String s2 = new String(&quot;abc&quot;);    System.out.println(s1==s2); // 返回false，说明s2创建时，在堆内存中又新建了一个“abc”对象</code></pre><p>所以，通过直接赋值的方式进行初始化还可以节省空间</p><h4 id="检测字符串相等"><a href="#检测字符串相等" class="headerlink" title="检测字符串相等"></a>检测字符串相等</h4><p>用.equals()方法检测</p><p>&#x3D;&#x3D; 运算符只能确定两个字符串是否存放在同一位置<br>只有字符串字面值会共享，+和substring得到的字符串不共享</p><h4 id="空串与null"><a href="#空串与null" class="headerlink" title="空串与null"></a>空串与null</h4><p>空串是一个对象，长度为0，内容为空</p><pre><code>    str.length() == 0;    str.equals(&quot;&quot;);</code></pre><p>null表示没有任何对象与该变量相关联</p><pre><code>    str === null</code></pre><h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder和StringBuffer都可以理解成容器，用于<strong>支持String修改操作</strong></p><p><strong>StringBuilder</strong><br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p><pre><code>    StringBuilder sb = new StringBuilder();    sb.append(str1);    sb.append(str2);    String ret = sb.toString();</code></pre><p><strong>StringBuffer</strong><br>与StringBuilder类似，没有StringBuilder速度快，多数情况下用Builder<br>但是，StringBuilder不是线程安全的，<strong>若要求线程安全必须用StringBuffer</strong></p><p><strong>原因</strong>：StringBuffer中所有方法都是synchronized修饰的，同一时间只能有一个线程访问，StringBuilder中的操作有非原子操作。但是实际情况中，String的构建几乎不涉及多线程场景</p><p><strong>StringJoiner</strong><br>StringJoiner基于StringBuilder构建的适用于<strong>字符拼接</strong>的场景</p><pre><code>    StringJoiner sj = new StringJoiner(&quot;,&quot;); // 指定分隔符    sj.add(&quot;张三&quot;).add(&quot;李四&quot;).add(&quot;王五&quot;); // 添加元素    String result = sj.toString(); // 转换为字符串    System.out.println(result); // 张三,李四,王五</code></pre><h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p><pre><code>    int[] a = new int[100];    System.out.println(Arrays.toString(a));</code></pre><p>快速打印二维数组</p><pre><code>    int[] a = new int[100][100];    System.out.println(Arrays.deeptoString(a));</code></pre>]]></content>
     
     
       
@@ -430,28 +445,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>通信模型--同步、异步、部分同步</title>
-    <link href="http://coder_tinghao.github.io/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/"/>
-    <id>http://coder_tinghao.github.io/2022/12/25/%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B-%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%83%A8%E5%88%86%E5%90%8C%E6%AD%A5/</id>
-    <published>2022-12-25T06:19:46.000Z</published>
-    <updated>2022-12-25T06:49:45.346Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="通信模型"><a href="#通信模型" class="headerlink" title="通信模型"></a>通信模型</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在标准的分布式计算模型中，通信的不确定性被可以控制消息延迟的敌手捕获。通信模型定义了敌手延迟消息的能力的限制。</p><p>在同步模型中，存在一些已知的有限时间界限Δ。 对于发送的任何消息，敌手最多可以将其传递延迟Δ。</p><p>在异步模型中，对于发送的任何消息，敌手可以将其传递延迟任意有限的时间。 因此，一方面，传递消息的时间没有限制，但另一方面，每条消息最终都必须传递。</p><p>部分同步模型（参见<a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf">DLS88</a>）旨在找到这两个模型之间的折中。 假设存在一些已知的有限时间界限 Δ 和一个称为 GST（Global Stabilization Time–全局稳定时间）的特殊事件，使得：敌手必须导致 GST 事件在某个未知的有限时间后最终发生。在时间 x 发送的任何消息必须在时间 Δ+max(x,GST) 之前交付。</p><p>在部分同步模型中，系统在GST之前异步运行，在GST之后同步运行</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于同步模型：</p><p>1.存在一个trade-off问题：有限时间界限Δ过长，造成长时间超时，会降低性能；有限时间界限Δ过短，会造成安全性违规问题。<br>2.假设找到了Δ的sweet spot，想象一个发送者向两个接收者广播一条消息，一个消息在Δ−ε时间后到达，另一个在Δ+ε后到达。在这里，真实世界的行为与模型不同，这可能再次导致安全问题。</p><p>对于异步模型：</p><p>异步模型的主要问题是该模型中的协议往往更复杂且更难推理。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;通信模型&quot;&gt;&lt;a href=&quot;#通信模型&quot; class=&quot;headerlink&quot; title=&quot;通信模型&quot;&gt;&lt;/a&gt;通信模型&lt;/h1&gt;&lt;h2 id=&quot;定义&quot;&gt;&lt;a href=&quot;#定义&quot; class=&quot;headerlink&quot; title=&quot;定义&quot;&gt;&lt;/a&gt;定义&lt;/h</summary>
-      
-    
-    
-    
-    
-    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   

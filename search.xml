@@ -622,13 +622,21 @@ int j  // 声明并定义j
 <p>null表示没有任何对象与该变量相关联</p>
 <pre><code>    str === null
 </code></pre>
-<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder<br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder和StringBuffer都可以理解成容器，用于<strong>支持String修改操作</strong></p>
+<p><strong>StringBuilder</strong><br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p>
 <pre><code>    StringBuilder sb = new StringBuilder();
     sb.append(str1);
     sb.append(str2);
     String ret = sb.toString();
 </code></pre>
-<p>StringBuffer<br>效率不如StringBuilder，但是支持<strong>多线程编辑操作</strong></p>
+<p><strong>StringBuffer</strong><br>与StringBuilder类似，没有StringBuilder速度快，多数情况下用Builder<br>但是，StringBuilder不是线程安全的，<strong>若要求线程安全必须用StringBuffer</strong></p>
+<p><strong>原因</strong>：StringBuffer中所有方法都是synchronized修饰的，同一时间只能有一个线程访问，StringBuilder中的操作有非原子操作。但是实际情况中，String的构建几乎不涉及多线程场景</p>
+<p><strong>StringJoiner</strong><br>StringJoiner基于StringBuilder构建的适用于<strong>字符拼接</strong>的场景</p>
+<pre><code>    StringJoiner sj = new StringJoiner(&quot;,&quot;); // 指定分隔符
+    sj.add(&quot;张三&quot;).add(&quot;李四&quot;).add(&quot;王五&quot;); // 添加元素
+    String result = sj.toString(); // 转换为字符串
+    System.out.println(result); // 张三,李四,王五
+</code></pre>
 <h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p>
 <pre><code>    int[] a = new int[100];
@@ -639,6 +647,14 @@ int j  // 声明并定义j
     System.out.println(Arrays.deeptoString(a));
 </code></pre>
 ]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记——9.29</title>
+    <url>/2023/09/29/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-29/</url>
+    <content><![CDATA[]]></content>
       <tags>
         <tag>java</tag>
       </tags>
