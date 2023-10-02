@@ -663,7 +663,44 @@ int j  // 声明并定义j
   <entry>
     <title>java学习笔记——9.29</title>
     <url>/2023/09/29/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-29/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="java堆"><a href="#java堆" class="headerlink" title="java堆"></a>java堆</h3><p>java new出来的对象都<strong>大多</strong>是在堆中构造的，不绝对</p>
+<h3 id="java-var关键字"><a href="#java-var关键字" class="headerlink" title="java var关键字"></a>java var关键字</h3><p>var关键字用于<strong>局部变量的类型推导</strong>，参数和字段的类型必须声明</p>
+<h3 id="java类"><a href="#java类" class="headerlink" title="java类"></a>java类</h3><p>只访问对象而不修改对象——<strong>访问器方法</strong></p>
+<pre><code>getXXX() &#123;
+    
+&#125;
+</code></pre>
+<p>能修改的——<strong>修改器方法</strong></p>
+<pre><code>setXXX() &#123;
+
+&#125;
+</code></pre>
+<h3 id="null引用"><a href="#null引用" class="headerlink" title="null引用"></a>null引用</h3><p>没有任何引用对象</p>
+<pre><code>// 对象引用参数为null时，转化为非null值
+public Emmployee(String name, int age) &#123;
+    name = Objects.requireNonNullElse(n, &quot;unknown&quot;);
+&#125;
+
+// 对象引用参数为null时，产生异常
+// 但可以准确定位，会提供问题描述
+public Emmployee(String name, int age) &#123;
+    name = Objects.requireNonNull(n, &quot;name cannot be null&quot;);
+&#125;
+</code></pre>
+<h3 id="方法参数（java核心技术P122）"><a href="#方法参数（java核心技术P122）" class="headerlink" title="方法参数（java核心技术P122）"></a>方法参数（java核心技术P122）</h3><p>参数类型：基本数据类型，对象引用</p>
+<p>java中总是采用<strong>按值传递</strong>，方法不可能修改基本数据类型的参数</p>
+<p>传入一个<strong>对象参数</strong>就可以实现修改</p>
+<p>原因：Java中实际上对象引用也是按值传递的<br>参数传一个对象引用，因为是值传递，可以获得一个对象引用的副本（个人理解：就是传入这个对象地址值的副本，和远对象引用指向同一个对象）那么这个对象引用的副本就可以操作这个对象修改所引用对象的状态</p>
+<h3 id="java记录"><a href="#java记录" class="headerlink" title="java记录"></a>java记录</h3><p>特殊类，状态不可变，公共可读</p>
+<pre><code>record Point(double x, double y) &#123; &#125;
+var p = new Point(3, 4);
+sout(p.x() + p.y());
+</code></pre>
+<p>访问器方法名为变量名</p>
+<h3 id="java静态绑定和动态绑定"><a href="#java静态绑定和动态绑定" class="headerlink" title="java静态绑定和动态绑定"></a>java静态绑定和动态绑定</h3><p>静态绑定发生在编译时期，动态绑定发生在运行时</p>
+<p>使用private或static或final修饰的变量或者方法，编译器可以准确的知道可以调用哪个方法，使用静态绑定<br>可以被子类重写的方法则会根据运行时的对象进行动态绑定</p>
+<p>动态绑定过程：<br>jvm会为每个类生成一个<strong>方法表</strong>，方便在调用方法时查找该用哪个方法</p>
+]]></content>
       <tags>
         <tag>java</tag>
       </tags>
