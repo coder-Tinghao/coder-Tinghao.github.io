@@ -700,7 +700,23 @@ sout(p.x() + p.y());
 <h3 id="java静态绑定和动态绑定"><a href="#java静态绑定和动态绑定" class="headerlink" title="java静态绑定和动态绑定"></a>java静态绑定和动态绑定</h3><p>静态绑定发生在编译时期，动态绑定发生在运行时</p>
 <p>使用private或static或final修饰的变量或者方法，编译器可以准确的知道可以调用哪个方法，使用静态绑定<br>可以被子类重写的方法则会根据运行时的对象进行动态绑定</p>
 <p>动态绑定过程：<br>jvm会为每个类生成一个<strong>方法表</strong>，方便在调用方法时查找该用哪个方法</p>
+<h3 id="Object类"><a href="#Object类" class="headerlink" title="Object类"></a>Object类</h3><p><strong>toString方法</strong><br>返回一个表示对象的值的字符串<br>用法：例如下面的代码，常用于自定义toString方法，来<strong>方便获取和打印对象状态</strong>的有用信息</p>
+<pre><code>public String toString() &#123;
+    return getClass().getName()
+    + &quot;name=&quot; + name;
+&#125;
+</code></pre>
+<h3 id="包装器"><a href="#包装器" class="headerlink" title="包装器"></a>包装器</h3><p>如：Integer对应int<br><strong>包装器类是不可变的，不允许更改里面的值</strong>，且是final的</p>
+<h3 id="密封类sealed"><a href="#密封类sealed" class="headerlink" title="密封类sealed"></a>密封类sealed</h3><p>可以控制哪些类可以继承他</p>
 ]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记——10.5</title>
+    <url>/2023/10/05/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9410-5/</url>
+    <content><![CDATA[]]></content>
       <tags>
         <tag>java</tag>
       </tags>
