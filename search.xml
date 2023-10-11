@@ -714,9 +714,35 @@ sout(p.x() + p.y());
       </tags>
   </entry>
   <entry>
-    <title>java学习笔记——10.5</title>
-    <url>/2023/10/05/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9410-5/</url>
-    <content><![CDATA[]]></content>
+    <title>java学习笔记——10.9</title>
+    <url>/2023/10/05/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9410-9/</url>
+    <content><![CDATA[<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p><strong>为什么不用抽象类表示通用属性？</strong><br>java中没有多重继承，每个类只能扩展一个类，那比如一个类想扩展多个抽象功能，就做不到了<br>接口提供多重继承，每个类可以实现任意多个接口</p>
+<h3 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h3><p>回调函数（callback function）所指的是一个函数作为参数传递到另一个函数，并且它将在某些“事件”（条件判定、函数调用、按钮点击事件或者是计时器计时等）触发后被调用执行，以完成我们指定的任务</p>
+<h3 id="克隆与拷贝"><a href="#克隆与拷贝" class="headerlink" title="克隆与拷贝"></a>克隆与拷贝</h3><p>拷贝：原变量和副本都是同一个对象的引用（引用拷贝）<br>克隆：是copy一个新对象，初始状态和原来相同，需要使用<strong>clone()方法</strong></p>
+<p>所有数组类型都有一个公共的clone方法，且不受保护</p>
+<pre><code>int[] a = &#123;1,2,3,4,5&#125;;
+int[] b = a.clone()
+b[4] = 2; // 不会改变a数组中的值
+</code></pre>
+<h4 id="深拷贝和浅拷贝-（java核心技术P248）"><a href="#深拷贝和浅拷贝-（java核心技术P248）" class="headerlink" title="深拷贝和浅拷贝 （java核心技术P248）"></a>深拷贝和浅拷贝 （java核心技术P248）</h4><p>暂时浅浅理解</p>
+<p>浅拷贝：克隆的默认操作，没有克隆对象中引用的其他对象<br>深拷贝：深拷贝把要复制的对象<strong>所引用的对象</strong>都复制了一遍<br>这两种拷贝都叫<strong>对象拷贝</strong></p>
+<h3 id="lambda表达式及函数式接口"><a href="#lambda表达式及函数式接口" class="headerlink" title="lambda表达式及函数式接口"></a>lambda表达式及函数式接口</h3><p><strong>函数式接口就是只有一个抽象方法的接口</strong>，比如典型的Comparator接口就是只有一个方法的接口（就一个函数，像个函数似的但是是接口，就叫函数式接口，没毛病）<br>对于Arrays.sort(xx, xx)  这个sort方法会接收实现了Comparator<String>某个类的对象，在对象上调用compare方法</p>
+<p>设计函数式接口时，可以加上@<strong>FunctionalInterface注解</strong>，用于检查是否只有一个抽象方法和javadoc页可以指出这是一个函数式接口</p>
+<pre><code>@FunctionalInterface
+interface MathOperation &#123;
+    int operate(int a, int b);
+&#125;
+
+MathOperation addition = (a, b) -&gt; a + b; // 使用Lambda表达式来创建函数式接口的实例
+int result = addition.operate(5, 3); // 调用MathOperation接口的operate方法
+System.out.println(result); // 输出8
+</code></pre>
+<p>lambda表达式可以转换为接口（只转换为函数式接口）<br><strong>把lambda表达式看作一个函数</strong>，而不是对象，且可以传递到函数式接口<br>lambda表达式可以捕获外围作用域的<strong>事实最终变量（初始化后就不再被赋新值）</strong></p>
+<p><strong>和c++的区别就是</strong>：c++传的是个函数指针，java传的是个实现了这个接口的类的对象，从这个对象调这个函数</p>
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>方法引用是用来简化Lambda表达式的一种方式，它可以将已存在的方法引用为Lambda表达式的实现，方法引用适用于Lambda表达式的签名与被引用方法的签名兼容的情况</p>
+<p>包括静态方法、实例方法、构造方法<br>（具体见《java核心技术》P258）</p>
+<h3 id="java代理"><a href="#java代理" class="headerlink" title="java代理"></a>java代理</h3><p>涉及反射，后续看完反射回头看</p>
+]]></content>
       <tags>
         <tag>java</tag>
       </tags>
