@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">27</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">28</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,90 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/10/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9410-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/10/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9410-12/" class="post-title-link" itemprop="url">java学习笔记——10.12</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-12 12:37:11" itemprop="dateCreated datePublished" datetime="2023-10-12T12:37:11+08:00">2023-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-13 20:13:06" itemprop="dateModified" datetime="2023-10-13T20:13:06+08:00">2023-10-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><pre><code>assert condition;
+assert condition: expression;
+</code></pre>
+<p>expression表达式部分为了<strong>生成一个消息字符串</strong></p>
+<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><h4 id="类型擦除"><a href="#类型擦除" class="headerlink" title="类型擦除"></a>类型擦除</h4><p><strong>Java虚拟机没有泛型类型对象，所有对象都属于普通类</strong><br>对于一个泛型类型，都会自动提供一个<strong>原始类型</strong><br>对于无限定的类型变量，会被替换为Object；对于有限定的，用第一个限定来替换类型变量<br>例如：List<T> 在运行时被视为List<Object></p>
+<h4 id="Java桥方法"><a href="#Java桥方法" class="headerlink" title="Java桥方法"></a>Java桥方法</h4><p>虚拟机合成桥方法以保持多态<br>暂时没看懂。。。</p>
+<p>泛型类型继承机制<br>考虑一个类和一个子类Employee和Manager，<strong>Pair<Manager>不是Pair<Employee>的子类型</strong></p>
+<h4 id="通配符类型"><a href="#通配符类型" class="headerlink" title="通配符类型"></a>通配符类型</h4><p>没看懂</p>
+<h4 id="反射和泛型"><a href="#反射和泛型" class="headerlink" title="反射和泛型"></a>反射和泛型</h4><p>没看懂</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -200,7 +284,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-11 21:09:16" itemprop="dateModified" datetime="2023-10-11T21:09:16+08:00">2023-10-11</time>
+      <time title="修改时间：2023-10-14 20:34:22" itemprop="dateModified" datetime="2023-10-14T20:34:22+08:00">2023-10-14</time>
     </span>
 
   
@@ -239,6 +323,15 @@ System.out.println(result); // 输出8
 <h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>方法引用是用来简化Lambda表达式的一种方式，它可以将已存在的方法引用为Lambda表达式的实现，方法引用适用于Lambda表达式的签名与被引用方法的签名兼容的情况</p>
 <p>包括静态方法、实例方法、构造方法<br>（具体见《java核心技术》P258）</p>
 <h3 id="java代理"><a href="#java代理" class="headerlink" title="java代理"></a>java代理</h3><p>涉及反射，后续看完反射回头看</p>
+<h3 id="java容器"><a href="#java容器" class="headerlink" title="java容器"></a>java容器</h3><h4 id="Iterator接口"><a href="#Iterator接口" class="headerlink" title="Iterator接口"></a>Iterator接口</h4><p>认为Java迭代器位于两个元素之间，调用next，迭代器会越过下一个元素，并返回越过的这个元素的引用<br>迭代器必须顺序访问集合</p>
+<p><strong>ListIterator接口</strong>有两个方法可以反向遍历链表</p>
+<pre><code>E previous()
+boolean hasPrevious()
+</code></pre>
+<p>与next方法一样，previous方法会返回越过的对象</p>
+<h4 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h4><p>Vector的所有方法是<strong>同步的</strong>，线程安全<br>ArrayList方法不是同步的</p>
+<h4 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h4><p>Java中，散列表的实现为链表数组，每个列表为桶；当桶满时，链表会变为平衡二叉树</p>
+<h4 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h4><p>与散列集很像，是一个有序集合，遍历时自动按照排序后顺序出现（排序目前用的是红黑树）；且HashSet稍快一些<br>要使用这个TreeSet，元素必须实现Comparable接口或者提供Comparator</p>
 
       
     </div>
@@ -1000,110 +1093,6 @@ while (test_and_set(lock) == 1);
 </code></pre>
 <p>FAA可用于实现互斥锁、信号量</p>
 <h2 id="compare-and-swap"><a href="#compare-and-swap" class="headerlink" title="compare-and-swap"></a>compare-and-swap</h2><p>比较并交换(compare and swap, CAS)，是原子操作的一种，可用于在多线程编程中实现不被打断的数据交换操作，从而避免多线程同时改写某一数据时由于执行顺序不确定性以及中断的不可预知性产生的数据不一致问题。 该操作通过将内存中的值与指定数据进行比较，当数值一样时将内存中的数据替换为新的值</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/08/%E8%87%AA%E6%97%8B%E9%94%81%E2%80%94%E2%80%94spinlock/" class="post-title-link" itemprop="url">自旋锁——spinlock</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-06-08 17:05:11 / 修改时间：17:16:05" itemprop="dateCreated datePublished" datetime="2023-06-08T17:05:11+08:00">2023-06-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cxuanBlog/p/11679883.html">参考链接</a></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>由于在多处理器环境中某些资源的有限性，有时需要互斥访问(mutual exclusion)，这时候就需要引入锁的概念，只有获取了锁的线程才能够对资源进行访问，由于多线程的核心是CPU的时间分片，所以同一时刻只能有一个线程获取到锁。那么就面临一个问题，那么没有获取到锁的线程应该怎么办？</p>
-<p>通常有两种处理方式：<br>一种是没有获取到锁的线程就一直循环等待判断该资源是否已经释放锁，这种锁叫做<strong>自旋锁</strong>，它不用将线程阻塞起来(NON-BLOCKING)；<br>还有一种处理方式就是把自己阻塞起来，等待重新调度请求，这种叫做<strong>互斥锁</strong>。</p>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><strong>自旋锁</strong>的定义：当一个线程尝试去获取某一把锁的时候，如果这个锁此时已经被别人获取(占用)，那么此线程就无法获取到这把锁，该线程将会等待，间隔一段时间后会再次尝试获取。这种采用<strong>循环加锁 -&gt; 等待的机制</strong>被称为自旋锁(spinlock)。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/spinlock.png?raw=true" alt="自旋锁示意图"></p>
-<p>如果持有锁的线程能<strong>在短时间内释放锁资源</strong>，那么那些等待竞争锁的线程就不需要做内核态和用户态之间的切换进入阻塞状态，它们只需要等一等(自旋)，等到持有锁的线程释放锁之后即可获取，这样就避免了用户进程和内核切换的消耗。</p>
-<p>自旋锁尽可能的减少线程的阻塞，这对于锁的竞争不激烈，且占用锁时间非常短的代码块来说性能能大幅度的提升，因为自旋的消耗会小于线程阻塞挂起再唤醒的操作的消耗，这些操作会导致线程发生两次上下文切换！</p>
-<p>但是如果锁的竞争激烈，或者持有锁的线程需要长时间占用锁执行同步块，这时候就不适合使用自旋锁了，因为自旋锁在获取锁前一直都是占用 cpu 做无用功，同时有大量线程在竞争一个锁，会导致获取锁的时间很长，线程自旋的消耗大于线程阻塞挂起操作的消耗，其它需要 cpu 的线程又不能获取到 cpu，造成 cpu 的浪费。所以这种情况下我们要关闭自旋锁。</p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre><code>public class SpinLockTest &#123;
-
-    private AtomicBoolean available = new AtomicBoolean(false);
-
-    public void lock()&#123;
-
-        // 循环检测尝试获取锁
-        while (!tryLock())&#123;
-            // doSomething...
-        &#125;
-
-    &#125;
-
-    public boolean tryLock()&#123;
-        // 尝试获取锁，成功返回true，失败返回false
-        return available.compareAndSet(false,true);
-    &#125;
-
-    public void unLock()&#123;
-        if(!available.compareAndSet(true,false))&#123;
-            throw new RuntimeException(&quot;释放锁失败&quot;);
-        &#125;
-    &#125;
-
-&#125;
-</code></pre>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><strong>无法保证多线程竞争的公平性</strong></p>
 
       
     </div>

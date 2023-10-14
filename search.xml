@@ -742,6 +742,32 @@ System.out.println(result); // 输出8
 <h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>方法引用是用来简化Lambda表达式的一种方式，它可以将已存在的方法引用为Lambda表达式的实现，方法引用适用于Lambda表达式的签名与被引用方法的签名兼容的情况</p>
 <p>包括静态方法、实例方法、构造方法<br>（具体见《java核心技术》P258）</p>
 <h3 id="java代理"><a href="#java代理" class="headerlink" title="java代理"></a>java代理</h3><p>涉及反射，后续看完反射回头看</p>
+<h3 id="java容器"><a href="#java容器" class="headerlink" title="java容器"></a>java容器</h3><h4 id="Iterator接口"><a href="#Iterator接口" class="headerlink" title="Iterator接口"></a>Iterator接口</h4><p>认为Java迭代器位于两个元素之间，调用next，迭代器会越过下一个元素，并返回越过的这个元素的引用<br>迭代器必须顺序访问集合</p>
+<p><strong>ListIterator接口</strong>有两个方法可以反向遍历链表</p>
+<pre><code>E previous()
+boolean hasPrevious()
+</code></pre>
+<p>与next方法一样，previous方法会返回越过的对象</p>
+<h4 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h4><p>Vector的所有方法是<strong>同步的</strong>，线程安全<br>ArrayList方法不是同步的</p>
+<h4 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h4><p>Java中，散列表的实现为链表数组，每个列表为桶；当桶满时，链表会变为平衡二叉树</p>
+<h4 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h4><p>与散列集很像，是一个有序集合，遍历时自动按照排序后顺序出现（排序目前用的是红黑树）；且HashSet稍快一些<br>要使用这个TreeSet，元素必须实现Comparable接口或者提供Comparator</p>
+]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java学习笔记——10.12</title>
+    <url>/2023/10/12/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9410-12/</url>
+    <content><![CDATA[<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><pre><code>assert condition;
+assert condition: expression;
+</code></pre>
+<p>expression表达式部分为了<strong>生成一个消息字符串</strong></p>
+<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><h4 id="类型擦除"><a href="#类型擦除" class="headerlink" title="类型擦除"></a>类型擦除</h4><p><strong>Java虚拟机没有泛型类型对象，所有对象都属于普通类</strong><br>对于一个泛型类型，都会自动提供一个<strong>原始类型</strong><br>对于无限定的类型变量，会被替换为Object；对于有限定的，用第一个限定来替换类型变量<br>例如：List<T> 在运行时被视为List<Object></p>
+<h4 id="Java桥方法"><a href="#Java桥方法" class="headerlink" title="Java桥方法"></a>Java桥方法</h4><p>虚拟机合成桥方法以保持多态<br>暂时没看懂。。。</p>
+<p>泛型类型继承机制<br>考虑一个类和一个子类Employee和Manager，<strong>Pair<Manager>不是Pair<Employee>的子类型</strong></p>
+<h4 id="通配符类型"><a href="#通配符类型" class="headerlink" title="通配符类型"></a>通配符类型</h4><p>没看懂</p>
+<h4 id="反射和泛型"><a href="#反射和泛型" class="headerlink" title="反射和泛型"></a>反射和泛型</h4><p>没看懂</p>
 ]]></content>
       <tags>
         <tag>java</tag>
