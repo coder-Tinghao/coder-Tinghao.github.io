@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="MySQL索引b树索引B树可以在内部节点同时存储键和值，频繁访问的数据放在靠近根节点的地方将会大大提高热点数据的查询效率，键和值存放在内部节点和叶子节点 b+树索引B+树的内部节点只存放键，不存放值，叶子节点有一条链相连，天然支持范围查询 当需要进行一次全数据遍历的时候，B+树只需 要使用O(logN)时间找到最小的一个节点，然后通过链进行O(N)的顺序遍历即可 hash索引，不支持范围查，查询效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java学习笔记——11.21">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/index.html">
+<meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="MySQL索引b树索引B树可以在内部节点同时存储键和值，频繁访问的数据放在靠近根节点的地方将会大大提高热点数据的查询效率，键和值存放在内部节点和叶子节点 b+树索引B+树的内部节点只存放键，不存放值，叶子节点有一条链相连，天然支持范围查询 当需要进行一次全数据遍历的时候，B+树只需 要使用O(logN)时间找到最小的一个节点，然后通过链进行O(N)的顺序遍历即可 hash索引，不支持范围查，查询效">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-21T09:21:09.000Z">
+<meta property="article:modified_time" content="2023-11-21T14:04:47.880Z">
+<meta property="article:author" content="Fength">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/","path":"2023/11/21/java学习笔记——11-21/","title":"java学习笔记——11.21"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>java学习笔记——11.21 | Feng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Feng's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Feng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">passion</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL"><span class="nav-number">1.</span> <span class="nav-text">MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8B-%E6%A0%91%E8%80%8C%E4%B8%8D%E6%98%AFB%E6%A0%91"><span class="nav-number">1.2.</span> <span class="nav-text">为什么用B+树而不是B树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E5%92%8C%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95"><span class="nav-number">1.3.</span> <span class="nav-text">聚簇索引和非聚簇索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%AE%9A%E9%9C%80%E8%A6%81%E5%9B%9E%E8%A1%A8%E6%9F%A5%E8%AF%A2%E5%90%97%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">一定需要回表查询吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">1.5.</span> <span class="nav-text">MySQL隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%92%8C%E9%94%81"><span class="nav-number">1.6.</span> <span class="nav-text">隔离级别和锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%B2%92%E5%BA%A6"><span class="nav-number">1.7.</span> <span class="nav-text">锁粒度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E8%A1%8C%E9%94%81"><span class="nav-number">1.8.</span> <span class="nav-text">MySQL行锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E9%94%81"><span class="nav-number">1.9.</span> <span class="nav-text">InnoDB存储引擎的锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-number">1.10.</span> <span class="nav-text">视图</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Fength"
+      src="/images/profile.png">
+  <p class="site-author-name" itemprop="name">Fength</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/coder-tinghao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;coder-tinghao" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:793360194@qq.com" title="E-Mail → mailto:793360194@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="java学习笔记——11.21 | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java学习笔记——11.21
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-21 17:21:09 / 修改时间：22:04:47" itemprop="dateCreated datePublished" datetime="2023-11-21T17:21:09+08:00">2023-11-21</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p><strong>b树索引</strong><br><strong>B树可以在内部节点同时存储键和值</strong>，频繁访问的数据放在靠近根节点的地方将会大大提高热点数据的查询效率，键和值存放在内部节点和叶子节点</p>
+<p><strong>b+树索引</strong><br><strong>B+树的内部节点只存放键，不存放值</strong>，叶子节点有一条链相连，天然<strong>支持范围查询</strong></p>
+<p>当需要进行一次全数据遍历的时候，B+树只需 要使用O(logN)时间找到最小的一个节点，然后通过链进行O(N)的顺序遍历即可</p>
+<p><strong>hash索引</strong>，不支持范围查，查询效率不稳定</p>
+<p>较频繁作为<strong>查询条件</strong>的字段才去创建索引，<strong>更新频繁字段</strong>不适合创建索引</p>
+<h3 id="为什么用B-树而不是B树"><a href="#为什么用B-树而不是B树" class="headerlink" title="为什么用B+树而不是B树"></a>为什么用B+树而不是B树</h3><p><strong>B树</strong><br>随机检索<br>元素遍历（范围查询）效率低下</p>
+<p><strong>B+树</strong><br>同时支持随机检索和顺序检索<br>内部结点不存值，比B树小，盘块能容纳的结点中关键字数量更多，一次性读入内存中可以查找的关键字也就越多，相对的，<strong>IO读写次数</strong>也就降低了</p>
+<h3 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h3><p>聚簇索引：数据存储与索引放到了一块，找到索引也就找到了数据；叶子节点存储的是行数据，因此通过聚簇索引可以直接找到真正的行数据</p>
+<p>非聚簇索引：数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，通过 key_buffer把索引先<strong>缓存到内存中</strong>；叶子节点存储的是主键信息，所以使用非聚簇索引还需要<strong>回表查询</strong></p>
+<p>聚簇索引一般是主键索引，一个表中也只能有一个，而非聚簇索引则没有数量上的限制</p>
+<h3 id="一定需要回表查询吗？"><a href="#一定需要回表查询吗？" class="headerlink" title="一定需要回表查询吗？"></a>一定需要回表查询吗？</h3><p>不一定，取决于<strong>查询语句所要求的字段是否全部命中了索引</strong>，假设我们在员工表的年龄上建立了索引，那么当进行select age from employee where age &lt; 20的查询时，在索引的叶子节点上，已经包含了age信息，不会再次进行回表查询</p>
+<h3 id="MySQL隔离级别"><a href="#MySQL隔离级别" class="headerlink" title="MySQL隔离级别"></a>MySQL隔离级别</h3><p>因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读 取提交内容):，但是你要知道的是InnoDB 存储引擎默认使用 REPEATABLE-READ(可重读)并不会有 任何性能损失<br><strong>InnoDB 存储引擎在 分布式事务 的情况下一般会用到SERIALIZABLE(可串行化)隔离级别</strong></p>
+<h3 id="隔离级别和锁"><a href="#隔离级别和锁" class="headerlink" title="隔离级别和锁"></a>隔离级别和锁</h3><p>在Read Uncommitted级别下，<strong>读取数据不需要加共享锁</strong>，这样就不会跟被修<br>改的数据上的排他锁冲突</p>
+<p>在Read Committed级别下，<strong>读操作需要加共享锁</strong>，但是在语句<strong>执行完以后释放共享锁</strong></p>
+<p>在Repeatable Read级别下，<strong>读操作需要加共享锁，但是在事务提交之前并不释放共享锁</strong>，也就是必须等待事务执行完毕以后才释放共享锁</p>
+<p>SERIALIZABLE 是限制性最强的隔离级别，因为该级别锁定整个范围的键，并一直持有锁，直到事务完成</p>
+<h3 id="锁粒度"><a href="#锁粒度" class="headerlink" title="锁粒度"></a>锁粒度</h3><p>行级锁、表级锁、页级锁；具体还分<strong>共享锁和排他锁</strong> 还有<strong>意向锁（预先通知）</strong><br>InnoDB支持行级锁和表级锁，<strong>默认为行级锁</strong></p>
+<p><strong>行级锁</strong> 开销大，加锁慢;会出现死锁;锁定粒度最小，发生锁冲突的概率最低；并发度最高</p>
+<p><strong>表级锁</strong> 开销小，加锁快;不会出现死锁（也有可能吧）;锁定粒度大，发出锁冲突的概率最高</p>
+<p><strong>页级锁</strong> 中间</p>
+<h3 id="MySQL行锁"><a href="#MySQL行锁" class="headerlink" title="MySQL行锁"></a>MySQL行锁</h3><p>InnoDB是基于<strong>索引</strong>来完成行锁<br>例: select * from tab_with_index where id &#x3D; 1 for update;<br>for update 可以根据条件来完成行锁锁定，并且 id 是有索引键的列，如果 id不是索引键那么InnoDB将 完成表锁，并发将无从谈起</p>
+<h3 id="InnoDB存储引擎的锁"><a href="#InnoDB存储引擎的锁" class="headerlink" title="InnoDB存储引擎的锁"></a>InnoDB存储引擎的锁</h3><p>Record lock:单个行记录上的锁<br>Gap lock:间隙锁，锁定一个范围，不包括记录本身<br>Next-key lock:record+gap 锁定一个范围，包含记录本身</p>
+<p>Gap Lock 的作用是为了<strong>阻止多个事务将记录插入到同一个范围内</strong>，因为这会导致幻读问题（phantom Problem）的产生</p>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>虚拟表</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/20/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-20/" rel="prev" title="java学习笔记——11.20">
+                  <i class="fa fa-chevron-left"></i> java学习笔记——11.20
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fength</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

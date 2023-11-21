@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-10-13T12:13:06.004Z</updated>
+  <updated>2023-11-21T14:04:47.880Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java学习笔记——11.21</title>
+    <link href="http://coder_tinghao.github.io/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/"/>
+    <id>http://coder_tinghao.github.io/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/</id>
+    <published>2023-11-21T09:21:09.000Z</published>
+    <updated>2023-11-21T14:04:47.880Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p><strong>b树索引</strong><br><strong>B树可以在内部节点同时存储键和值</strong>，频繁访问的数据放在靠近根节点的地方将会大大提高热点数据的查询效率，键和值存放在内部节点和叶子节点</p><p><strong>b+树索引</strong><br><strong>B+树的内部节点只存放键，不存放值</strong>，叶子节点有一条链相连，天然<strong>支持范围查询</strong></p><p>当需要进行一次全数据遍历的时候，B+树只需 要使用O(logN)时间找到最小的一个节点，然后通过链进行O(N)的顺序遍历即可</p><p><strong>hash索引</strong>，不支持范围查，查询效率不稳定</p><p>较频繁作为<strong>查询条件</strong>的字段才去创建索引，<strong>更新频繁字段</strong>不适合创建索引</p><h3 id="为什么用B-树而不是B树"><a href="#为什么用B-树而不是B树" class="headerlink" title="为什么用B+树而不是B树"></a>为什么用B+树而不是B树</h3><p><strong>B树</strong><br>随机检索<br>元素遍历（范围查询）效率低下</p><p><strong>B+树</strong><br>同时支持随机检索和顺序检索<br>内部结点不存值，比B树小，盘块能容纳的结点中关键字数量更多，一次性读入内存中可以查找的关键字也就越多，相对的，<strong>IO读写次数</strong>也就降低了</p><h3 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h3><p>聚簇索引：数据存储与索引放到了一块，找到索引也就找到了数据；叶子节点存储的是行数据，因此通过聚簇索引可以直接找到真正的行数据</p><p>非聚簇索引：数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，通过 key_buffer把索引先<strong>缓存到内存中</strong>；叶子节点存储的是主键信息，所以使用非聚簇索引还需要<strong>回表查询</strong></p><p>聚簇索引一般是主键索引，一个表中也只能有一个，而非聚簇索引则没有数量上的限制</p><h3 id="一定需要回表查询吗？"><a href="#一定需要回表查询吗？" class="headerlink" title="一定需要回表查询吗？"></a>一定需要回表查询吗？</h3><p>不一定，取决于<strong>查询语句所要求的字段是否全部命中了索引</strong>，假设我们在员工表的年龄上建立了索引，那么当进行select age from employee where age &lt; 20的查询时，在索引的叶子节点上，已经包含了age信息，不会再次进行回表查询</p><h3 id="MySQL隔离级别"><a href="#MySQL隔离级别" class="headerlink" title="MySQL隔离级别"></a>MySQL隔离级别</h3><p>因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读 取提交内容):，但是你要知道的是InnoDB 存储引擎默认使用 REPEATABLE-READ(可重读)并不会有 任何性能损失<br><strong>InnoDB 存储引擎在 分布式事务 的情况下一般会用到SERIALIZABLE(可串行化)隔离级别</strong></p><h3 id="隔离级别和锁"><a href="#隔离级别和锁" class="headerlink" title="隔离级别和锁"></a>隔离级别和锁</h3><p>在Read Uncommitted级别下，<strong>读取数据不需要加共享锁</strong>，这样就不会跟被修<br>改的数据上的排他锁冲突</p><p>在Read Committed级别下，<strong>读操作需要加共享锁</strong>，但是在语句<strong>执行完以后释放共享锁</strong></p><p>在Repeatable Read级别下，<strong>读操作需要加共享锁，但是在事务提交之前并不释放共享锁</strong>，也就是必须等待事务执行完毕以后才释放共享锁</p><p>SERIALIZABLE 是限制性最强的隔离级别，因为该级别锁定整个范围的键，并一直持有锁，直到事务完成</p><h3 id="锁粒度"><a href="#锁粒度" class="headerlink" title="锁粒度"></a>锁粒度</h3><p>行级锁、表级锁、页级锁；具体还分<strong>共享锁和排他锁</strong> 还有<strong>意向锁（预先通知）</strong><br>InnoDB支持行级锁和表级锁，<strong>默认为行级锁</strong></p><p><strong>行级锁</strong> 开销大，加锁慢;会出现死锁;锁定粒度最小，发生锁冲突的概率最低；并发度最高</p><p><strong>表级锁</strong> 开销小，加锁快;不会出现死锁（也有可能吧）;锁定粒度大，发出锁冲突的概率最高</p><p><strong>页级锁</strong> 中间</p><h3 id="MySQL行锁"><a href="#MySQL行锁" class="headerlink" title="MySQL行锁"></a>MySQL行锁</h3><p>InnoDB是基于<strong>索引</strong>来完成行锁<br>例: select * from tab_with_index where id &#x3D; 1 for update;<br>for update 可以根据条件来完成行锁锁定，并且 id 是有索引键的列，如果 id不是索引键那么InnoDB将 完成表锁，并发将无从谈起</p><h3 id="InnoDB存储引擎的锁"><a href="#InnoDB存储引擎的锁" class="headerlink" title="InnoDB存储引擎的锁"></a>InnoDB存储引擎的锁</h3><p>Record lock:单个行记录上的锁<br>Gap lock:间隙锁，锁定一个范围，不包括记录本身<br>Next-key lock:record+gap 锁定一个范围，包含记录本身</p><p>Gap Lock 的作用是为了<strong>阻止多个事务将记录插入到同一个范围内</strong>，因为这会导致幻读问题（phantom Problem）的产生</p><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>虚拟表</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;MySQL&quot;&gt;&lt;a href=&quot;#MySQL&quot; class=&quot;headerlink&quot; title=&quot;MySQL&quot;&gt;&lt;/a&gt;MySQL&lt;/h2&gt;&lt;h3 id=&quot;索引&quot;&gt;&lt;a href=&quot;#索引&quot; class=&quot;headerlink&quot; title=&quot;索引&quot;&gt;&lt;/a&gt;索</summary>
+      
+    
+    
+    
+    
+    <category term="java" scheme="http://coder_tinghao.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java学习笔记——11.20</title>
+    <link href="http://coder_tinghao.github.io/2023/11/20/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-20/"/>
+    <id>http://coder_tinghao.github.io/2023/11/20/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-20/</id>
+    <published>2023-11-20T11:59:31.000Z</published>
+    <updated>2023-11-21T08:08:17.896Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Java集合"><a href="#Java集合" class="headerlink" title="Java集合"></a>Java集合</h2><p>Java集合由两大接口派生：<strong>Collection接口、Map接口</strong><br>Collection接口下面，有三个主要的子接口：<strong>List、Set 和 Queue</strong></p><h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>ArrayList，底层用**Object[]**存储，线程不安全，适用于频繁查找，支持快速随机访问（实现了RandomAccess接口）</p><p>Vector，底层用**Object[]**存储，线程安全</p><p>LinkedList底层用<strong>双向链表</strong>，一般是不会使用到LinkedList，需要用到 LinkedList的场景几乎都可以使用 ArrayList 来代替，并且，性能通常会更好</p><h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>HashSet，底层基于HashMap实现，保存元素，用于不需要保证元素插入和取出顺序的场景</p><p>LinkedHashSet，通过 LinkedHashMap来实现，链表和哈希表，<strong>元素的插入和取出顺序满足 FIFO</strong></p><p>TreeSet，红黑树，支持对元素自定义排序规则的场景</p><h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h3><p>PriorityQueue，Object[]数组来实现小顶堆</p><p>DelayQueue，只有到了其指定的延迟时间，才能够从队列中出队</p><p>ArrayDeque，可扩容动态双向数组</p><h3 id="Deque"><a href="#Deque" class="headerlink" title="Deque"></a>Deque</h3><p>双端队列，扩展了Queue接口</p><h3 id="ArrayDeque-与-LinkedList-的区别"><a href="#ArrayDeque-与-LinkedList-的区别" class="headerlink" title="ArrayDeque 与 LinkedList 的区别"></a>ArrayDeque 与 LinkedList 的区别</h3><p>ArrayDeque 是基于<strong>可变长的数组和双指针</strong>来实现，而 LinkedList 则通过<strong>链表</strong>实现</p><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>HashMap，<strong>数组+链表</strong>，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</p><p>LinkedHashMap，</p><p>Hashtable，数组+链表，比HashMap多了个<strong>线程安全</strong></p><p>TreeMap，红黑树</p><p>ConcurrentHashMap，<strong>并发环境</strong>下，推荐使用</p><h3 id="Java集合fail-last机制"><a href="#Java集合fail-last机制" class="headerlink" title="Java集合fail-last机制"></a>Java集合fail-last机制</h3><p>fail-fast 机制是java集合(Collection)中的一种错误机制。当多个线程对同一个集合的内容进行操作时，就可能会产生fail-fast事件</p><p>迭代器在遍历时直接访问集合中的内容，并且在遍历过程中使用一个 modCount 变量。集合在 被遍历期间如果内容发生变化，就会改变modCount 的值。每当迭代器使用hashNext()&#x2F;next()遍历下一 个元素之前，都会检测 modCount变量是否为expectedmodCount值，是的话就返回遍历;否则抛出 异常，终止遍历</p><p><strong>不要在 foreach 循环里进行元素的 remove&#x2F;add 操作</strong>，remove 元素请使用 Iterator 方式，如果并发操作，需要对 Iterator 对象加锁。通过反编译你会发现 foreach 语法底层其实还是依赖 Iterator 。不过， <strong>remove&#x2F;add 操作直接调用的是集合自己的方法，而不是 Iterator 的 remove&#x2F;add方法，迭代器就会发现自己有元素被remove&#x2F;add，就抛异常了</strong></p><p>除了使用Iterator进行遍历操作外：<br>使用 fail-safe 的集合类，<br><strong>java.util包下面的所有的集合类都是 fail-fast 的，而java.util.concurrent包下面的所有的类都是 fail-safe</strong></p><h3 id="集合只读"><a href="#集合只读" class="headerlink" title="集合只读"></a>集合只读</h3><p>Collections. unmodifiableCollection(Collection c)方法来创建一个 只读集合，改变集合 的任何操作都会抛出 Java. lang. UnsupportedOperationException 异常</p><h3 id="迭代器Iterator"><a href="#迭代器Iterator" class="headerlink" title="迭代器Iterator"></a>迭代器Iterator</h3><pre><code>List&lt;String&gt; list = new ArrayListIterator&lt;String&gt; it = list. iteratorwhile(it. hasNext())&#123;    String obj = it. next();    System. out. println(obj);&#125;</code></pre><p>在当前遍历 的集合元素被更改的时候，就会抛出 ConcurrentModificationException 异常，如果要删除元素就用iterator.remove()</p><h3 id="Iterator与ListIterator"><a href="#Iterator与ListIterator" class="headerlink" title="Iterator与ListIterator"></a>Iterator与ListIterator</h3><p>Iterator 可以遍历 Set 和 List 集合，而 ListIterator 只能遍历 List<br>Iterator 只能<strong>单向遍历</strong>，而 ListIterator 可以<strong>双向遍历(向前&#x2F;后遍历)</strong></p><h3 id="List遍历的最佳实践"><a href="#List遍历的最佳实践" class="headerlink" title="List遍历的最佳实践"></a>List遍历的最佳实践</h3><p><strong>支持 Random Access 的列表可用 for 循环遍历，否则建议 用 Iterator 或 foreach 遍历</strong></p><h3 id="Comparable-和-Comparator-的区别"><a href="#Comparable-和-Comparator-的区别" class="headerlink" title="Comparable 和 Comparator 的区别"></a>Comparable 和 Comparator 的区别</h3><p>Comparable 接口实际上是出自java.lang包，它有一个 c**ompareTo(Object obj)**方法用来排序</p><p>Comparator接口实际上是出自 java.util 包它有一个c**ompare(Object obj1, Object obj2)**方法用来排序</p><h3 id="集合去重"><a href="#集合去重" class="headerlink" title="集合去重"></a>集合去重</h3><p><strong>可以利用 Set 元素唯一的特性，可以快速对一个集合进行去重操作</strong>，避免使用 List 的 contains() 进行遍历去重或者判断包含操作</p><p>HashSet 的 contains() 方法底部依赖的 HashMap 的 containsKey() 方法，时间复杂度接近于<strong>O（1）</strong></p><p>ArrayList 的 contains() 方法是通过遍历所有元素的方法来做的，时间复杂度接近是 <strong>O(n)</strong></p><h3 id="Arrays-asList"><a href="#Arrays-asList" class="headerlink" title="Arrays.asList()"></a>Arrays.asList()</h3><p>当传入一个原生数据类型数组时，Arrays.asList() 的真正得到的参数就不是数组中的元素，而是数组对象本身！此时 List 的唯一元素就是这个数组</p><p>Arrays.asList()方法返回的并不是 java.util.ArrayList ，而是 java.util.Arrays 的一个内部类</p><p>List.of()方法适用于需要创建一组固定的、不可变的元素列表的场景</p><h3 id="字符流与字节流"><a href="#字符流与字节流" class="headerlink" title="字符流与字节流"></a>字符流与字节流</h3><p>处理纯文本数据，优先考虑使用字符流，除此之外都使用字节流</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Java集合&quot;&gt;&lt;a href=&quot;#Java集合&quot; class=&quot;headerlink&quot; title=&quot;Java集合&quot;&gt;&lt;/a&gt;Java集合&lt;/h2&gt;&lt;p&gt;Java集合由两大接口派生：&lt;strong&gt;Collection接口、Map接口&lt;/strong&gt;&lt;br&gt;C</summary>
+      
+    
+    
+    
+    
+    <category term="java" scheme="http://coder_tinghao.github.io/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>java学习笔记——10.12</title>
@@ -413,51 +457,6 @@ assert condition: expression;
       
       
     <summary type="html">&lt;h1 id=&quot;GFS论文总结&quot;&gt;&lt;a href=&quot;#GFS论文总结&quot; class=&quot;headerlink&quot; title=&quot;GFS论文总结&quot;&gt;&lt;/a&gt;GFS论文总结&lt;/h1&gt;&lt;p&gt;GFS（The Google File System），Google的目标是构建一个大型的，快速的文</summary>
-      
-    
-    
-    
-    
-    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>故障模型</title>
-    <link href="http://coder_tinghao.github.io/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://coder_tinghao.github.io/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/</id>
-    <published>2023-02-12T07:22:47.000Z</published>
-    <updated>2023-02-12T16:21:14.546Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p><h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p><p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p><p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p><p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p><h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p><p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p><p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p><p>Crash failure: Omission failure的特例；在omission failure的基础上，增加了节点停止响应的假设，也即持续性地omission failure。</p><p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png?raw=true" alt="故障模型"></p><p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p><h2 id="fail-stop-故障-和-bugs"><a href="#fail-stop-故障-和-bugs" class="headerlink" title="fail-stop 故障 和 bugs"></a>fail-stop 故障 和 bugs</h2><p>简单来说复制能够处理单台计算机的fail-stop故障，如果某些东西出现故障，只是单纯的停止运行，而不是运算出错误结果。 比如电源线、服务器风扇导致CPU过热停止运行、网络等故障。网络隔离场景很有趣，因为从外界来看，这和服务器停止运行毫无区别。</p><p>复制不能处理软件中的bug和硬件设计中的缺陷。 如果相同的程序，都计算出错误的结果，那么再多副本也都无法避免。我们也不能期望复制可以处理硬件的漏洞，当硬件有漏洞的时候会计算出错误的结果，至少基于复制这种技术，我们就无能为力了。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;故障模型&quot;&gt;&lt;a href=&quot;#故障模型&quot; class=&quot;headerlink&quot; title=&quot;故障模型&quot;&gt;&lt;/a&gt;故障模型&lt;/h1&gt;&lt;p&gt;最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结&lt;/p&gt;
-&lt;h2 id=</summary>
-      
-    
-    
-    
-    
-    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mapreduce论文总结</title>
-    <link href="http://coder_tinghao.github.io/2023/02/05/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/"/>
-    <id>http://coder_tinghao.github.io/2023/02/05/Mapreduce%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</id>
-    <published>2023-02-05T05:50:51.000Z</published>
-    <updated>2023-02-06T03:11:24.384Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近决定通过MIT6.824的分布式课程学习一下Google的三篇经典论文，Mapreduce、GFS、Raft。6.824课程相关链接如下：</p><p><a href="https://mit-public-courses-cn-translatio.gitbook.io/mit6-824/lecture-01-introduction">6.824课程翻译链接</a></p><p><a href="https://www.bilibili.com/video/av87684880/?vd_source=cc4910ad55a90281a3f278b41a379e5b">2020课程视频链接（带字幕）</a></p><p><a href="http://nil.csail.mit.edu/6.824/2020/schedule.html">2020课程安排官方链接（含实验）</a></p><p>起初读到Mapreduce论文的时候还在12月初，想要去总结但一拖拖到现在，接下来我将对Mapreduce论文的学习进行一些总结：</p><h1 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h1><p>一致性就是用来定义操作行为的概念。从性能和容错的角度来说，我们通常会有多个副本。在一个非分布式系统中，你通常只有一个服务器，一个表单。虽然不是绝对，但是通常来说对于put&#x2F;get的行为不会有歧义。直观上来说，put就是更新这个表单，get就是从表单中获取当前表单中存储的数据。但是在一个分布式系统中，由于复制或者缓存，数据可能存在于多个副本当中，于是就有了多个不同版本的key-value对。假设服务器有两个副本，那么他们都有一个key-value表单，两个表单中key 1对应的值都是20。</p><p>之后会发送给第二台服务器，因为相同的put请求需要发送给两个副本，这样这两个副本才能保持同步。但是就在客户端准备给第二台服务器发送相同请求时，这个客户端故障了，可能是电源故障或者操作系统的bug之类的。所以，现在我们处于一个不好的状态，我们发送了一个put请求，更新了一个副本的值是21，但是另一个副本的值仍然是20。</p><p>如果现在某人通过get读取key为1的值，那么他可能获得21，也可能获得20，取决于get请求发送到了哪个服务器。即使规定了总是把请求先发送给第一个服务器，那么我们在构建容错系统时，如果第一台服务器故障了，请求也会发给第二台服务器。所以不管怎么样，总有一天你会面临暴露旧数据的风险。很可能是这样，最开始许多get请求都得到了21，之后过了一周突然一些get请求得到了一周之前的旧数据（20）。所以，这里不是很一致。并且，如果我们不小心的话，这个场景是可能发生的，所以，我们需要确定put&#x2F;get操作的一些规则。</p><p>实际上，对于一致性有很多不同的定义。有一些非常直观，比如说get请求可以得到最近一次完成的put请求写入的值。这种一般也被称为强一致（Strong Consistency）。弱一致是指，不保证get请求可以得到最近一次完成的put请求写入的值。尽管有很多细节的工作要处理，强一致可以保证get得到的是put写入的最新的数据；而很多的弱一致系统不会做出类似的保证。所以在一个弱一致系统中，某人通过put请求写入了一个数据，但是你通过get看到的可能仍然是一个旧数据，而这个旧数据可能是很久之前写入的。</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/consistency.png?raw=true" alt="一致性"></p><h1 id="Mapreduce论文"><a href="#Mapreduce论文" class="headerlink" title="Mapreduce论文"></a>Mapreduce论文</h1><h2 id="Mapreduce框架"><a href="#Mapreduce框架" class="headerlink" title="Mapreduce框架"></a>Mapreduce框架</h2><p>MapReduce的思想是：应用程序设计人员和分布式运算的使用者，只需要写简单的Map函数和Reduce函数，而不需要知道任何有关分布式的事情，MapReduce框架会处理剩下的事情。</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce.png?raw=true" alt="Mapreduce框架"></p><p>Map函数以文件作为输入，文件是整个输入数据的一部分。Map函数的输出是一个key-value对的列表。假设我们在实现一个最简单的MapReduce Job：单词计数器。它会统计每个单词出现的次数。在这个例子中，Map函数会输出key-value对，其中key是单词，而value是1。Map函数会将输入中的每个单词拆分，并输出一个key-value对，key是该单词，value是1。最后需要对所有的key-value进行计数，以获得最终的输出。所以，假设输入文件1包含了单词a和单词b，Map函数的输出将会是key&#x3D;a，value&#x3D;1和key&#x3D;b，value&#x3D;1。第二个Map函数只从输入文件2看到了b，那么输出将会是key&#x3D;b，value&#x3D;1。第三个输入文件有一个a和一个c。</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/mapreduce_execution.png?raw=true" alt="Mapreduce执行过程"></p><p>我们对所有的输入文件都运行了Map函数，并得到了论文中称之为中间输出（intermediate output），也就是每个Map函数输出的key-value对。<br>运算的第二阶段是运行Reduce函数。MapReduce框架会收集所有Map函数输出的每一个单词的统计。比如说，MapReduce框架会先收集每一个Map函数输出的key为a的key-value对。收集了之后，会将它们提交给Reduce函数。</p><p>之后会收集所有的b。这里的收集是真正意义上的收集，因为b是由不同计算机上的不同Map函数生成，所以不仅仅是数据从一台计算机移动到另一台（如果Map只在一台计算机的一个实例里，可以直接通过一个RPC将数据从Map移到Reduce）。我们收集所有的b，并将它们提交给另一个Reduce函数。这个Reduce函数的入参是所有的key为b的key-value对。对c也是一样。所以，MapReduce框架会为所有Map函数输出的每一个key，调用一次Reduce函数。</p><p>Job：整个MapReduce计算称为Job</p><p>Task：每一次MapReduce调用称为Task</p><h2 id="Map函数和Reduce函数"><a href="#Map函数和Reduce函数" class="headerlink" title="Map函数和Reduce函数"></a>Map函数和Reduce函数</h2><h3 id="Map函数"><a href="#Map函数" class="headerlink" title="Map函数"></a>Map函数</h3><p>入参中，key是输入文件的名字，通常会被忽略，因为我们不太关心文件名是什么，value是输入文件的内容。所以，对于一个单词计数器来说，value包含了要统计的文本，我们会将这个文本拆分成单词。之后对于每一个单词，我们都会调用emit。emit由MapReduce框架提供，并且这里的emit属于Map函数。emit会接收两个参数，其中一个是key，另一个是value。在单词计数器的例子中，emit入参的key是单词，value是字符串“1”。</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/map.png?raw=true" alt="Map函数"></p><h3 id="Reduce函数"><a href="#Reduce函数" class="headerlink" title="Reduce函数"></a>Reduce函数</h3><p>Reduce函数的入参是某个特定key的所有实例（Map输出中的key-value对中，出现了一次特定的key就可以算作一个实例）。所以Reduce函数也是使用一个key和一个value作为参数，其中value是一个数组，里面每一个元素是Map函数输出的key的一个实例的value。对于单词计数器来说，key就是单词，value就是由字符串“1”组成的数组，所以，我们不需要关心value的内容是什么，我们只需要关心value数组的长度。Reduce的emit函数只接受一个参数value，这个value会作为Reduce函数入参的key的最终输出。所以，对于单词计数器，我们会给emit传入数组的长度。</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/reduce.png?raw=true" alt="Reduce函数"></p><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="Shuffle过程"><a href="#Shuffle过程" class="headerlink" title="Shuffle过程"></a>Shuffle过程</h3><p>Mapreduce框架中提到的从Map函数到Reduce函数的过程就是<strong>shuffle</strong>，根据课程中的讲解，这个过程如mapreduce图所示<strong>本质是从行存储到列存储的转换</strong>，也是mapreduce整个过程代价最大的部分</p><p>这里的shuffle的重点是，这里实际上可能会有大量的网络通信。假设你在进行排序，排序的输入输出会有相同的大小。这样，如果你的输入是10TB，为了能排序，你需要将10TB的数据在网络上移动，并且输出也会是10TB，所以这里有大量的数据。这可能发生在任何MapReduce job中，尽管有一些MapReduce job在不同阶段的数据没有那么大。之前有人提过，想将Reduce的输出传给另一个MapReduce job，而这也是人们常做的事情。在一些场景中，Reduce的输出可能会非常巨大，比如排序，比如网页索引器。10TB的输入对应的是10TB的输出。所以，Reduce的输出也会存储在GFS上。但是Reduce只会生成key-value对，MapReduce框架会收集这些数据，并将它们写入到GFS的大文件中。</p><h3 id="Mapreduce-GFS"><a href="#Mapreduce-GFS" class="headerlink" title="Mapreduce+GFS"></a>Mapreduce+GFS</h3><p>GFS是一个共享文件服务，并且它也运行在MapReduce的worker集群的物理服务器上。GFS会自动拆分你存储的任何大文件，并且以64MB的块存储在多个服务器之上。所以，如果你有了10TB的网页数据，你只需要将它们写入到GFS，甚至你写入的时候是作为一个大文件写入的，GFS会自动将这个大文件拆分成64MB的块，并将这些块平均的分布在所有的GFS服务器之上，而这是极好的，这正是我们所需要的。如果我们接下来想要对刚刚那10TB的网页数据运行MapReduce Job，数据已经均匀的分割存储在所有的服务器上了。如果我们有1000台服务器，我们会启动1000个Map worker，每个Map worker会读取1&#x2F;1000输入数据。这些Map worker可以并行的从1000个GFS文件服务器读取数据，并获取巨大的读取吞吐量，也就是1000台服务器能提供的吞吐量。</p><h3 id="论文补充"><a href="#论文补充" class="headerlink" title="论文补充"></a>论文补充</h3><p>The master keeps several data structures. For each map task and reduce task, it stores the state (idle, in-progress, or completed), and the identity of the worker machine (for non-idle tasks).</p><p>The master pings every worker periodically. If no re- sponse is received from a worker in a certain amount of time, the master marks the worker as failed.</p><p>The master runs an internal HTTP server and exports a set of status pages for human consumption.</p><h3 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h3><p><a href="http://nil.csail.mit.edu/6.824/2020/labs/lab-mr.html">6.824lab1链接</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;最近决定通过MIT6.824的分布式课程学习一下Google的三篇经典论文，Mapreduce、GFS、Raft。6.824课程相关链接如下</summary>
       
     
     
