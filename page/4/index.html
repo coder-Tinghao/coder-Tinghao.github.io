@@ -20,28 +20,23 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Paxos共识协议Paxos就是一个在异步通信环境，并容忍在只有多数派机器存活的情况下，仍然能完成一个一致性写入的协议 学习过程比较痛苦，multi-Paxos根本看不懂…以后有机会再补充 参考链接共识算法系列：Paxos&#x2F;Multi-Paxos算法关键点综述、优缺点总结微信自研生产级paxos类库PhxPaxos实现原理介绍Paxos理论介绍(1): 朴素Paxos算法理论推导与证明">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Paxos原理">
-<meta property="og:url" content="http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Feng&#39;s Blog">
+<meta property="og:url" content="http://coder_tinghao.github.io/page/4/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
-<meta property="og:description" content="Paxos共识协议Paxos就是一个在异步通信环境，并容忍在只有多数派机器存活的情况下，仍然能完成一个一致性写入的协议 学习过程比较痛苦，multi-Paxos根本看不懂…以后有机会再补充 参考链接共识算法系列：Paxos&#x2F;Multi-Paxos算法关键点综述、优缺点总结微信自研生产级paxos类库PhxPaxos实现原理介绍Paxos理论介绍(1): 朴素Paxos算法理论推导与证明">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-04T08:20:00.000Z">
-<meta property="article:modified_time" content="2023-04-04T09:43:35.985Z">
 <meta property="article:author" content="Fength">
-<meta property="article:tag" content="共识算法">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/">
+<link rel="canonical" href="http://coder_tinghao.github.io/page/4/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/","path":"2023/04/04/Paxos原理/","title":"Paxos原理"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/4/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Paxos原理 | Feng's Blog</title>
+<title>Feng's Blog</title>
   
 
 
@@ -75,7 +70,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Feng's Blog</p>
+      <h1 class="site-title">Feng's Blog</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">passion</p>
@@ -102,7 +97,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -115,7 +110,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paxos%E5%85%B1%E8%AF%86%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">Paxos共识协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">1.1.</span> <span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paxos%E7%AE%97%E6%B3%95%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">Paxos算法基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%B4%E7%B4%A0Paxos%E7%AE%97%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">朴素Paxos算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Paxos%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">Multi-Paxos算法</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -160,18 +154,17 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner index posts-expand">
 
-
-  
+    
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2022/07/23/test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/profile.png">
@@ -184,13 +177,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Paxos原理 | Feng's Blog">
+      <meta itemprop="name" content="undefined | Feng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Paxos原理
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/23/test/" class="post-title-link" itemprop="url">test</a>
+        </h2>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -199,19 +192,18 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-04-04 16:20:00 / 修改时间：17:43:35" itemprop="dateCreated datePublished" datetime="2023-04-04T16:20:00+08:00">2023-04-04</time>
+      <time title="创建时间：2022-07-23 17:05:10" itemprop="dateCreated datePublished" datetime="2022-07-23T17:05:10+08:00">2022-07-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-06 20:36:25" itemprop="dateModified" datetime="2022-12-06T20:36:25+08:00">2022-12-06</time>
     </span>
 
   
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
 </div>
 
         </div>
@@ -221,20 +213,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Paxos共识协议"><a href="#Paxos共识协议" class="headerlink" title="Paxos共识协议"></a>Paxos共识协议</h1><p>Paxos就是一个在<strong>异步通信</strong>环境，并容忍在只有<strong>多数派</strong>机器存活的情况下，仍然能完成一个一致性写入的协议</p>
-<p>学习过程比较痛苦，multi-Paxos根本看不懂…以后有机会再补充</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="http://dinghao.li/2018/12/Paxos/">共识算法系列：Paxos&#x2F;Multi-Paxos算法关键点综述、优缺点总结</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI4NDMyNTU2Mw==&mid=2247483695&idx=1&sn=91ea422913fc62579e020e941d1d059e#rd">微信自研生产级paxos类库PhxPaxos实现原理介绍</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/21438357">Paxos理论介绍(1): 朴素Paxos算法理论推导与证明</a></p>
-<h2 id="Paxos算法基本概念"><a href="#Paxos算法基本概念" class="headerlink" title="Paxos算法基本概念"></a>Paxos算法基本概念</h2><p>Paxos的目标——<strong>“确定一个值”、“确定多个值”、“有序的确定多个值”</strong><br>Paxos协议中的角色包括：<strong>Acceptor、Proposer、Learner、State machine</strong><br>Proposer——提出提议；Acceptor——接受提议；Learner——做instance对齐</p>
-<p>Proposer只需要与<strong>多数派</strong>的Acceptor交互，即可完成一个值的确定，但一旦这个值被确定下来后，无论Proposer再发起任何值的写入，Data数据都不会再被修改。Chosen value即是被确定的值，永远不会被修改。 </p>
-<p><strong>有序的确定多个值</strong>：<br>只要我们通过paxos完成一个<strong>多机一致的有序的操作系列</strong>，就能保证Paxos算法的一致性：</p>
-<p>1 给实例一个编号，定义为i，i从0开始，只增不减，由本机器生成，不依赖网络<br>2 我们保证一台机器任一时刻只能有一个实例在工作<br>3 当编号为i的实例获知已经确定好一个值之后，这个实例将会被销毁，进而产生一个编号为i+1的实例</p>
-<p><strong>实例的对齐</strong>：<br>回去询问别的机器的相同编号的实例<br>如果这个实例已经被销毁了，那说明值已经确定好了，直接把这个值拉回来写到当前实例里面，直接由Learner直接学习得到即可。</p>
-<p><strong>状态机</strong><br>状态机必须记录下来输入过的最大实例编号<br><strong>启动重放</strong>：把这些chosen value一个一个输入到状态机，那么状态机的状态就会更新到y了</p>
-<h2 id="朴素Paxos算法"><a href="#朴素Paxos算法" class="headerlink" title="朴素Paxos算法"></a>朴素Paxos算法</h2><p>个人理解朴素Paxos算法就是做一个instance中值的确定的算法过程。</p>
-<p>其中包括三个投票的约束，通过反证法可以证明得到一致性结论，比较重要的是MaxVote的定义</p>
-<p>问题：为什么需要多轮投票？</p>
-<h2 id="Multi-Paxos算法"><a href="#Multi-Paxos算法" class="headerlink" title="Multi-Paxos算法"></a>Multi-Paxos算法</h2><p>暂时没看懂</p>
-
+          
+      
     </div>
 
     
@@ -242,24 +222,8 @@
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" rel="tag"># 共识算法</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/" rel="prev" title="消息认证码Message Authentication Code(MAC)">
-                  <i class="fa fa-chevron-left"></i> 消息认证码Message Authentication Code(MAC)
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2023/05/02/Exponential-backoff-%E6%8C%87%E6%95%B0%E8%A1%A5%E5%81%BF/" rel="next" title="Exponential backoff--指数补偿">
-                  Exponential backoff--指数补偿 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        <div class="post-eof"></div>
+      
     </footer>
   </article>
 </div>
@@ -267,7 +231,97 @@
 
 
 
+    
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2022/07/23/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/23/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-23 17:01:52" itemprop="dateCreated datePublished" datetime="2022-07-23T17:01:52+08:00">2022-07-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-06 20:35:12" itemprop="dateModified" datetime="2022-12-06T20:35:12+08:00">2022-12-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
 
 </div>
   </main>

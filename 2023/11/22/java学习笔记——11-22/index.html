@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Innodb事务redo logredo log就是保存执行的SQL语句到一个指定的Log文件，当Mysql执行recovery时重新执行redo log记录的SQL操作即可,当客户端执行每条SQL(更新语句)时，redo log会被首先写入log buffer;当客户端执行COMMIT命令时，log buffer中的内容会被视情况刷新到磁盘 undo logundo log是为回滚而用，就是co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java学习笔记——11.22">
+<meta property="og:url" content="http://coder_tinghao.github.io/2023/11/22/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-22/index.html">
+<meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="Innodb事务redo logredo log就是保存执行的SQL语句到一个指定的Log文件，当Mysql执行recovery时重新执行redo log记录的SQL操作即可,当客户端执行每条SQL(更新语句)时，redo log会被首先写入log buffer;当客户端执行COMMIT命令时，log buffer中的内容会被视情况刷新到磁盘 undo logundo log是为回滚而用，就是co">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://coder_tinghao.github.io/image.png">
+<meta property="article:published_time" content="2023-11-22T03:21:45.000Z">
+<meta property="article:modified_time" content="2023-11-24T02:39:30.510Z">
+<meta property="article:author" content="Fength">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://coder_tinghao.github.io/image.png">
+
+
+<link rel="canonical" href="http://coder_tinghao.github.io/2023/11/22/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-22/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2023/11/22/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-22/","path":"2023/11/22/java学习笔记——11-22/","title":"java学习笔记——11.22"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>java学习笔记——11.22 | Feng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Feng's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Feng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">passion</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Innodb%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">Innodb事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">Java内存泄漏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">3.</span> <span class="nav-text">线程池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executor%E6%A1%86%E6%9E%B6%E4%B8%A4%E7%BA%A7%E8%B0%83%E5%BA%A6%EF%BC%88Java%E5%B2%97%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83MCA%E7%89%88-P458%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">Executor框架两级调度（Java岗面试核心MCA版 P458）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%BB%84"><span class="nav-number">5.</span> <span class="nav-text">线程池与线程组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Callable%E4%B8%8ERunnbale%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">6.</span> <span class="nav-text">Callable与Runnbale的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">7.</span> <span class="nav-text">什么是线程安全，如何实现线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">Java多线程安全机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%92%E6%96%A5%E5%90%8C%E6%AD%A5%EF%BC%88%E9%98%BB%E5%A1%9E%E5%90%8C%E6%AD%A5%EF%BC%8C%E6%82%B2%E8%A7%82%EF%BC%89"><span class="nav-number">8.1.</span> <span class="nav-text">互斥同步（阻塞同步，悲观）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E5%90%8C%E6%AD%A5%EF%BC%88%E4%B9%90%E8%A7%82%EF%BC%89"><span class="nav-number">8.2.</span> <span class="nav-text">非阻塞同步（乐观）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88"><span class="nav-number">8.3.</span> <span class="nav-text">无同步方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">8.4.</span> <span class="nav-text">volatile关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">8.5.</span> <span class="nav-text">可见性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A6%81%E6%AD%A2%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F%E4%BC%98%E5%8C%96"><span class="nav-number">8.6.</span> <span class="nav-text">禁止指令重排序优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized%E3%80%81volatile%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">synchronized、volatile区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">10.</span> <span class="nav-text">Java内存模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">11.</span> <span class="nav-text">ThreadLocal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">12.</span> <span class="nav-text">ConcurrentHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAS%EF%BC%88Compare-and-Swap%EF%BC%89"><span class="nav-number">13.</span> <span class="nav-text">CAS（Compare-and-Swap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CountDownLatch%E3%80%81CyclicBarrier%E3%80%81Semaphore%E7%9A%84%E7%94%A8%E6%B3%95%E5%92%8C%E5%8C%BA%E5%88%AB"><span class="nav-number">14.</span> <span class="nav-text">CountDownLatch、CyclicBarrier、Semaphore的用法和区别</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Fength"
+      src="/images/profile.png">
+  <p class="site-author-name" itemprop="name">Fength</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/coder-tinghao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;coder-tinghao" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:793360194@qq.com" title="E-Mail → mailto:793360194@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/11/22/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="java学习笔记——11.22 | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java学习笔记——11.22
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-22 11:21:45" itemprop="dateCreated datePublished" datetime="2023-11-22T11:21:45+08:00">2023-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-24 10:39:30" itemprop="dateModified" datetime="2023-11-24T10:39:30+08:00">2023-11-24</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Innodb事务"><a href="#Innodb事务" class="headerlink" title="Innodb事务"></a>Innodb事务</h3><p><strong>redo log</strong><br>redo log就是保存执行的SQL语句到一个指定的Log文件，当Mysql执行recovery时重新执行redo log记录的SQL操作即可,当客户端执行每条SQL(更新语句)时，redo log会被首先写入log buffer;当客户端执行COMMIT命令时，log buffer中的内容会被视情况刷新到磁盘</p>
+<p><strong>undo log</strong><br>undo log是为回滚而用，就是copy事务前的数据库内容(行)到undo buffer，在适合的时间把undo buffer中的内容刷新到磁盘</p>
+<h3 id="Java内存泄漏"><a href="#Java内存泄漏" class="headerlink" title="Java内存泄漏"></a>Java内存泄漏</h3><p>未引用对象将会被垃圾回收器回收，而引用对象却不会。<br>未引用对象很显然是无用的对象，有一些无用对象也有可能是引用对象，<strong>这部分对象正是内存泄露的来源</strong></p>
+<p><strong>为什么会发生？</strong><br>对象A引用对象B，A的生命周期(t1- t4)比B的生命周期(t2-t3)要长，当B在程序中不再被使用的时候，A仍然引用着B。在这种情况下， 垃圾回收器是不会回收B对象的，这就可能造成了内存不足问题</p>
+<p>因为A可能不止引用着B对象，还可能 引用其它生命周期比A短的对象，这就造成了大量无用对象不能被回收，且占据了昂贵的内存资源。</p>
+<p>同样的，B对象也可能引用着一大堆对象，这些被B对象引用着的对象也不能被垃圾回收器回收，所有的 这些无用对象消耗了大量内存资源。</p>
+<p><strong>如何阻止？</strong><br>使用集合、大对象、文件等时，及时赋值为null或关闭</p>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p><strong>工作原理</strong><br>刚开始都是在创建新的线程，达到<strong>核心线程数量5个后，新的任务进来后不再创建新的线程，而是将任务加入工作队列</strong>，任务队列到达上线5个后，新的任务又会创建新的普通线程，直到达到线程池最大的线 程数量10个，后面的任务则根据配置的饱和策略来处理<br><img data-src="/image.png" alt="Alt text"><br><strong>优点</strong><br>1、线程是稀缺资源，使用线程池可以减少创建和销毁线程的次数，每个工作线程都可以重复使用</p>
+<p>2、可以根据系统的承受能力，调整线程池中工作线程的数量，防止因为消耗过多内存导致服务器崩溃</p>
+<p>降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。<br>提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行。<br>提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</p>
+<h3 id="Executor框架两级调度（Java岗面试核心MCA版-P458）"><a href="#Executor框架两级调度（Java岗面试核心MCA版-P458）" class="headerlink" title="Executor框架两级调度（Java岗面试核心MCA版 P458）"></a>Executor框架两级调度（Java岗面试核心MCA版 P458）</h3><p>在上层，JAVA程序会将应用分解为多个任务，然后使用应用级的调度器(Executor)将这些任务映射成固定数量的线程;在底层，操作系统内核将这些线程映射到硬件处理器上</p>
+<p>Runnable和Callable是工作单元(也就是俗称的任务)，执行机制由Executor来提 供。Executor是基于<strong>生产者消费者模式</strong></p>
+<h3 id="线程池与线程组"><a href="#线程池与线程组" class="headerlink" title="线程池与线程组"></a>线程池与线程组</h3><p><strong>线程组</strong>就表示一个线程的集合</p>
+<p><strong>线程池</strong>是为<strong>线程的生命周期开销问题和资源不足问题</strong>提供解决方案，主要用来管理线程；如果每当一个请求到达就创建一个新线程，开销是相当大的</p>
+<p><strong>Callable是Runnable封装的异步运算任务<br>Future用来保存Callable异步运算的结果<br>FutureTask封装Future的实体类</strong></p>
+<h3 id="Callable与Runnbale的区别"><a href="#Callable与Runnbale的区别" class="headerlink" title="Callable与Runnbale的区别"></a>Callable与Runnbale的区别</h3><p>a、Callable定义的方法是call，而Runnable定义的方法是run<br>b、call方法有返回值，而run方法是没有返回值的<br>c、call方法可以抛出异常，而run方法不能抛出异常</p>
+<pre><code>public class MyCallableTask implements Callable&lt;Integer&gt; &#123;
+@Override
+public Integer call()
+&#123;
+        System.out.println(&quot;callable do somothing&quot;);
+        Thread.sleep(5000);
+        return new Random().nextInt(100);
+    &#125;
+&#125;
+
+Callable&lt;Integer&gt; callable = new MyCallableTask();
+FutureTask&lt;Integer&gt; future = new FutureTask&lt;Integer&gt;(callable);
+Thread thread = new Thread(future);
+thread.start();
+Thread.sleep(100);
+future.cancel(true);
+</code></pre>
+<h3 id="什么是线程安全，如何实现线程安全"><a href="#什么是线程安全，如何实现线程安全" class="headerlink" title="什么是线程安全，如何实现线程安全"></a>什么是线程安全，如何实现线程安全</h3><p>线程安全：线程执行过程中不会产生共享资源的冲突<br>线程不安全：如果有多个线程同时在操作主内存中的变量</p>
+<h3 id="Java多线程安全机制"><a href="#Java多线程安全机制" class="headerlink" title="Java多线程安全机制"></a>Java多线程安全机制</h3><h4 id="互斥同步（阻塞同步，悲观）"><a href="#互斥同步（阻塞同步，悲观）" class="headerlink" title="互斥同步（阻塞同步，悲观）"></a>互斥同步（阻塞同步，悲观）</h4><p>最基本的就是<strong>synchronized关键字</strong>，执行时，会有monitorenter指令和monitorexit指令，monitorenter指令尝试获取对象的锁，或者给锁的计数器加1；monitorexit指令会给锁的计数器减1，获取失败就阻塞等待</p>
+<p>还有java.util.concurrent包中的<strong>ReentrantLock重入锁</strong>，基本用法相似，目前性能接近</p>
+<h4 id="非阻塞同步（乐观）"><a href="#非阻塞同步（乐观）" class="headerlink" title="非阻塞同步（乐观）"></a>非阻塞同步（乐观）</h4><p><strong>操作和冲突检测，具备原子性</strong><br><strong>Test-and-Set, Fetch-and-Increment, Swap, Compare-and-Swap(CAS)</strong></p>
+<h4 id="无同步方案"><a href="#无同步方案" class="headerlink" title="无同步方案"></a>无同步方案</h4><h4 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h4><h4 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h4><p>一个变量被定义为volatile后，保证此变量对<strong>所有线程可见性</strong>，普通变量做不到，因为普通变量在线程间传递需要通过主内存</p>
+<p><strong>volatile变量在使用之前需要先从主内存刷新最新的值</strong>，执行引擎看不到不一致的情况，但是Java内的运算操作符不是原子操作，所以若不满足以下两条规则，仍要通过加锁保证原子性：</p>
+<p>1.运算结果不依赖变量当前值，或只有单一线程修改变量值</p>
+<p>2.变量不需要与其他状态变量共同参与不变约束</p>
+<p>Java虚拟机书P446有例子，<strong>volatile关键字很适合控制并发（状态标志），例如：其他线程看到某一标志变量变化了，就停止线程</strong></p>
+<h4 id="禁止指令重排序优化"><a href="#禁止指令重排序优化" class="headerlink" title="禁止指令重排序优化"></a>禁止指令重排序优化</h4><p>volatile修饰的变量会建立<strong>内存屏障</strong>，指重排序不能把后面的指令重排序到内存屏障之前的位置，例如：<strong>lock</strong> addl xxxxx</p>
+<p>其中，<strong>lock前缀将本处理器的缓存写入内存，同时其他处理器缓存无效化</strong>，就建立了内存屏障</p>
+<p><strong>synchronized关键字，一个变量在同一个时刻只允许一条线程进行lock操作</strong></p>
+<h3 id="synchronized、volatile区别"><a href="#synchronized、volatile区别" class="headerlink" title="synchronized、volatile区别"></a>synchronized、volatile区别</h3><p>volatile仅能使用在<strong>变量级别</strong>，仅能实现变量的修改可见性，<strong>不能保证原子性</strong>，<strong>不会被编译器优化</strong></p>
+<p>synchronized则可以使用在<strong>变量、方法、和类级别</strong>的，可以保证变量的修改可见性和原子性，因为线程获得锁才能进入临界区，<strong>可以被编译器优化</strong></p>
+<h3 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h3><p>处理器与内存之间——高速缓存</p>
+<p>多个处理器，多个缓存，共享内存，带来的<strong>缓存一致性问题</strong></p>
+<p>通过缓存一致性协议协调</p>
+<p><strong>happens-before规则</strong></p>
+<h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p><strong>ThreadLocal是一个本地线程副本变量工具类，主要用于将私有线程和该线程存放的副本对象做一个映射，各个线程之间的变量互不干扰</strong></p>
+<p>每个Thread线程内部都有一个ThreadLocalMap。<br>Map里面存储线程本地对象ThreadLocal（key）和线程的变量副本（value）</p>
+<p>Thread内部的Map是由ThreadLocal维护，ThreadLocal负责向map获取和设置线程的变量值。<br>一个Thread可以有多个ThreadLocal</p>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>1.8的实现已经抛弃了Segment分段锁机制，利用CAS+Synchronized来保证并发更新的安全，底层采用数组+链表+红黑树的存储结构<br>利用了CAS对数组的某个位置进行并发安全的赋值</p>
+<h3 id="CAS（Compare-and-Swap）"><a href="#CAS（Compare-and-Swap）" class="headerlink" title="CAS（Compare-and-Swap）"></a>CAS（Compare-and-Swap）</h3><p>CAS指令需要三个操作数，分别是内存地址（在Java内存模型中可以简单理解为主内存中变量的内存地址）、旧值（在Java内存模型中，可以理解工作内存中缓存的主内存的变量的值）和新值。<strong>CAS操作执行时，当且仅当主内存对应的值等于旧值时，处理器用新值去更新旧值，否则它就不执行更新</strong>。但是无论是否更新了主内存中的值，都会返回旧值，上述的处理过程是一个原子操作。<br>如果线程中的值和主内存中的值不一致，根据缓存一致性原则，会重新去主内存读取a的值（11）</p>
+<p><strong>CAS 操作是抱着乐观的态度进行的(乐观锁)，它总是认为自己可以成功完成操作。当多个线程同时使用 CAS 操作一个变量时，只有一个会胜出，并成功更新，其余均会失败。</strong></p>
+<h3 id="CountDownLatch、CyclicBarrier、Semaphore的用法和区别"><a href="#CountDownLatch、CyclicBarrier、Semaphore的用法和区别" class="headerlink" title="CountDownLatch、CyclicBarrier、Semaphore的用法和区别"></a>CountDownLatch、CyclicBarrier、Semaphore的用法和区别</h3><p>CountDownLatch 类位于 java.util.concurrent 包下，利用它可以实现类似计数器的功能。比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，此时就可以利用CountDownLatch来实现这种功能了</p>
+<p>回环屏障，通过它可以实现让一组线程等待至某个状态之后再全部同时执行。叫做回环是因为当所有等待线程都被释放以后，CyclicBarrier可以被重用</p>
+<p>Semaphore翻译成字面意思为 信号量，Semaphore 可以同时让多个线程同时访问共享资源，通过 acquire() 获取一个许可，如果没有就等待，而 release() 释放一个许可</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/" rel="prev" title="java学习笔记——11.21">
+                  <i class="fa fa-chevron-left"></i> java学习笔记——11.21
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/24/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-24/" rel="next" title="java学习笔记——11.24">
+                  java学习笔记——11.24 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fength</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

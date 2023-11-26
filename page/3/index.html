@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,210 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/02/17/copy-on-write%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">copy-on-write机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-02-17 12:05:05 / 修改时间：15:07:07" itemprop="dateCreated datePublished" datetime="2023-02-17T12:05:05+08:00">2023-02-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="copy-on-write机制"><a href="#copy-on-write机制" class="headerlink" title="copy-on-write机制"></a>copy-on-write机制</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903702373859335">参考链接</a></p>
+<p>写时复制（Copy-on-write，COW），有时也称为隐式共享（implicit sharing）。COW 将复制操作推迟到第一次写入时进行：在创建一个新副本时，不会立即复制资源，而是共享原始副本的资源；当修改时再执行复制操作。通过这种方式共享资源，可以显著减少创建副本时的开销，以及节省资源；同时，资源修改操作会增加少量开销。</p>
+<h1 id="linux下的fork函数和exec函数"><a href="#linux下的fork函数和exec函数" class="headerlink" title="linux下的fork函数和exec函数"></a>linux下的fork函数和exec函数</h1><p>在说明Linux下的copy-on-write机制前，首先要知道两个函数：fork()和exec()</p>
+<p>需要注意的是exec()并不是一个特定的函数, 它是一组函数的统称, 它包括了execl()、execlp()、execv()、execle()、execve()、execvp()</p>
+<p>fork是类Unix操作系统上<strong>创建进程</strong>的主要方法，fork用于创建子进程(等同于当前进程的副本)，新的进程要通过老的进程复制自身得到，Linux的进程都通过<strong>init进程或init的子进程</strong>fork(vfork)出来的</p>
+<p>从上面我们已经知道了fork会创建一个子进程。子进程的是父进程的副本。</p>
+<p>exec函数的作用就是：装载一个新的程序（可执行映像）覆盖当前进程内存空间中的映像，从而执行不同的任务，exec系列函数在执行时会直接替换掉当前进程的地址空间。</p>
+<h1 id="copy-on-write实现原理"><a href="#copy-on-write实现原理" class="headerlink" title="copy-on-write实现原理"></a>copy-on-write实现原理</h1><h2 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h2><p>既然很多时候复制给子进程的数据是无效的，于是就有了Copy On Write这项技术了，原理也很简单：</p>
+<p>fork创建出的子进程，<strong>与父进程共享内存空间</strong>。也就是说，如果<strong>子进程不对内存空间进行写入操作的话，内存空间中的数据并不会复制给子进程</strong>，这样创建子进程的速度就很快了！(不用复制，直接引用父进程的物理空间)。<br>并且如果在fork函数返回之后，子进程<strong>第一时间</strong>exec一个新的可执行映像，那么也不会浪费时间和内存空间了。</p>
+<p>另外表达：在fork之后exec之前两个进程用的是相同的<strong>物理空间（内存区）</strong>，子进程的代码段、数据段、堆栈都是指向父进程的物理空间，也就是说，两者的虚拟空间不同，但其对应的物理空间是同一个，当<strong>父子进程中有更改相应段的行为</strong>发生时，再为子进程相应的段分配物理空间</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/copy-on-write_implement.png?raw=true" alt="实现原理"></p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>fork()之后，kernel把父进程中所有的内存页的权限都设为<strong>read-only</strong>，然后子进程的地址空间指向父进程。当父子进程都只读内存时，相安无事。当其中某个进程写内存时，CPU硬件检测到内存页是read-only的，于是触发<strong>页异常中断（page-fault）</strong>，陷入kernel的一个中断例程。中断例程中，kernel就会把触发的异常的页复制一份，于是父子进程各自持有独立的一份。</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点：减少不必要的资源分配，节省宝贵的物理内存。</p>
+<p>缺点：如果在子进程存在期间发生了大量写操作，那么会频繁地产生页面错误，不断陷入内核，复制页面。这反而会降低效率。</p>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p><strong>语言中的应用:</strong><br>相比于传统的深层复制，能带来很大性能提升。比如 C++ 98 标准下的 std::string 就采用了写时复制的实现：</p>
+<pre><code>std::string x(&quot;Hello&quot;);
+std::string y = x;  // x、y 共享相同的 buffer
+y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buffer
+                    // x 依然使用旧的 buffer
+</code></pre>
+<p>Golang、PHP 中的 string、array 也是写时复制。在修改这些类型时，如果其引用计数非零，则会复制一个副本。因此我们在 golang、php 中可以将字符串、数组当作值类型（values type）进行传递，即不会有传值复制的开销，也能保证其 immutable 的特性。</p>
+<p><strong>文件系统中的应用：</strong><br>Copy-on-write在对数据进行修改的时候，不会直接在原来的数据位置上进行操作，而是重新找个位置修改，这样的好处是一旦系统突然断电，重启之后不需要做Fsck。好处就是能保证数据的完整性，掉电的话容易恢复。</p>
+<p>比如说：要修改数据块A的内容，先把A读出来，写到B块里面去。如果这时候断电了，原来A的内容还在！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/02/13/GFS%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">GFS论文总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-13 15:51:29" itemprop="dateCreated datePublished" datetime="2023-02-13T15:51:29+08:00">2023-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-02-14 13:01:51" itemprop="dateModified" datetime="2023-02-14T13:01:51+08:00">2023-02-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="GFS论文总结"><a href="#GFS论文总结" class="headerlink" title="GFS论文总结"></a>GFS论文总结</h1><p>GFS（The Google File System），Google的目标是构建一个大型的，快速的文件系统。并且这个文件系统是全局有效的，这样各种不同的应用程序都可以从中读取数据。从硬件到使用了GFS的软件都有讨论，并且它也是一个成功的现实世界的设计。尽管这是在学术会议上发表的学术论文，但是文章里介绍的东西（GFS）也相当成功，并且在现实世界中使用了相当长的时间。</p>
+<h1 id="分布式存储系统"><a href="#分布式存储系统" class="headerlink" title="分布式存储系统"></a>分布式存储系统</h1><p>存储是一种关键的抽象，可能有各种各样重要的抽象可以应用在分布式系统中，简单的存储接口往往非常有用且极其通用。所以，构建分布式系统大多都是关于如何设计存储系统，或是设计其它基于大型分布式存储的系统。所以我们会更加关注如何为大型分布式存储系统设计一个优秀的接口，以及如何设计存储系统的内部结构，这样系统才能良好运行。<br><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/distributed_system.png?raw=true" alt="分布式系统"></p>
+<p>1.对于分布式存储，为了获取更大的性能，利用数百台计算机的资源来同时完成大量工作</p>
+<p>2.将数据分割放到大量的服务器上，这样就可以并行的从多台服务器读取数据。我们将这种方式称之为分片（Sharding）</p>
+<p>3.分片导致常态的错误，需要自动化的方法而不是人工介入来修复错误，引出容错</p>
+<p>4.实现容错最有用的一种方法是使用复制，只需要维护2-3个数据的副本，当其中一个故障了，你就可以使用另一个。所以，如果想要容错能力，就得有复制（replication）</p>
+<p>5.如果有复制，那就有了两份数据的副本。可以确定的是，如果你不小心，它们就会不一致。获取到的数据内容也将取决于你向哪个副本请求数据。这对于应用程序来说就有些麻烦了。所以，如果我们有了复制，我们就有不一致的问题（inconsistency）</p>
+<p>6.避免不一致的问题，并且让数据看起来也表现的符合预期。但是为了达到这样的效果，你总是需要额外的工作，需要不同服务器之间通过网络额外的交互，而这样的交互会降低性能。所以如果你想要一致性，你的代价就是低性能。</p>
+<p><strong>通常，人们很少会乐意为好的一致性付出相应的性能代价。</strong></p>
+<h1 id="GFS系统设计"><a href="#GFS系统设计" class="headerlink" title="GFS系统设计"></a>GFS系统设计</h1><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_architecture.png?raw=true" alt="GFS结构"></p>
+<h2 id="GFS设计目标"><a href="#GFS设计目标" class="headerlink" title="GFS设计目标"></a>GFS设计目标</h2><p>为了获得大容量和高速的特性，每个包含了数据的文件会被GFS自动的分割并存放在多个服务器之上，这样读写操作自然就会变得很快。因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量。将文件分割存储还可以在存储系统中保存比单个磁盘还要大的文件。</p>
+<p><strong>GFS是为TB级别的文件而生。并且GFS只会顺序处理，不支持随机访问</strong></p>
+<h2 id="GFS-Master节点"><a href="#GFS-Master节点" class="headerlink" title="GFS Master节点"></a>GFS Master节点</h2><p>Master节点用来管理文件和Chunk的信息，而Chunk服务器用来存储实际的数据。Master节点知道每一个文件对应的所有的Chunk的ID，这些Chunk每个是64MB大小，它们共同构成了一个文件。如果我有一个1GB的文件，那么Master节点就知道文件的第一个Chunk存储在哪，第二个Chunk存储在哪，等等。当我想读取这个文件中的任意一个部分时，我需要向Master节点查询对应的Chunk在哪个服务器上，之后我可以直接从Chunk服务器读取对应的Chunk数据。</p>
+<p>Master节点主要保存了两个表单：</p>
+<p>1.文件名到Chunk ID或者Chunk Handle数组的对应。这个表单告诉你，文件对应了哪些Chunk。</p>
+<p>2.记录了Chunk ID到Chunk数据的对应关系。这里的数据又包括了：<br><strong>每个Chunk存储在哪些服务器上</strong>；<strong>每个Chunk当前的版本号</strong>；<strong>哪个Chunk服务器持有主Chunk</strong>，所有对于Chunk的写操作都必须在主Chunk（Primary Chunk）上顺序处理，主Chunk是Chunk的多个副本之一；<br><strong>主Chunk的租约过期时间</strong>，主Chunk只能在特定的租约时间内担任主Chunk</p>
+<p>Master会在磁盘上存储log，每次有数据变更时，Master会在磁盘的log中追加一条记录，并生成CheckPoint（类似于备份点）</p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_Master.png?raw=true" alt="GFS_Master"></p>
+<p>有些数据需要存在磁盘上，而有些不用。它们分别是：<br>如图所示，需要保存在磁盘上的，标记为NV（non-volatile, 非易失）；不需要保存在磁盘上的标记为V</p>
+<p>任何时候，如果文件扩展到达了一个新的64MB，需要新增一个Chunk或者由于指定了新的主Chunk而导致版本号更新了，Master节点需要向磁盘中的Log追加一条记录。这里在磁盘中维护log而不是数据库的原因是，数据库本质上来说是某种B树（b-tree）或者hash table，相比之下，<strong>追加log会非常的高效</strong>，因为你可以将最近的<strong>多个log记录一次性的写入磁盘</strong>。因为这些数据都是向同一个地址追加，这样只需要等待磁盘的磁碟旋转一次。而对于B树来说，每一份数据都需要在磁盘中随机找个位置写入。</p>
+<p>Master节点重启时，会从log中的最近一个<strong>checkpoint</strong>开始恢复，再逐条执行从Checkpoint开始的log，最后恢复自己的状态。</p>
+<h2 id="GFS读文件"><a href="#GFS读文件" class="headerlink" title="GFS读文件"></a>GFS读文件</h2><p>读请求，意味着应用程序或者GFS客户端有一个文件名和它想从文件的某个位置读取的偏移量（offset），应用程序会将这些信息发送给Master节点。Master节点会从自己的file表单中查询文件名，得到Chunk ID的数组。因为每个Chunk是64MB，所以偏移量除以64MB就可以从数组中得到对应的Chunk ID。之后Master再从Chunk表单中找到存有Chunk的服务器列表，并将列表返回给客户端。所以，第一步是客户端（或者应用程序）将文件名和偏移量发送给Master。第二步，Master节点将Chunk Handle（也就是ID，记为H）和服务器列表发送给客户端。</p>
+<p>客户端可以从这些Chunk服务器中挑选一个来读取数据。GFS论文说，客户端会选择一个网络上最近的服务器（Google的数据中心中，IP地址是连续的，所以可以从IP地址的差异判断网络位置的远近），并将读请求发送到那个服务器。因为客户端每次可能只读取1MB或者64KB数据，所以，客户端可能会连续多次读取同一个Chunk的不同位置。所以，客户端会缓存Chunk和服务器的对应关系。</p>
+<p>客户端会与选出的Chunk服务器通信，将Chunk Handle和偏移量发送给那个Chunk服务器。Chunk服务器会在本地的硬盘上，将每个Chunk存储成独立的Linux文件，并通过普通的Linux文件系统管理</p>
+<h2 id="GFS写文件"><a href="#GFS写文件" class="headerlink" title="GFS写文件"></a>GFS写文件</h2><p>写文件，客户端会向Master节点发送请求说：我想向这个文件名对应的文件追加数据，请告诉我文件中<strong>最后一个Chunk的位置</strong>。这就是GFS论文中讨论的<strong>记录追加（Record Append）</strong></p>
+<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_write.png?raw=true" alt="GFS写操作"></p>
+<p>GFS 使用了**租约(lease)**的手段，Master 会定期向 chunk 的某个 replica 所在的服务器进行授权（有超时时间，所以称为租约），拿到授权的副本称为主副本（primary replica），由其进行写入顺序的安排。</p>
+<p>对于读文件来说，可以从任何最新的Chunk副本读取数据，但是对于写文件来说，必须要通过Chunk的主副本（Primary Chunk）来写入。对于Master节点来说，如果发现Chunk的主副本不存在，Master会找出所有存有Chunk最新副本的Chunk服务器。每个Chunk可能同时有多个副本，最新的副本是指，副本中保存的版本号与Master中记录的Chunk的版本号一致。当客户端想要对文件进行追加，但是又不知道文件尾的Chunk对应的Primary在哪时，Master会等所有存储了最新Chunk版本的服务器集合完成，然后挑选一个作为Primary，其他的作为Secondary。</p>
+<p>现在我们有了一个Primary，它可以接收来自客户端的写请求，并将写请求应用在多个Chunk服务器中。这样Master可以将实际更新Chunk的能力转移给Primary服务器。并且在将版本号更新到Primary和Secondary服务器之后，如果Master节点故障重启，还是可以在相同的Primary和Secondary服务器上继续更新Chunk。</p>
+<h2 id="GFS一致性"><a href="#GFS一致性" class="headerlink" title="GFS一致性"></a>GFS一致性</h2><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/GFS_consistency.png?raw=true" alt="GFS一致性"></p>
+<p>如图所示，追加A成功，追加B时第三个副本失败，追加C成功，而后重新追加B会在C的后面追加。</p>
+<p>在GFS的这种工作方式下，如果Primary返回写入成功，那么一切都还好，如果Primary返回写入失败，就不是那么好了。Primary返回写入失败会导致不同的副本有完全不同的数据。</p>
+<h2 id="GFS问题"><a href="#GFS问题" class="headerlink" title="GFS问题"></a>GFS问题</h2><p>它最严重的局限可能在于，它只有一个Master节点，会带来以下问题：</p>
+<p>·Master节点必须为每个文件，每个Chunk维护表单，随着GFS的应用越来越多，涉及的文件也越来越多，最终Master会耗尽内存来存储文件表单。你可以增加内存，但是单台计算机的内存也是有上限的。</p>
+<p>·单个Master节点要承载数千个客户端的请求，而Master节点的CPU每秒只能处理数百个请求，尤其Master还需要将部分数据写入磁盘，很快，客户端数量超过了单个Master的能力。</p>
+<p>·应用程序发现很难处理GFS奇怪的语义（本节最开始介绍的GFS的副本数据的同步，或者可以说不同步）。</p>
+<p>·Master节点的故障切换不是自动的。GFS需要人工干预来处理已经永久故障的Master节点，并更换新的服务器，这可能需要几十分钟甚至更长的而时间来处理。对于某些应用程序来说，这个时间太长了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -860,171 +1064,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2022/07/23/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/23/test/" class="post-title-link" itemprop="url">test</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-07-23 17:05:10" itemprop="dateCreated datePublished" datetime="2022-07-23T17:05:10+08:00">2022-07-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-06 20:36:25" itemprop="dateModified" datetime="2022-12-06T20:36:25+08:00">2022-12-06</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2022/07/23/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/23/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-07-23 17:01:52" itemprop="dateCreated datePublished" datetime="2022-07-23T17:01:52+08:00">2022-07-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-06 20:35:12" itemprop="dateModified" datetime="2022-12-06T20:35:12+08:00">2022-12-06</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
