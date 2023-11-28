@@ -1050,7 +1050,7 @@ future.cancel(true);
   <entry>
     <title>快手——Java电商——一面凉经</title>
     <url>/2023/11/28/%E5%BF%AB%E6%89%8B%E2%80%94%E2%80%94Java%E7%94%B5%E5%95%86%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E5%87%89%E7%BB%8F/</url>
-    <content><![CDATA[<h4 id="面试过程"><a href="#面试过程" class="headerlink" title="面试过程"></a>面试过程</h4><p>10min项目+30min拷打<br>面试官还是很耐心的，很多问题我答的可以说很烂，最后还是愿意告诉我我的问题在哪</p>
+    <content><![CDATA[<h4 id="面试过程"><a href="#面试过程" class="headerlink" title="面试过程"></a>面试过程</h4><p>10min项目+30min拷打<br>面试官还是很耐心的，很多问题我答的可以说很烂，最后还是愿意跟我聊问题，怎么提升</p>
 <h4 id="项目亮点，收获"><a href="#项目亮点，收获" class="headerlink" title="项目亮点，收获"></a>项目亮点，收获</h4><p>表述清楚，用程序员语言描述</p>
 <p><strong>不match</strong></p>
 <h4 id="SQL题，统计一个小学7～12岁的年龄分布-id-name-age"><a href="#SQL题，统计一个小学7～12岁的年龄分布-id-name-age" class="headerlink" title="SQL题，统计一个小学7～12岁的年龄分布 id name age"></a>SQL题，统计一个小学7～12岁的年龄分布 id name age</h4><p>select count(id) from xxx where 7&lt;&#x3D;age ans age&lt;&#x3D;12 order by age</p>
@@ -1074,6 +1074,7 @@ future.cancel(true);
 <h4 id="Java线程安全"><a href="#Java线程安全" class="headerlink" title="Java线程安全"></a>Java线程安全</h4><h4 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h4><p><a href="https://pdai.tech/md/java/thread/java-thread-x-key-synchronized.html">https://pdai.tech/md/java/thread/java-thread-x-key-synchronized.html</a><br><strong>锁粒度问题</strong><br>1.synchronized用来标识一个<strong>普通方法</strong>，表示一个线程要执行该方法，必须取得该方法所在的<strong>对象的锁</strong></p>
 <p>2.synchronized用来标识一个<strong>静态方法</strong>，表示一个线程要执行该方法，必须取得该方法所在的<strong>类的类锁</strong></p>
 <p>3.synchronized用来修饰一个代码块，表示一个线程要执行该代码块，必须获得obj的锁</p>
+<h4 id="Java-web流程"><a href="#Java-web流程" class="headerlink" title="Java web流程"></a>Java web流程</h4><p>比如一个手机想客户端发请求，到返回请求，处理流程</p>
 ]]></content>
       <tags>
         <tag>面试</tag>
