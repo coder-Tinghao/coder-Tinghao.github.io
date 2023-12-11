@@ -600,7 +600,16 @@ int j  // 声明并定义j
   <entry>
     <title>java学习笔记——9.26</title>
     <url>/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/</url>
-    <content><![CDATA[<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p>
+    <content><![CDATA[<h3 id="Java类型转换"><a href="#Java类型转换" class="headerlink" title="Java类型转换"></a>Java类型转换</h3><p>long类型比float类型表示的范围小</p>
+<p><strong>byte、char、short类型在做运算过程中，会自动提升为int类型</strong></p>
+<pre><code>    byte a = 3;
+    byte b = 4;
+    byte c = a + b;  // 会报错，因为运算时提升成int了
+    byte c = (byte)(a+b); // int转byte，大转小，用强制类型转换
+    byte c = 3 + 4;  // 不会报错，因为上面的运算是变量，这行代码是两个字面量
+</code></pre>
+<p>**Java有常量优化机制：编译期间会对3+4进行计算，实际的字节码文件：byte c&#x3D;7;对于String类型，也有常量优化机制，String s &#x3D; “a” +  **</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p>
 <p>优点：编译器可以让字符串<strong>共享</strong></p>
 <p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p>
 <pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化
@@ -1088,6 +1097,26 @@ future.cancel(true);
 ]]></content>
       <tags>
         <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>京东零售——一面面经——12.11</title>
+    <url>/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/</url>
+    <content><![CDATA[<h3 id="京东零售一面面经"><a href="#京东零售一面面经" class="headerlink" title="京东零售一面面经"></a>京东零售一面面经</h3><p>这个面试官超柔和，语速也比较慢，会给提示辅助，总体答完很舒畅，没有上次的压力和紧张感，全程几乎没八股，全是计算机基础</p>
+<p>1.区块链理解</p>
+<p>2.raft共识算法，PBFT共识算法<br>——raft算法都有哪几个角色，都是干嘛的<br>——PBFT共识算法和raft算法区别</p>
+<p>3.C++和Java区别，谈理解</p>
+<p>4.虚拟内存是什么</p>
+<p>5.计算机网络五层模型，分别都做什么的，举例子<br>——Java中有没有和计算机网络这种模型相似的地方，谈谈理解</p>
+<p>——答的：分层思想，解藕</p>
+<p>6.C++引用和指针有什么区别<br>——没答出来，刚思考3秒钟，面试官说没事，不知道也没事什么的</p>
+<p>7.MySQL场景题，查百万级电话号码，对电话号码排序</p>
+<p>我答：基数排序思想，按位查，然后再并行查，不知道对不对。。</p>
+<p>反问：部门具体业务</p>
+<p>其他的慢慢回想再写吧。。</p>
+]]></content>
+      <tags>
+        <tag>面经</tag>
       </tags>
   </entry>
 </search>

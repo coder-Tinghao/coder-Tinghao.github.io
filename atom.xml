@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-11-29T08:55:18.190Z</updated>
+  <updated>2023-12-11T04:12:51.862Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>京东零售——一面面经——12.11</title>
+    <link href="http://coder_tinghao.github.io/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/"/>
+    <id>http://coder_tinghao.github.io/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/</id>
+    <published>2023-12-11T03:55:14.000Z</published>
+    <updated>2023-12-11T04:12:51.862Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="京东零售一面面经"><a href="#京东零售一面面经" class="headerlink" title="京东零售一面面经"></a>京东零售一面面经</h3><p>这个面试官超柔和，语速也比较慢，会给提示辅助，总体答完很舒畅，没有上次的压力和紧张感，全程几乎没八股，全是计算机基础</p><p>1.区块链理解</p><p>2.raft共识算法，PBFT共识算法<br>——raft算法都有哪几个角色，都是干嘛的<br>——PBFT共识算法和raft算法区别</p><p>3.C++和Java区别，谈理解</p><p>4.虚拟内存是什么</p><p>5.计算机网络五层模型，分别都做什么的，举例子<br>——Java中有没有和计算机网络这种模型相似的地方，谈谈理解</p><p>——答的：分层思想，解藕</p><p>6.C++引用和指针有什么区别<br>——没答出来，刚思考3秒钟，面试官说没事，不知道也没事什么的</p><p>7.MySQL场景题，查百万级电话号码，对电话号码排序</p><p>我答：基数排序思想，按位查，然后再并行查，不知道对不对。。</p><p>反问：部门具体业务</p><p>其他的慢慢回想再写吧。。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;京东零售一面面经&quot;&gt;&lt;a href=&quot;#京东零售一面面经&quot; class=&quot;headerlink&quot; title=&quot;京东零售一面面经&quot;&gt;&lt;/a&gt;京东零售一面面经&lt;/h3&gt;&lt;p&gt;这个面试官超柔和，语速也比较慢，会给提示辅助，总体答完很舒畅，没有上次的压力和紧张感，全程几</summary>
+      
+    
+    
+    
+    
+    <category term="面经" scheme="http://coder_tinghao.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>快手——Java电商——一面凉经</title>
@@ -201,15 +223,15 @@ assert condition: expression;
     <link href="http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/"/>
     <id>http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/</id>
     <published>2023-09-26T12:28:45.000Z</published>
-    <updated>2023-09-29T10:38:13.538Z</updated>
+    <updated>2023-12-05T14:08:57.270Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p><p>优点：编译器可以让字符串<strong>共享</strong></p><p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p><pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化    String s2 = &quot;abc&quot;;    System.out.println(s1==s2); // 返回true，说明在常量池的同一个地方</code></pre><p>若通过new初始化，则在堆内存中，不在常量池中</p><pre><code>    String s1 = new String(&quot;abc&quot;);    String s2 = new String(&quot;abc&quot;);    System.out.println(s1==s2); // 返回false，说明s2创建时，在堆内存中又新建了一个“abc”对象</code></pre><p>所以，通过直接赋值的方式进行初始化还可以节省空间</p><h4 id="检测字符串相等"><a href="#检测字符串相等" class="headerlink" title="检测字符串相等"></a>检测字符串相等</h4><p>用.equals()方法检测</p><p>&#x3D;&#x3D; 运算符只能确定两个字符串是否存放在同一位置<br>只有字符串字面值会共享，+和substring得到的字符串不共享</p><h4 id="空串与null"><a href="#空串与null" class="headerlink" title="空串与null"></a>空串与null</h4><p>空串是一个对象，长度为0，内容为空</p><pre><code>    str.length() == 0;    str.equals(&quot;&quot;);</code></pre><p>null表示没有任何对象与该变量相关联</p><pre><code>    str === null</code></pre><h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder和StringBuffer都可以理解成容器，用于<strong>支持String修改操作</strong></p><p><strong>StringBuilder</strong><br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p><pre><code>    StringBuilder sb = new StringBuilder();    sb.append(str1);    sb.append(str2);    String ret = sb.toString();</code></pre><p><strong>源码分析</strong><br>长度 .length() ：实际存了多少<br>容量 .capacity() :最多可以存多少<br>初始容量为<strong>指定字符串 +16</strong>，若初始化时为空，容量就是16；也可以指定容量</p><h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><p>若不够，先扩容为2倍+2；若还不够，扩容为字符串实际长度<br>扩容就是创建一个新容量的byte数组，把字符串内容复制进去，再返回</p><p><strong>StringBuffer</strong><br>与StringBuilder类似，没有StringBuilder速度快，多数情况下用Builder<br>但是，StringBuilder不是线程安全的，<strong>若要求线程安全必须用StringBuffer</strong></p><p><strong>原因</strong>：StringBuffer中所有方法都是synchronized修饰的，同一时间只能有一个线程访问，StringBuilder中的操作有非原子操作。但是实际情况中，String的构建几乎不涉及多线程场景</p><p><strong>StringJoiner</strong><br>StringJoiner基于StringBuilder构建的适用于<strong>字符拼接</strong>的场景</p><pre><code>    StringJoiner sj = new StringJoiner(&quot;,&quot;); // 指定分隔符    sj.add(&quot;张三&quot;).add(&quot;李四&quot;).add(&quot;王五&quot;); // 添加元素    String result = sj.toString(); // 转换为字符串    System.out.println(result); // 张三,李四,王五</code></pre><h3 id="字符串拼接底层原理"><a href="#字符串拼接底层原理" class="headerlink" title="字符串拼接底层原理"></a>字符串拼接底层原理</h3><p>如果没有变量参与，编译时会进行优化，<strong>编译时拼接起来，会复用常量池中的字符串</strong></p><pre><code>    String s1 = &quot;abc&quot;;    String s2 = &quot;a&quot; + &quot;b&quot; + &quot;c&quot;;    System.out.println(s1==s2); // 返回true，</code></pre><p>如果有变量参与，每一行拼接都会在内存中创建新字符串对象，浪费内存</p><h4 id="StringBuilder优化原理"><a href="#StringBuilder优化原理" class="headerlink" title="StringBuilder优化原理"></a>StringBuilder优化原理</h4><p>创建一次StringBuilder对象，所有要拼接的都往这一个对象放，节约内存</p><h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p><pre><code>    int[] a = new int[100];    System.out.println(Arrays.toString(a));</code></pre><p>快速打印二维数组</p><pre><code>    int[] a = new int[100][100];    System.out.println(Arrays.deeptoString(a));</code></pre>]]></content>
+    <content type="html"><![CDATA[<h3 id="Java类型转换"><a href="#Java类型转换" class="headerlink" title="Java类型转换"></a>Java类型转换</h3><p>long类型比float类型表示的范围小</p><p><strong>byte、char、short类型在做运算过程中，会自动提升为int类型</strong></p><pre><code>    byte a = 3;    byte b = 4;    byte c = a + b;  // 会报错，因为运算时提升成int了    byte c = (byte)(a+b); // int转byte，大转小，用强制类型转换    byte c = 3 + 4;  // 不会报错，因为上面的运算是变量，这行代码是两个字面量</code></pre><p>**Java有常量优化机制：编译期间会对3+4进行计算，实际的字节码文件：byte c&#x3D;7;对于String类型，也有常量优化机制，String s &#x3D; “a” +  **</p><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p><p>优点：编译器可以让字符串<strong>共享</strong></p><p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p><pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化    String s2 = &quot;abc&quot;;    System.out.println(s1==s2); // 返回true，说明在常量池的同一个地方</code></pre><p>若通过new初始化，则在堆内存中，不在常量池中</p><pre><code>    String s1 = new String(&quot;abc&quot;);    String s2 = new String(&quot;abc&quot;);    System.out.println(s1==s2); // 返回false，说明s2创建时，在堆内存中又新建了一个“abc”对象</code></pre><p>所以，通过直接赋值的方式进行初始化还可以节省空间</p><h4 id="检测字符串相等"><a href="#检测字符串相等" class="headerlink" title="检测字符串相等"></a>检测字符串相等</h4><p>用.equals()方法检测</p><p>&#x3D;&#x3D; 运算符只能确定两个字符串是否存放在同一位置<br>只有字符串字面值会共享，+和substring得到的字符串不共享</p><h4 id="空串与null"><a href="#空串与null" class="headerlink" title="空串与null"></a>空串与null</h4><p>空串是一个对象，长度为0，内容为空</p><pre><code>    str.length() == 0;    str.equals(&quot;&quot;);</code></pre><p>null表示没有任何对象与该变量相关联</p><pre><code>    str === null</code></pre><h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder和StringBuffer都可以理解成容器，用于<strong>支持String修改操作</strong></p><p><strong>StringBuilder</strong><br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p><pre><code>    StringBuilder sb = new StringBuilder();    sb.append(str1);    sb.append(str2);    String ret = sb.toString();</code></pre><p><strong>源码分析</strong><br>长度 .length() ：实际存了多少<br>容量 .capacity() :最多可以存多少<br>初始容量为<strong>指定字符串 +16</strong>，若初始化时为空，容量就是16；也可以指定容量</p><h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><p>若不够，先扩容为2倍+2；若还不够，扩容为字符串实际长度<br>扩容就是创建一个新容量的byte数组，把字符串内容复制进去，再返回</p><p><strong>StringBuffer</strong><br>与StringBuilder类似，没有StringBuilder速度快，多数情况下用Builder<br>但是，StringBuilder不是线程安全的，<strong>若要求线程安全必须用StringBuffer</strong></p><p><strong>原因</strong>：StringBuffer中所有方法都是synchronized修饰的，同一时间只能有一个线程访问，StringBuilder中的操作有非原子操作。但是实际情况中，String的构建几乎不涉及多线程场景</p><p><strong>StringJoiner</strong><br>StringJoiner基于StringBuilder构建的适用于<strong>字符拼接</strong>的场景</p><pre><code>    StringJoiner sj = new StringJoiner(&quot;,&quot;); // 指定分隔符    sj.add(&quot;张三&quot;).add(&quot;李四&quot;).add(&quot;王五&quot;); // 添加元素    String result = sj.toString(); // 转换为字符串    System.out.println(result); // 张三,李四,王五</code></pre><h3 id="字符串拼接底层原理"><a href="#字符串拼接底层原理" class="headerlink" title="字符串拼接底层原理"></a>字符串拼接底层原理</h3><p>如果没有变量参与，编译时会进行优化，<strong>编译时拼接起来，会复用常量池中的字符串</strong></p><pre><code>    String s1 = &quot;abc&quot;;    String s2 = &quot;a&quot; + &quot;b&quot; + &quot;c&quot;;    System.out.println(s1==s2); // 返回true，</code></pre><p>如果有变量参与，每一行拼接都会在内存中创建新字符串对象，浪费内存</p><h4 id="StringBuilder优化原理"><a href="#StringBuilder优化原理" class="headerlink" title="StringBuilder优化原理"></a>StringBuilder优化原理</h4><p>创建一次StringBuilder对象，所有要拼接的都往这一个对象放，节约内存</p><h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p><pre><code>    int[] a = new int[100];    System.out.println(Arrays.toString(a));</code></pre><p>快速打印二维数组</p><pre><code>    int[] a = new int[100][100];    System.out.println(Arrays.deeptoString(a));</code></pre>]]></content>
     
     
       
       
-    <summary type="html">&lt;h3 id=&quot;字符串&quot;&gt;&lt;a href=&quot;#字符串&quot; class=&quot;headerlink&quot; title=&quot;字符串&quot;&gt;&lt;/a&gt;字符串&lt;/h3&gt;&lt;p&gt;java字符串，String类对象&lt;strong&gt;不可变&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;优点：编译器可以让字符串&lt;strong&gt;共</summary>
+    <summary type="html">&lt;h3 id=&quot;Java类型转换&quot;&gt;&lt;a href=&quot;#Java类型转换&quot; class=&quot;headerlink&quot; title=&quot;Java类型转换&quot;&gt;&lt;/a&gt;Java类型转换&lt;/h3&gt;&lt;p&gt;long类型比float类型表示的范围小&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;byte、char、</summary>
       
     
     
@@ -440,29 +462,6 @@ assert condition: expression;
     
     
     <category term="共识算法" scheme="http://coder_tinghao.github.io/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>消息认证码Message Authentication Code(MAC)</title>
-    <link href="http://coder_tinghao.github.io/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/"/>
-    <id>http://coder_tinghao.github.io/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/</id>
-    <published>2023-03-19T07:44:26.000Z</published>
-    <updated>2023-03-20T05:56:57.598Z</updated>
-    
-    <content type="html"><![CDATA[<p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p><p>消息认证码的输入为任意长度的<strong>消息</strong>和一个发送者与接收者之间<strong>共享的密钥</strong>，它可以输出固定长度的数据，这个数据称为 MAC 值</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/message_authentication_code.png?raw=true" alt="消息认证码"></p><p>个人理解，消息认证码就是：传递一条消息，为了保证这个消息是你本人发的，把这个消息和共享密钥结合得到一个MAC值，同时传递过去，接收方通过接收消息，计算MAC值再与发送<br>方发来的MAC值对比即可验证。</p><p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/message_authentication_code_example.png?raw=true" alt="例子"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术&lt;/p&gt;
-&lt;p&gt;消息认证码的输入为任意长度的&lt;strong&gt;消息&lt;/strong&gt;和一个发送者与接收者之间&lt;strong&gt;共享的密钥&lt;/strong&gt;，它可以输出固定长度的数</summary>
-      
-    
-    
-    
-    
-    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
