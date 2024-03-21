@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2023-12-11T04:24:48.913Z</updated>
+  <updated>2024-03-21T04:56:10.491Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -17,13 +17,52 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>3.21美团暑期一面</title>
+    <link href="http://coder_tinghao.github.io/2024/03/21/3-21%E7%BE%8E%E5%9B%A2%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2/"/>
+    <id>http://coder_tinghao.github.io/2024/03/21/3-21%E7%BE%8E%E5%9B%A2%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2/</id>
+    <published>2024-03-21T04:42:39.000Z</published>
+    <updated>2024-03-21T04:56:10.491Z</updated>
+    
+    <content type="html"><![CDATA[<p>算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某快手面试官只会笑</p><p>全程1h10min 1h八股+10min手撕</p><p>– jvm<br>jvm都有哪几部分，哪些部分会OOM，方法区怎么OOM？<br>最后方法区问题答错了，jvm没追问了</p><p><a href="https://cloud.tencent.com/developer/article/2398572">https://cloud.tencent.com/developer/article/2398572</a></p><p>—— 线程池<br>为什么有线程池，假设4个核心线程，8个最大线程，队列长度为10，有20个线程，问执行过程？<br>最后会饱和，所以问了拒绝策略？</p><p>—— 最近学了什么新技术？<br>stream<br>—— stream执行原理？<br>不会。。</p><p>—— 消息队列MQ，MQ底层原理？<br>不太会。没敢说会</p><p>—— 慢查询怎么处理，用什么工具？</p><p>—— 手写单例模式，解释原理</p><p>—— LRU原理，如果实现要怎么实现，见力扣</p><p>—— 给你一个展示界面，需要实现界面里多个tab的 不同类型人员的可见性，如超级管理员等，怎么实现？</p><p>—— 单元测试（由实习经历衍生的）<br>怎么自己测代码是不是对的</p><p>覆盖率，是不是走到了</p><p>Mock注解，IDEA自带覆盖率报告，断点Debug自己看</p><p>—— 手撕 LC78. 子集</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某快手面试官只会笑&lt;/p&gt;
+&lt;p&gt;全程1h10min 1h八股+10min手撕&lt;/p&gt;
+&lt;p&gt;– jvm&lt;br&gt;jvm都有哪几部分，哪些部分会OOM，方法</summary>
+      
+    
+    
+    
+    
+    <category term="面经" scheme="http://coder_tinghao.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java学习笔记——1.20</title>
+    <link href="http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/"/>
+    <id>http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/</id>
+    <published>2024-01-20T07:32:27.000Z</published>
+    <updated>2024-01-20T07:42:20.135Z</updated>
+    
+    
+    
+    
+    
+    <category term="Java" scheme="http://coder_tinghao.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>京东零售——一面面经——12.11</title>
     <link href="http://coder_tinghao.github.io/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/"/>
     <id>http://coder_tinghao.github.io/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/</id>
     <published>2023-12-11T03:55:14.000Z</published>
-    <updated>2023-12-11T04:24:48.913Z</updated>
+    <updated>2023-12-11T06:37:01.440Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="京东零售一面面经"><a href="#京东零售一面面经" class="headerlink" title="京东零售一面面经"></a>京东零售一面面经</h3><p>这个面试官超柔和，语速也比较慢，会给提示辅助，总体答完很舒畅，没有上次的压力和紧张感，全程几乎没八股，全是计算机基础</p><p>1.区块链理解</p><p>2.raft共识算法，PBFT共识算法<br>——raft算法都有哪几个角色，都是干嘛的<br>——PBFT共识算法和raft算法区别</p><p>3.C++和Java区别，谈理解</p><p>4.虚拟内存是什么</p><p>5.计算机网络五层模型，分别都做什么的，举例子<br>——Java中有没有和计算机网络这种模型相似的地方，谈谈理解</p><p>——答的：分层思想，解藕</p><p>6.网络层中最短路算法都有什么，有按边找的，有按节点找的，具体讲讲<br>——讲的不是很好，不是很流畅，面试官赶时间，讲一半pass了</p><p>7.C++引用和指针有什么区别<br>——没答出来，刚思考3秒钟，面试官说没事，不知道也没事什么的</p><p>8.MySQL场景题，查百万级电话号码，对电话号码排序</p><p>我答：基数排序思想，按位查，然后再并行查，不知道对不对。。</p><p>反问：部门具体业务<br>答：数据中台，分线下和什么的忘了</p><p>其他的慢慢回想再写吧。。</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="京东零售一面面经"><a href="#京东零售一面面经" class="headerlink" title="京东零售一面面经"></a>京东零售一面面经</h3><p>这个面试官超柔和，语速也比较慢，会给提示辅助，总体答完很舒畅，没有上次的压力和紧张感，全程几乎没八股，全是计算机基础</p><p>1.区块链理解</p><p>2.raft共识算法，PBFT共识算法<br>——raft算法都有哪几个角色，都是干嘛的<br>——PBFT共识算法和raft算法区别</p><p>3.C++和Java区别，谈理解</p><p>4.虚拟内存是什么</p><p>5.计算机网络五层模型，分别都做什么的，举例子<br>——Java中有没有和计算机网络这种模型相似的地方，谈谈理解</p><p>——答的：分层思想，解藕</p><p>6.网络层中最短路算法都有什么，有按边找的，有按节点找的，具体讲讲<br>——讲的不是很好，不是很流畅，面试官赶时间，讲一半pass了</p><p>7.C++引用和指针有什么区别<br>——没答出来，刚思考3秒钟，面试官说没事，不知道也没事什么的</p><p>8.讲一下聚簇索引，是什么</p><p>9.MySQL场景题，查百万级电话号码，对电话号码排序</p><p>我答：基数排序思想，按位查，然后再并行查，不知道对不对。。</p><p>反问：部门具体业务<br>答：数据中台，分线下和什么的忘了</p><p>其他的慢慢回想再写吧。。</p>]]></content>
     
     
       
@@ -418,50 +457,6 @@ assert condition: expression;
     
     
     <category term="linux" scheme="http://coder_tinghao.github.io/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Exponential backoff--指数补偿</title>
-    <link href="http://coder_tinghao.github.io/2023/05/02/Exponential-backoff-%E6%8C%87%E6%95%B0%E8%A1%A5%E5%81%BF/"/>
-    <id>http://coder_tinghao.github.io/2023/05/02/Exponential-backoff-%E6%8C%87%E6%95%B0%E8%A1%A5%E5%81%BF/</id>
-    <published>2023-05-02T07:40:00.000Z</published>
-    <updated>2023-05-02T07:47:14.063Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://en.wikipedia.org/wiki/Exponential_backoff">wiki百科</a><br><a href="http://note.huangz.me/algorithm/arithmetic/exponential-backoff.html">指数补偿 —— Exponential backoff</a></p><h2 id="指数补偿"><a href="#指数补偿" class="headerlink" title="指数补偿"></a>指数补偿</h2><p>指数补偿指的是，在执行事件时，通过反馈，逐渐降低某个过程的速率，从而最终<strong>找到一个合适的速率</strong>（来处理事件）。</p><p>指数补偿通常用于网络和传输协议，比如在进行网络连接时，如果第一次请求失败，那么可以等待 t1之后重试，如果再次请求还是失败，那么等待 t2之后重试。</p><p>重试可以一直继续下去，或者等待次数或等待时间超过特定值为止。</p><p>等待的时间 tn可以是随机选择，也可以随着重试的次数而逐渐加大，诸如此类。</p><p>指数退避算法是闭环控制系统的一种形式，可降低受控过程响应不良事件的速率。例如，如果智能手机应用程序无法连接到其服务器，它可能会在 1 秒后重试，如果再次失败，则在 2 秒后，然后 4 等。每次暂停都乘以固定数量（在此情况 2)。在这种情况下，不利事件是无法连接到服务器。不良事件的其他示例包括网络流量冲突、来自服务的错误响应或降低速率的明确请求（即“回退”）。</p><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>《UNIX 环境高级编程，第二版》（APUE，2E） 16.4 节提供了一个带重试的 socket 连接程序， 如果连接失败， 那么程序就睡眠一段时间再尝试， 每失败一次睡眠的时间就延长一些：</p><pre><code>#include &quot;apue.h&quot;#include &lt;sys/socket.h&gt;#define MAXSLEEP 128int connect_retry(int sockfd, const struct sockaddr *addr, socklen_talen)&#123;int nsec;for (nsec = 1; nsec &lt; MAXSLEEP; nsec &lt;&lt;=1) &#123;    if (connect(sockfd, addr, alen) == 0) &#123;        // connect accepted.        return 0;    &#125;    if (nsec &lt;= MAXSLEEP/2)        sleep(nsec);    &#125;    return -1;&#125;</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;参考链接&quot;&gt;&lt;a href=&quot;#参考链接&quot; class=&quot;headerlink&quot; title=&quot;参考链接&quot;&gt;&lt;/a&gt;参考链接&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Exponential_backoff&quot;&gt;wi</summary>
-      
-    
-    
-    
-    
-    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Paxos原理</title>
-    <link href="http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/"/>
-    <id>http://coder_tinghao.github.io/2023/04/04/Paxos%E5%8E%9F%E7%90%86/</id>
-    <published>2023-04-04T08:20:00.000Z</published>
-    <updated>2023-04-04T09:43:35.985Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Paxos共识协议"><a href="#Paxos共识协议" class="headerlink" title="Paxos共识协议"></a>Paxos共识协议</h1><p>Paxos就是一个在<strong>异步通信</strong>环境，并容忍在只有<strong>多数派</strong>机器存活的情况下，仍然能完成一个一致性写入的协议</p><p>学习过程比较痛苦，multi-Paxos根本看不懂…以后有机会再补充</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://dinghao.li/2018/12/Paxos/">共识算法系列：Paxos&#x2F;Multi-Paxos算法关键点综述、优缺点总结</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzI4NDMyNTU2Mw==&mid=2247483695&idx=1&sn=91ea422913fc62579e020e941d1d059e#rd">微信自研生产级paxos类库PhxPaxos实现原理介绍</a><br><a href="https://zhuanlan.zhihu.com/p/21438357">Paxos理论介绍(1): 朴素Paxos算法理论推导与证明</a></p><h2 id="Paxos算法基本概念"><a href="#Paxos算法基本概念" class="headerlink" title="Paxos算法基本概念"></a>Paxos算法基本概念</h2><p>Paxos的目标——<strong>“确定一个值”、“确定多个值”、“有序的确定多个值”</strong><br>Paxos协议中的角色包括：<strong>Acceptor、Proposer、Learner、State machine</strong><br>Proposer——提出提议；Acceptor——接受提议；Learner——做instance对齐</p><p>Proposer只需要与<strong>多数派</strong>的Acceptor交互，即可完成一个值的确定，但一旦这个值被确定下来后，无论Proposer再发起任何值的写入，Data数据都不会再被修改。Chosen value即是被确定的值，永远不会被修改。 </p><p><strong>有序的确定多个值</strong>：<br>只要我们通过paxos完成一个<strong>多机一致的有序的操作系列</strong>，就能保证Paxos算法的一致性：</p><p>1 给实例一个编号，定义为i，i从0开始，只增不减，由本机器生成，不依赖网络<br>2 我们保证一台机器任一时刻只能有一个实例在工作<br>3 当编号为i的实例获知已经确定好一个值之后，这个实例将会被销毁，进而产生一个编号为i+1的实例</p><p><strong>实例的对齐</strong>：<br>回去询问别的机器的相同编号的实例<br>如果这个实例已经被销毁了，那说明值已经确定好了，直接把这个值拉回来写到当前实例里面，直接由Learner直接学习得到即可。</p><p><strong>状态机</strong><br>状态机必须记录下来输入过的最大实例编号<br><strong>启动重放</strong>：把这些chosen value一个一个输入到状态机，那么状态机的状态就会更新到y了</p><h2 id="朴素Paxos算法"><a href="#朴素Paxos算法" class="headerlink" title="朴素Paxos算法"></a>朴素Paxos算法</h2><p>个人理解朴素Paxos算法就是做一个instance中值的确定的算法过程。</p><p>其中包括三个投票的约束，通过反证法可以证明得到一致性结论，比较重要的是MaxVote的定义</p><p>问题：为什么需要多轮投票？</p><h2 id="Multi-Paxos算法"><a href="#Multi-Paxos算法" class="headerlink" title="Multi-Paxos算法"></a>Multi-Paxos算法</h2><p>暂时没看懂</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;Paxos共识协议&quot;&gt;&lt;a href=&quot;#Paxos共识协议&quot; class=&quot;headerlink&quot; title=&quot;Paxos共识协议&quot;&gt;&lt;/a&gt;Paxos共识协议&lt;/h1&gt;&lt;p&gt;Paxos就是一个在&lt;strong&gt;异步通信&lt;/strong&gt;环境，并容忍在只有&lt;s</summary>
-      
-    
-    
-    
-    
-    <category term="共识算法" scheme="http://coder_tinghao.github.io/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
