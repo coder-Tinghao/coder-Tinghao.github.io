@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-03-21T05:05:40.677Z</updated>
+  <updated>2024-03-21T05:06:02.343Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -21,16 +21,16 @@
     <link href="http://coder_tinghao.github.io/2024/03/21/3-21%E7%BE%8E%E5%9B%A2%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2/"/>
     <id>http://coder_tinghao.github.io/2024/03/21/3-21%E7%BE%8E%E5%9B%A2%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2/</id>
     <published>2024-03-21T04:42:39.000Z</published>
-    <updated>2024-03-21T05:05:40.677Z</updated>
+    <updated>2024-03-21T05:06:02.343Z</updated>
     
-    <content type="html"><![CDATA[<p>算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某快手面试官只会笑</p><p>全程1h10min 1h八股+10min手撕</p><p>– jvm<br>jvm都有哪几部分，哪些部分会OOM，方法区怎么OOM？<br>最后方法区问题答错了，jvm没追问了</p><p><a href="https://cloud.tencent.com/developer/article/2398572">https://cloud.tencent.com/developer/article/2398572</a></p><p>—— 线程池<br>为什么有线程池，假设4个核心线程，8个最大线程，队列长度为10，有20个线程，问执行过程？<br>最后会饱和，所以问了拒绝策略？</p><p>——— MySQL<br>熟悉哪些索引<br>B树和B+树索引区别，B+树优点</p><p>—— 最近学了什么新技术？<br>stream<br>—— stream执行原理？<br>不会。。</p><p>—— 消息队列MQ，MQ底层原理？<br>不太会。没敢说会</p><p>—— 慢查询怎么处理，用什么工具？</p><p>—— 手写单例模式，解释原理</p><p>—— LRU原理，如果实现要怎么实现，见力扣<br>问的很细，所有结构的设计，说实话还不如让我写，抽象着叙述确实有地方没太考虑到</p><p>—— 给你一个展示界面，需要实现界面里多个tab的 不同类型人员的可见性，如超级管理员等，怎么实现？</p><p>—— 单元测试（由实习经历衍生的）<br>怎么自己测代码是不是对的</p><p>覆盖率，是不是走到了</p><p>Mock注解，IDEA自带覆盖率报告，断点Debug自己看</p><p>—— 手撕 LC78. 子集</p>]]></content>
+    <content type="html"><![CDATA[<p>算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某手面试官只会笑</p><p>全程1h10min 1h八股+10min手撕</p><p>– jvm<br>jvm都有哪几部分，哪些部分会OOM，方法区怎么OOM？<br>最后方法区问题答错了，jvm没追问了</p><p><a href="https://cloud.tencent.com/developer/article/2398572">https://cloud.tencent.com/developer/article/2398572</a></p><p>—— 线程池<br>为什么有线程池，假设4个核心线程，8个最大线程，队列长度为10，有20个线程，问执行过程？<br>最后会饱和，所以问了拒绝策略？</p><p>——— MySQL<br>熟悉哪些索引<br>B树和B+树索引区别，B+树优点</p><p>—— 最近学了什么新技术？<br>stream<br>—— stream执行原理？<br>不会。。</p><p>—— 消息队列MQ，MQ底层原理？<br>不太会。没敢说会</p><p>—— 慢查询怎么处理，用什么工具？</p><p>—— 手写单例模式，解释原理</p><p>—— LRU原理，如果实现要怎么实现，见力扣<br>问的很细，所有结构的设计，说实话还不如让我写，抽象着叙述确实有地方没太考虑到</p><p>—— 给你一个展示界面，需要实现界面里多个tab的 不同类型人员的可见性，如超级管理员等，怎么实现？</p><p>—— 单元测试（由实习经历衍生的）<br>怎么自己测代码是不是对的</p><p>覆盖率，是不是走到了</p><p>Mock注解，IDEA自带覆盖率报告，断点Debug自己看</p><p>—— 手撕 LC78. 子集</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某快手面试官只会笑&lt;/p&gt;
+    <summary type="html">&lt;p&gt;算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某手面试官只会笑&lt;/p&gt;
 &lt;p&gt;全程1h10min 1h八股+10min手撕&lt;/p&gt;
-&lt;p&gt;– jvm&lt;br&gt;jvm都有哪几部分，哪些部分会OOM，方法</summary>
+&lt;p&gt;– jvm&lt;br&gt;jvm都有哪几部分，哪些部分会OOM，方法区</summary>
       
     
     

@@ -1124,7 +1124,7 @@ future.cancel(true);
   <entry>
     <title>3.21美团暑期一面</title>
     <url>/2024/03/21/3-21%E7%BE%8E%E5%9B%A2%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2/</url>
-    <content><![CDATA[<p>算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某快手面试官只会笑</p>
+    <content><![CDATA[<p>算是第一个模版式的面试 实习经历+高强度八股+两道手撕 吧，面试官比较耐心，一直在引导，说对说错会有反馈，能感受到，不像某手面试官只会笑</p>
 <p>全程1h10min 1h八股+10min手撕</p>
 <p>– jvm<br>jvm都有哪几部分，哪些部分会OOM，方法区怎么OOM？<br>最后方法区问题答错了，jvm没追问了</p>
 <p><a href="https://cloud.tencent.com/developer/article/2398572">https://cloud.tencent.com/developer/article/2398572</a></p>
