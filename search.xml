@@ -1129,6 +1129,7 @@ future.cancel(true);
 <p>– jvm<br>jvm都有哪几部分，哪些部分会OOM，方法区怎么OOM？<br>最后方法区问题答错了，jvm没追问了</p>
 <p><a href="https://cloud.tencent.com/developer/article/2398572">https://cloud.tencent.com/developer/article/2398572</a></p>
 <p>—— 线程池<br>为什么有线程池，假设4个核心线程，8个最大线程，队列长度为10，有20个线程，问执行过程？<br>最后会饱和，所以问了拒绝策略？</p>
+<p>——— MySQL<br>熟悉哪些索引<br>B树和B+树索引区别，B+树优点</p>
 <p>—— 最近学了什么新技术？<br>stream<br>—— stream执行原理？<br>不会。。</p>
 <p>—— 消息队列MQ，MQ底层原理？<br>不太会。没敢说会</p>
 <p>—— 慢查询怎么处理，用什么工具？</p>
