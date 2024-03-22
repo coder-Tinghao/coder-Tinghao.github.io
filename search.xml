@@ -1135,7 +1135,8 @@ future.cancel(true);
 <p>—— 最近学了什么新技术？<br>stream<br>—— stream执行原理？<br>不会。。</p>
 <p>—— 消息队列MQ，MQ应用场景？MQ底层原理？<br>不太会。没敢说会</p>
 <p>—— 慢查询怎么分析？怎么处理？用什么工具？<br><a href="https://www.cnblogs.com/wzh2010/p/17091055.html">https://www.cnblogs.com/wzh2010/p/17091055.html</a></p>
-<p>—— 手写单例模式，解释原理</p>
+<p>—— 手写单例模式，解释原理<br><a href="https://www.cnblogs.com/shoufeng/p/10820964.html">https://www.cnblogs.com/shoufeng/p/10820964.html</a></p>
+<p>记得禁用构造方法</p>
 <p>—— LRU原理，如果实现要怎么实现，见力扣<br>问的很细，所有结构的设计，说实话还不如让我写，抽象着叙述确实有地方没太考虑到</p>
 <p>—— 给你一个展示界面，需要实现界面里多个tab的 不同类型人员的可见性，如超级管理员等，怎么实现？</p>
 <p>—— 单元测试（由实习经历衍生的）<br>怎么自己测代码是不是对的</p>
