@@ -1183,4 +1183,18 @@ future.cancel(true);
         <tag>面经</tag>
       </tags>
   </entry>
+  <entry>
+    <title>java学习笔记——3.24</title>
+    <url>/2024/03/24/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%943-24/</url>
+    <content><![CDATA[<p>—— 一致性哈希算法<br><a href="https://www.xiaolincoding.com/os/8_network_system/hash.html#%E5%A6%82%E4%BD%95%E5%88%86%E9%85%8D%E8%AF%B7%E6%B1%82">https://www.xiaolincoding.com/os/8_network_system/hash.html#%E5%A6%82%E4%BD%95%E5%88%86%E9%85%8D%E8%AF%B7%E6%B1%82</a></p>
+<p>负载均衡：<br>全量存储，不需要分布式算法，根据每个机器的硬件水平，做对应请求分配即可</p>
+<p>分布式存储（非全量）<br>设计：为了解决普通哈希映射在分布式场景下，添加和删除节点带来的巨大数据迁移代价</p>
+<p>一致性哈希算法思想：整个映射关系用一个2^32次方的数组成的哈希环，相应的数据请求先根据哈希算法映射到哈希环一个节点上，再<strong>顺时针</strong>找下一个相邻存储节点</p>
+<p>带来问题：<br>容易想到，如果最开始的单纯的映射，导致存储节点分布不均匀，很可能导致大量热点请求集中在某一个存储节点，导致一个个逐渐崩溃的节点雪崩的出现</p>
+<p>解决：引入虚拟节点<br>个人理解，在最开始的单纯的映射后，为了让存储节点均匀，生成出使哈希环均匀的虚拟存储节点用于处理请求，相当于做一个二次映射，负载均衡到各个节点，避免出现请求集中</p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
 </search>
