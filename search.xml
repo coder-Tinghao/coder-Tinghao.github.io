@@ -1218,6 +1218,11 @@ future.cancel(true);
 <ol start="5">
 <li>zookeeper实现分布式锁：创建一个用于发号的节点“&#x2F;test&#x2F;lock”，最小号得锁</li>
 </ol>
+<p>—— Redis过期策略</p>
+<ol>
+<li>惰性过期：只有访问一个key时，才判断是否过期，过期则清除。但没有及时清除，对内存不友好</li>
+<li>定期过期：每隔一段时间，扫描一定数量的带过期时间的key，</li>
+</ol>
 ]]></content>
       <tags>
         <tag>Java</tag>

@@ -28,7 +28,7 @@
 <meta property="og:description" content="—— 一致性哈希算法https:&#x2F;&#x2F;www.xiaolincoding.com&#x2F;os&#x2F;8_network_system&#x2F;hash.html#%E5%A6%82%E4%BD%95%E5%88%86%E9%85%8D%E8%AF%B7%E6%B1%82 负载均衡：全量存储，不需要分布式算法，根据每个机器的硬件水平，做对应请求分配即可 分布式存储（非全量）设计：为了解决普通哈希映射在分布式场景下，添加和">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-24T07:20:40.000Z">
-<meta property="article:modified_time" content="2024-03-25T12:08:00.407Z">
+<meta property="article:modified_time" content="2024-03-26T03:43:53.960Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -206,7 +206,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-25 20:08:00" itemprop="dateModified" datetime="2024-03-25T20:08:00+08:00">2024-03-25</time>
+      <time title="修改时间：2024-03-26 11:43:53" itemprop="dateModified" datetime="2024-03-26T11:43:53+08:00">2024-03-26</time>
     </span>
 
   
@@ -257,6 +257,11 @@
 <p>why？Lua 是一种单线程语言，所有的代码都在同一个线程中运行，因此不会出现并发问题。</p>
 <ol start="5">
 <li>zookeeper实现分布式锁：创建一个用于发号的节点“&#x2F;test&#x2F;lock”，最小号得锁</li>
+</ol>
+<p>—— Redis过期策略</p>
+<ol>
+<li>惰性过期：只有访问一个key时，才判断是否过期，过期则清除。但没有及时清除，对内存不友好</li>
+<li>定期过期：每隔一段时间，扫描一定数量的带过期时间的key，</li>
 </ol>
 
     </div>
