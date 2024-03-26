@@ -1248,6 +1248,8 @@ future.cancel(true);
 </ol>
 </li>
 </ol>
+<p>—— 消息队列<br><a href="https://juejin.cn/post/7088909199475736612">https://juejin.cn/post/7088909199475736612</a></p>
+<p>如何保证消息队列消息顺序？<br>发往同一个队列</p>
 ]]></content>
       <tags>
         <tag>Java</tag>
