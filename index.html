@@ -200,7 +200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-26 11:43:53" itemprop="dateModified" datetime="2024-03-26T11:43:53+08:00">2024-03-26</time>
+      <time title="修改时间：2024-03-26 15:02:35" itemprop="dateModified" datetime="2024-03-26T15:02:35+08:00">2024-03-26</time>
     </span>
 
   
@@ -249,6 +249,15 @@
 <ol>
 <li>惰性过期：只有访问一个key时，才判断是否过期，过期则清除。但没有及时清除，对内存不友好</li>
 <li>定期过期：每隔一段时间，扫描一定数量的带过期时间的key，</li>
+</ol>
+<p>—— RocksDB等NoSQL数据库<br>—— LSM-Tree<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/181498475">https://zhuanlan.zhihu.com/p/181498475</a></p>
+<p>MemTable 内存中，有序组织key的结构，不同数据库有不同实现</p>
+<p>Immutable MemTable 当MemTable达到一定大小时，新的写入只进入新MemTable，将ImmuTable不断刷入磁盘</p>
+<p>SSTable 磁盘上的持久化存储，以append的日志形式</p>
+<p>SSTable有Compact策略，分为size-tiered和leveled策略：都是多层设计</p>
+<ol>
+<li>size-tiered策略是，层数越深，该层的SSTable越大；每层的SSTable超过一定数量，触发合并</li>
+<li>leveled策略，会将每一层切分成多个大小相近的SSTable，某层SSTable超过该层大小限制：此时会从L1中选择至少一个文件，然后把它跟L2有交集的部分(非常关键)进行合并。生成的文件会放在L2；若L2超过在合并后超过了，L2重复以上步骤向下合并</li>
 </ol>
 
       
