@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,122 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/11/20/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/20/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-20/" class="post-title-link" itemprop="url">java学习笔记——11.20</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-20 19:59:31" itemprop="dateCreated datePublished" datetime="2023-11-20T19:59:31+08:00">2023-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-21 16:08:17" itemprop="dateModified" datetime="2023-11-21T16:08:17+08:00">2023-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Java集合"><a href="#Java集合" class="headerlink" title="Java集合"></a>Java集合</h2><p>Java集合由两大接口派生：<strong>Collection接口、Map接口</strong><br>Collection接口下面，有三个主要的子接口：<strong>List、Set 和 Queue</strong></p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>ArrayList，底层用**Object[]**存储，线程不安全，适用于频繁查找，支持快速随机访问（实现了RandomAccess接口）</p>
+<p>Vector，底层用**Object[]**存储，线程安全</p>
+<p>LinkedList底层用<strong>双向链表</strong>，一般是不会使用到LinkedList，需要用到 LinkedList的场景几乎都可以使用 ArrayList 来代替，并且，性能通常会更好</p>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>HashSet，底层基于HashMap实现，保存元素，用于不需要保证元素插入和取出顺序的场景</p>
+<p>LinkedHashSet，通过 LinkedHashMap来实现，链表和哈希表，<strong>元素的插入和取出顺序满足 FIFO</strong></p>
+<p>TreeSet，红黑树，支持对元素自定义排序规则的场景</p>
+<h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h3><p>PriorityQueue，Object[]数组来实现小顶堆</p>
+<p>DelayQueue，只有到了其指定的延迟时间，才能够从队列中出队</p>
+<p>ArrayDeque，可扩容动态双向数组</p>
+<h3 id="Deque"><a href="#Deque" class="headerlink" title="Deque"></a>Deque</h3><p>双端队列，扩展了Queue接口</p>
+<h3 id="ArrayDeque-与-LinkedList-的区别"><a href="#ArrayDeque-与-LinkedList-的区别" class="headerlink" title="ArrayDeque 与 LinkedList 的区别"></a>ArrayDeque 与 LinkedList 的区别</h3><p>ArrayDeque 是基于<strong>可变长的数组和双指针</strong>来实现，而 LinkedList 则通过<strong>链表</strong>实现</p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>HashMap，<strong>数组+链表</strong>，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</p>
+<p>LinkedHashMap，</p>
+<p>Hashtable，数组+链表，比HashMap多了个<strong>线程安全</strong></p>
+<p>TreeMap，红黑树</p>
+<p>ConcurrentHashMap，<strong>并发环境</strong>下，推荐使用</p>
+<h3 id="Java集合fail-last机制"><a href="#Java集合fail-last机制" class="headerlink" title="Java集合fail-last机制"></a>Java集合fail-last机制</h3><p>fail-fast 机制是java集合(Collection)中的一种错误机制。当多个线程对同一个集合的内容进行操作时，就可能会产生fail-fast事件</p>
+<p>迭代器在遍历时直接访问集合中的内容，并且在遍历过程中使用一个 modCount 变量。集合在 被遍历期间如果内容发生变化，就会改变modCount 的值。每当迭代器使用hashNext()&#x2F;next()遍历下一 个元素之前，都会检测 modCount变量是否为expectedmodCount值，是的话就返回遍历;否则抛出 异常，终止遍历</p>
+<p><strong>不要在 foreach 循环里进行元素的 remove&#x2F;add 操作</strong>，remove 元素请使用 Iterator 方式，如果并发操作，需要对 Iterator 对象加锁。通过反编译你会发现 foreach 语法底层其实还是依赖 Iterator 。不过， <strong>remove&#x2F;add 操作直接调用的是集合自己的方法，而不是 Iterator 的 remove&#x2F;add方法，迭代器就会发现自己有元素被remove&#x2F;add，就抛异常了</strong></p>
+<p>除了使用Iterator进行遍历操作外：<br>使用 fail-safe 的集合类，<br><strong>java.util包下面的所有的集合类都是 fail-fast 的，而java.util.concurrent包下面的所有的类都是 fail-safe</strong></p>
+<h3 id="集合只读"><a href="#集合只读" class="headerlink" title="集合只读"></a>集合只读</h3><p>Collections. unmodifiableCollection(Collection c)方法来创建一个 只读集合，改变集合 的任何操作都会抛出 Java. lang. UnsupportedOperationException 异常</p>
+<h3 id="迭代器Iterator"><a href="#迭代器Iterator" class="headerlink" title="迭代器Iterator"></a>迭代器Iterator</h3><pre><code>List&lt;String&gt; list = new ArrayList
+Iterator&lt;String&gt; it = list. iterator
+while(it. hasNext())&#123;
+    String obj = it. next();
+    System. out. println(obj);
+&#125;
+</code></pre>
+<p>在当前遍历 的集合元素被更改的时候，就会抛出 ConcurrentModificationException 异常，如果要删除元素就用iterator.remove()</p>
+<h3 id="Iterator与ListIterator"><a href="#Iterator与ListIterator" class="headerlink" title="Iterator与ListIterator"></a>Iterator与ListIterator</h3><p>Iterator 可以遍历 Set 和 List 集合，而 ListIterator 只能遍历 List<br>Iterator 只能<strong>单向遍历</strong>，而 ListIterator 可以<strong>双向遍历(向前&#x2F;后遍历)</strong></p>
+<h3 id="List遍历的最佳实践"><a href="#List遍历的最佳实践" class="headerlink" title="List遍历的最佳实践"></a>List遍历的最佳实践</h3><p><strong>支持 Random Access 的列表可用 for 循环遍历，否则建议 用 Iterator 或 foreach 遍历</strong></p>
+<h3 id="Comparable-和-Comparator-的区别"><a href="#Comparable-和-Comparator-的区别" class="headerlink" title="Comparable 和 Comparator 的区别"></a>Comparable 和 Comparator 的区别</h3><p>Comparable 接口实际上是出自java.lang包，它有一个 c**ompareTo(Object obj)**方法用来排序</p>
+<p>Comparator接口实际上是出自 java.util 包它有一个c**ompare(Object obj1, Object obj2)**方法用来排序</p>
+<h3 id="集合去重"><a href="#集合去重" class="headerlink" title="集合去重"></a>集合去重</h3><p><strong>可以利用 Set 元素唯一的特性，可以快速对一个集合进行去重操作</strong>，避免使用 List 的 contains() 进行遍历去重或者判断包含操作</p>
+<p>HashSet 的 contains() 方法底部依赖的 HashMap 的 containsKey() 方法，时间复杂度接近于<strong>O（1）</strong></p>
+<p>ArrayList 的 contains() 方法是通过遍历所有元素的方法来做的，时间复杂度接近是 <strong>O(n)</strong></p>
+<h3 id="Arrays-asList"><a href="#Arrays-asList" class="headerlink" title="Arrays.asList()"></a>Arrays.asList()</h3><p>当传入一个原生数据类型数组时，Arrays.asList() 的真正得到的参数就不是数组中的元素，而是数组对象本身！此时 List 的唯一元素就是这个数组</p>
+<p>Arrays.asList()方法返回的并不是 java.util.ArrayList ，而是 java.util.Arrays 的一个内部类</p>
+<p>List.of()方法适用于需要创建一组固定的、不可变的元素列表的场景</p>
+<h3 id="字符流与字节流"><a href="#字符流与字节流" class="headerlink" title="字符流与字节流"></a>字符流与字节流</h3><p>处理纯文本数据，优先考虑使用字符流，除此之外都使用字节流</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1016,92 +1132,6 @@ int j  // 声明并定义j
 <p>它解决的是<strong>分片分布式数据库的一致性问题</strong>：A B C 因为地域区别读写的是不同的副本，B 在抖音评论区问了个问题，然后 A 作出了回答。但是问题跟回答两个数据如果处于不同的分片，副本同步时这两个数据的顺序是无法保证的，C 可能会先读到回答信息，之后才刷新出 B 的提问，历史事件的顺序就乱了。<br>实现方式：需要程序主动为<strong>消息之间添加显式的依赖关系</strong>，再据此控制其读取顺序，实现比较复杂。<br>存在的问题：只有被显式定义了因果关系的事件，它们之间的顺序才能被保证。</p>
 <p>问题与答案之间是有因果关系的，但这种关系在复制的过程中被忽略了，于是出现了异常。<br>保持这种因果关系的一致性，被称为前缀读或前缀一致性</p>
 <p><strong>前缀一致性：在每个会话内保证了单调读，会话之间不保证</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/" class="post-title-link" itemprop="url">经典原子操作——atomic operation</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-06-10 13:49:48 / 修改时间：14:10:51" itemprop="dateCreated datePublished" datetime="2023-06-10T13:49:48+08:00">2023-06-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="read-modify-write（RMW）"><a href="#read-modify-write（RMW）" class="headerlink" title="read-modify-write（RMW）"></a>read-modify-write（RMW）</h2><p><strong>读-修改-写（read-modify-write）</strong> 是计算机科学中的一个原子操作（atomic operation，操作过程是<strong>读一个内存位置（或IO端口），修改其值，再写回原位置</strong>。</p>
-<p><strong>“read-modify-write”（RMW）原子操作指的是一种能够在单个操作中读取、修改和写入某个内存地址的操作。</strong> 这种操作通常是在多线程编程和并发编程中使用，用于确保对共享内存的并发访问不会导致竞争条件（race condition）</p>
-<p>在一个RMW原子操作中，操作系统保证该操作的执行不会被其他线程中断，也就是说，在操作开始执行到结束期间，该内存地址上的任何其他操作都将被暂停。这意味着，RMW原子操作是一种不可分割的操作，不会发生其他线程对该内存地址进行操作的情况。</p>
-<p>RMW原子操作通常<strong>由硬件支持</strong></p>
-<p><strong>在多线程编程中，RMW原子操作通常用于实现线程间同步、加锁、计数器等功能</strong>。例如，在一个高并发的Web服务器中，可以使用RMW原子操作来保证多个线程同时访问同一个计数器变量时的正确性，避免计数器值出现不一致的情况。</p>
-<h2 id="test-and-set"><a href="#test-and-set" class="headerlink" title="test and set"></a>test and set</h2><p>在计算机科学中，<strong>检查并设置（test-and-set-lock，TSL）</strong> 是一种不可中断的原子运算。TSL<strong>对某个存储器位置写入1（set）并返回其旧值</strong>。</p>
-<p>在多个进程可同时访问存储器同个地址时，如果一个程序正在执行TSL，其他程序在它执行完成前不能执行TSL。</p>
-<p>TAS特点是<strong>自旋</strong>，也就是循环，每次尝试去设置值，如果设置成功则会返回，如果没有返回就会一直自旋，知道设置成功值。此时进入临界区，执行完临界区数据，再设置bool变量为false。从而让其他线程拿到锁</p>
-<pre><code>function Lock(boolean *lock) &#123; 
-while (test_and_set(lock) == 1); 
-&#125;
-</code></pre>
-<h2 id="fetch-and-add"><a href="#fetch-and-add" class="headerlink" title="fetch-and-add"></a>fetch-and-add</h2><p>fetch-and-add是CPU指令（FAA），对内存位置执行增加一个数量的原子操作。具体内容为：</p>
-<pre><code>令x 变为x + a，其中x是个内存位置，a是个值
-</code></pre>
-<p>FAA可用于实现互斥锁、信号量</p>
-<h2 id="compare-and-swap"><a href="#compare-and-swap" class="headerlink" title="compare-and-swap"></a>compare-and-swap</h2><p>比较并交换(compare and swap, CAS)，是原子操作的一种，可用于在多线程编程中实现不被打断的数据交换操作，从而避免多线程同时改写某一数据时由于执行顺序不确定性以及中断的不可预知性产生的数据不一致问题。 该操作通过将内存中的值与指定数据进行比较，当数值一样时将内存中的数据替换为新的值</p>
 
       
     </div>

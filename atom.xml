@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-03-26T10:39:10.564Z</updated>
+  <updated>2024-04-02T10:43:46.793Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>4-2蚂蚁暑期一面——保险技术</title>
+    <link href="http://coder_tinghao.github.io/2024/04/02/4-2%E8%9A%82%E8%9A%81%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2%E2%80%94%E2%80%94%E4%BF%9D%E9%99%A9%E6%8A%80%E6%9C%AF/"/>
+    <id>http://coder_tinghao.github.io/2024/04/02/4-2%E8%9A%82%E8%9A%81%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2%E2%80%94%E2%80%94%E4%BF%9D%E9%99%A9%E6%8A%80%E6%9C%AF/</id>
+    <published>2024-04-02T10:35:24.000Z</published>
+    <updated>2024-04-02T10:43:46.793Z</updated>
+    
+    <content type="html"><![CDATA[<p>25min 应该是寄了</p><p>—— Java基础<br>泛型<br>反射</p><p>HashMap实现<br>HashMap扩容机制</p><p>—— JVM<br>类加载器都有哪些<br>双亲委派模型<br>双亲委派能不能打破？怎么打破</p><p>垃圾回收算法<br>垃圾回收器</p><p>—— 线程池<br>线程池核心参数<br>拒绝策略<br>ThreadLocal原理<br>怎么实现的<br>为什么需要ThreadLocal</p><p>—— Spring&#x2F;SpringBoot<br>Spring Bean的生命周期？什么时候销毁<br>Bean循环依赖问题<br>SpringBoot常用注解</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;25min 应该是寄了&lt;/p&gt;
+&lt;p&gt;—— Java基础&lt;br&gt;泛型&lt;br&gt;反射&lt;/p&gt;
+&lt;p&gt;HashMap实现&lt;br&gt;HashMap扩容机制&lt;/p&gt;
+&lt;p&gt;—— JVM&lt;br&gt;类加载器都有哪些&lt;br&gt;双亲委派模型&lt;br&gt;双亲委派能不能打破？怎么打破&lt;/p&gt;
+&lt;p&gt;垃圾回</summary>
+      
+    
+    
+    
+    
+    <category term="面经" scheme="http://coder_tinghao.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>java学习笔记——3.24</title>
@@ -430,28 +456,6 @@ assert condition: expression;
       
     <summary type="html">&lt;p&gt;&lt;a href=&quot;https://thiscute.world/posts/consistency-and-consensus-algorithm/&quot;&gt;参考链接&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;单调前缀一致性——monotonic-prefix-consistency&quot;&gt;&lt;</summary>
-      
-    
-    
-    
-    
-    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>经典原子操作——atomic operation</title>
-    <link href="http://coder_tinghao.github.io/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/"/>
-    <id>http://coder_tinghao.github.io/2023/06/10/%E7%BB%8F%E5%85%B8%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94atomic-operation/</id>
-    <published>2023-06-10T05:49:48.000Z</published>
-    <updated>2023-06-10T06:10:51.820Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="read-modify-write（RMW）"><a href="#read-modify-write（RMW）" class="headerlink" title="read-modify-write（RMW）"></a>read-modify-write（RMW）</h2><p><strong>读-修改-写（read-modify-write）</strong> 是计算机科学中的一个原子操作（atomic operation，操作过程是<strong>读一个内存位置（或IO端口），修改其值，再写回原位置</strong>。</p><p><strong>“read-modify-write”（RMW）原子操作指的是一种能够在单个操作中读取、修改和写入某个内存地址的操作。</strong> 这种操作通常是在多线程编程和并发编程中使用，用于确保对共享内存的并发访问不会导致竞争条件（race condition）</p><p>在一个RMW原子操作中，操作系统保证该操作的执行不会被其他线程中断，也就是说，在操作开始执行到结束期间，该内存地址上的任何其他操作都将被暂停。这意味着，RMW原子操作是一种不可分割的操作，不会发生其他线程对该内存地址进行操作的情况。</p><p>RMW原子操作通常<strong>由硬件支持</strong></p><p><strong>在多线程编程中，RMW原子操作通常用于实现线程间同步、加锁、计数器等功能</strong>。例如，在一个高并发的Web服务器中，可以使用RMW原子操作来保证多个线程同时访问同一个计数器变量时的正确性，避免计数器值出现不一致的情况。</p><h2 id="test-and-set"><a href="#test-and-set" class="headerlink" title="test and set"></a>test and set</h2><p>在计算机科学中，<strong>检查并设置（test-and-set-lock，TSL）</strong> 是一种不可中断的原子运算。TSL<strong>对某个存储器位置写入1（set）并返回其旧值</strong>。</p><p>在多个进程可同时访问存储器同个地址时，如果一个程序正在执行TSL，其他程序在它执行完成前不能执行TSL。</p><p>TAS特点是<strong>自旋</strong>，也就是循环，每次尝试去设置值，如果设置成功则会返回，如果没有返回就会一直自旋，知道设置成功值。此时进入临界区，执行完临界区数据，再设置bool变量为false。从而让其他线程拿到锁</p><pre><code>function Lock(boolean *lock) &#123; while (test_and_set(lock) == 1); &#125;</code></pre><h2 id="fetch-and-add"><a href="#fetch-and-add" class="headerlink" title="fetch-and-add"></a>fetch-and-add</h2><p>fetch-and-add是CPU指令（FAA），对内存位置执行增加一个数量的原子操作。具体内容为：</p><pre><code>令x 变为x + a，其中x是个内存位置，a是个值</code></pre><p>FAA可用于实现互斥锁、信号量</p><h2 id="compare-and-swap"><a href="#compare-and-swap" class="headerlink" title="compare-and-swap"></a>compare-and-swap</h2><p>比较并交换(compare and swap, CAS)，是原子操作的一种，可用于在多线程编程中实现不被打断的数据交换操作，从而避免多线程同时改写某一数据时由于执行顺序不确定性以及中断的不可预知性产生的数据不一致问题。 该操作通过将内存中的值与指定数据进行比较，当数值一样时将内存中的数据替换为新的值</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;read-modify-write（RMW）&quot;&gt;&lt;a href=&quot;#read-modify-write（RMW）&quot; class=&quot;headerlink&quot; title=&quot;read-modify-write（RMW）&quot;&gt;&lt;/a&gt;read-modify-write（RM</summary>
       
     
     
