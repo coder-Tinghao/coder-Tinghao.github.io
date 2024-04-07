@@ -194,7 +194,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-04-07 15:32:27 / 修改时间：17:48:09" itemprop="dateCreated datePublished" datetime="2024-04-07T15:32:27+08:00">2024-04-07</time>
+      <time title="创建时间：2024-04-07 15:32:27 / 修改时间：21:36:52" itemprop="dateCreated datePublished" datetime="2024-04-07T15:32:27+08:00">2024-04-07</time>
     </span>
 
   
@@ -227,6 +227,30 @@
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dabusiGin/article/details/105323796">https://blog.csdn.net/dabusiGin/article/details/105323796</a></p>
 <p>ThreadPoolExecutor.DiscardPolicy：不处理新任务，直接丢弃掉。</p>
 <p>ThreadPoolExecutor.DiscardOldestPolicy：丢弃阻塞队列 workQueue 中最老的一个任务，并将新任务加入。</p>
+<p>如何设定线程池大小</p>
+<p>CPU密集型 N+1</p>
+<p>I&#x2F;O密集型 2N</p>
+<p>—— Atomic原子类型<br>AtomicInteger，不需要加锁即可实现线程安全</p>
+<p>通过CAS实现，即比对一下现在的变量是不是和取的时候一样，如果不一样，while循环取新值</p>
+<p>—— AQS详解（AbstractQueuedSynchronizer）</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904146127044622">https://juejin.cn/post/6844904146127044622</a></p>
+<p>—— Bean生命周期</p>
+<ol>
+<li>创建实例，Bean 容器首先会找到配置文件中的 Bean 定义，然后使用 Java 反射 API 来创建 Bean 的实例</li>
+<li>属性填充，如@Autowired 等注解注入的对象、@Value 注入的值</li>
+<li>初始化实例，1.注入xxxAware接口 2.BeanPostProcessor在初始化前后的处理<br>根据Bean实现的xxxAware接口，如BeanNameAware，调用 setBeanName()方法，传入 Bean 的名字。类似还有其他ClassLoaderAware等初始化Bean方法，BeanFactoryAware：注入当前 BeanFactory 容器的引用<br><strong>Aware 接口能让 Bean 能拿到 Spring 容器资源</strong></li>
+</ol>
+<p>还有BeanPostProcessor 在初始化前后的处理</p>
+<ol start="4">
+<li>销毁Bean，销毁并不是说要立马把 Bean 给销毁掉，而是把 Bean 的销毁方法先记录下来。会注册相关销毁回调接口，最后通过DisposableBean 和 destory-method 进行销毁</li>
+</ol>
+<p>—— SpringAOP</p>
+<p>—— Spring循环依赖问题解决</p>
+<ol>
+<li>重新设计</li>
+<li>Spring中采用三级缓存解决，第一级缓存存储完整的Bean实例对象，第二级缓存存储实例化以后还未赋值属性的Bean，未进行依赖注入，第三级缓存存储Bean实例工厂，用于创建Bean实例放入第二级缓存</li>
+</ol>
+<p><strong>核心思想：分离Bean对象的实例化和依赖注入分离开</strong></p>
 
       
     </div>
