@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-04-03T08:40:52.149Z</updated>
+  <updated>2024-04-07T09:48:09.213Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java学习笔记——4.7</title>
+    <link href="http://coder_tinghao.github.io/2024/04/07/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/"/>
+    <id>http://coder_tinghao.github.io/2024/04/07/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/</id>
+    <published>2024-04-07T07:32:27.000Z</published>
+    <updated>2024-04-07T09:48:09.213Z</updated>
+    
+    <content type="html"><![CDATA[<p>—— 泛型<br>List<E> list<br>提高容器的安全性和描述性</p><p>对于原生态类型，List容器添加进不同类型的对象，不会报错，只有警告，只有在取对象时，报ClassCastExeption异常</p><p>泛型通过类型擦除，和编译时检查，保证了容器类型的描述性，且如果添加进不同类型的对象，会有编译时检查，经过编译时检查后，泛型会进行类型擦除</p><p>—— transient 关键字<br>对于transient 修饰的成员变量，在类的实例对象的序列化处理过程中会被忽略。 因此，transient变量不会贯穿对象的序列化和反序列化，生命周期仅存于调用者的内存中而不会写到磁盘里进行持久化</p><p>—— HashMap源码分析<br>hash函数原理：HashMap当前对象，调用HashCode()方法，并做扰动：(h &#x3D; key.hashCode()) ^ (h &gt;&gt;&gt; 16)</p><p>组成：数组+链表<br>达到64后，变为红黑树，加快搜索速度</p><p>HashMap扩容机制：<br>初始容量16，扩容因子0.75，达到0.75比例时，触发扩容机制（resize函数），扩充为原来的2倍（要小于Integer.MAX_VALUE）</p><p>链表扩容达到64长度后，将链表修改为红黑树</p><p>—— ConrrentHashMap源码分析<br>Java7以前：Segment数组+HashEntry数组+链表<br>Segment数组不可扩容，大小为16个，可以认为最多16线程并发</p><p>Java8后: Node 数组 + 链表 &#x2F; 红黑树</p><p>对Node加锁</p><p>初始化是通过自旋和 CAS 操作完成的<br>即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功</p><p>利用 synchronized 锁写入数据</p><p>扩容机制和树化类似HashMap</p><p>—— ThreadLocal分析</p><p>—— 线程池<br>线程池饱和策略：<br>ThreadPoolExecutor.AbortPolicy：抛出 RejectedExecutionException来拒绝新任务的处理。</p><p><strong>ThreadPoolExecutor.CallerRunsPolicy：主线程直接执行新任务，并且不再向下执行main方法中的代码。如果您的应用程序可以承受此延迟并且你要求任何一个任务请求都要被执行的话，你可以选择这个策略。</strong></p><p><a href="https://blog.csdn.net/dabusiGin/article/details/105323796">https://blog.csdn.net/dabusiGin/article/details/105323796</a></p><p>ThreadPoolExecutor.DiscardPolicy：不处理新任务，直接丢弃掉。</p><p>ThreadPoolExecutor.DiscardOldestPolicy：丢弃阻塞队列 workQueue 中最老的一个任务，并将新任务加入。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;—— 泛型&lt;br&gt;List&lt;E&gt; list&lt;br&gt;提高容器的安全性和描述性&lt;/p&gt;
+&lt;p&gt;对于原生态类型，List容器添加进不同类型的对象，不会报错，只有警告，只有在取对象时，报ClassCastExeption异常&lt;/p&gt;
+&lt;p&gt;泛型通过类型擦除，和编译时检查，保证了容器</summary>
+      
+    
+    
+    
+    
+    <category term="Java" scheme="http://coder_tinghao.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>4-2蚂蚁暑期一面——保险技术</title>
@@ -108,21 +132,6 @@
     
     
     <category term="面经" scheme="http://coder_tinghao.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java学习笔记——1.20</title>
-    <link href="http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/"/>
-    <id>http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/</id>
-    <published>2024-01-20T07:32:27.000Z</published>
-    <updated>2024-01-20T07:42:20.135Z</updated>
-    
-    
-    
-    
-    
-    <category term="Java" scheme="http://coder_tinghao.github.io/tags/Java/"/>
     
   </entry>
   

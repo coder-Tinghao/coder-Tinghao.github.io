@@ -20,26 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"coder_tinghao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="article">
-<meta property="og:title" content="Java学习笔记——1.20">
-<meta property="og:url" content="http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/index.html">
+    <meta name="description" content="—— 泛型List list提高容器的安全性和描述性 对于原生态类型，List容器添加进不同类型的对象，不会报错，只有警告，只有在取对象时，报ClassCastExeption异常 泛型通过类型擦除，和编译时检查，保证了容器类型的描述性，且如果添加进不同类型的对象，会有编译时检查，经过编译时检查后，泛型会进行类型擦除 —— transient 关键字对于transient 修饰的成员变量，在类的实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java学习笔记——4.7">
+<meta property="og:url" content="http://coder_tinghao.github.io/2024/04/07/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/index.html">
 <meta property="og:site_name" content="Feng&#39;s Blog">
+<meta property="og:description" content="—— 泛型List list提高容器的安全性和描述性 对于原生态类型，List容器添加进不同类型的对象，不会报错，只有警告，只有在取对象时，报ClassCastExeption异常 泛型通过类型擦除，和编译时检查，保证了容器类型的描述性，且如果添加进不同类型的对象，会有编译时检查，经过编译时检查后，泛型会进行类型擦除 —— transient 关键字对于transient 修饰的成员变量，在类的实">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-01-20T07:32:27.000Z">
-<meta property="article:modified_time" content="2024-01-20T07:42:20.135Z">
+<meta property="article:published_time" content="2024-04-07T07:32:27.000Z">
+<meta property="article:modified_time" content="2024-04-07T09:48:09.213Z">
 <meta property="article:author" content="Fength">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/">
+<link rel="canonical" href="http://coder_tinghao.github.io/2024/04/07/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/","path":"2024/01/20/Java学习笔记——1-20/","title":"Java学习笔记——1.20"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://coder_tinghao.github.io/2024/04/07/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/","path":"2024/04/07/Java学习笔记——1-20/","title":"Java学习笔记——4.7"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Java学习笔记——1.20 | Feng's Blog</title>
+<title>Java学习笔记——4.7 | Feng's Blog</title>
   
 
 
@@ -168,7 +170,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2024/04/07/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%941-20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/profile.png">
@@ -181,12 +183,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Java学习笔记——1.20 | Feng's Blog">
+      <meta itemprop="name" content="Java学习笔记——4.7 | Feng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Java学习笔记——1.20
+          Java学习笔记——4.7
         </h1>
 
         <div class="post-meta-container">
@@ -198,7 +200,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-01-20 15:32:27 / 修改时间：15:42:20" itemprop="dateCreated datePublished" datetime="2024-01-20T15:32:27+08:00">2024-01-20</time>
+      <time title="创建时间：2024-04-07 15:32:27 / 修改时间：17:48:09" itemprop="dateCreated datePublished" datetime="2024-04-07T15:32:27+08:00">2024-04-07</time>
     </span>
 
   
@@ -218,7 +220,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <p>—— 泛型<br>List<E> list<br>提高容器的安全性和描述性</p>
+<p>对于原生态类型，List容器添加进不同类型的对象，不会报错，只有警告，只有在取对象时，报ClassCastExeption异常</p>
+<p>泛型通过类型擦除，和编译时检查，保证了容器类型的描述性，且如果添加进不同类型的对象，会有编译时检查，经过编译时检查后，泛型会进行类型擦除</p>
+<p>—— transient 关键字<br>对于transient 修饰的成员变量，在类的实例对象的序列化处理过程中会被忽略。 因此，transient变量不会贯穿对象的序列化和反序列化，生命周期仅存于调用者的内存中而不会写到磁盘里进行持久化</p>
+<p>—— HashMap源码分析<br>hash函数原理：HashMap当前对象，调用HashCode()方法，并做扰动：(h &#x3D; key.hashCode()) ^ (h &gt;&gt;&gt; 16)</p>
+<p>组成：数组+链表<br>达到64后，变为红黑树，加快搜索速度</p>
+<p>HashMap扩容机制：<br>初始容量16，扩容因子0.75，达到0.75比例时，触发扩容机制（resize函数），扩充为原来的2倍（要小于Integer.MAX_VALUE）</p>
+<p>链表扩容达到64长度后，将链表修改为红黑树</p>
+<p>—— ConrrentHashMap源码分析<br>Java7以前：Segment数组+HashEntry数组+链表<br>Segment数组不可扩容，大小为16个，可以认为最多16线程并发</p>
+<p>Java8后: Node 数组 + 链表 &#x2F; 红黑树</p>
+<p>对Node加锁</p>
+<p>初始化是通过自旋和 CAS 操作完成的<br>即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功</p>
+<p>利用 synchronized 锁写入数据</p>
+<p>扩容机制和树化类似HashMap</p>
+<p>—— ThreadLocal分析</p>
+<p>—— 线程池<br>线程池饱和策略：<br>ThreadPoolExecutor.AbortPolicy：抛出 RejectedExecutionException来拒绝新任务的处理。</p>
+<p><strong>ThreadPoolExecutor.CallerRunsPolicy：主线程直接执行新任务，并且不再向下执行main方法中的代码。如果您的应用程序可以承受此延迟并且你要求任何一个任务请求都要被执行的话，你可以选择这个策略。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dabusiGin/article/details/105323796">https://blog.csdn.net/dabusiGin/article/details/105323796</a></p>
+<p>ThreadPoolExecutor.DiscardPolicy：不处理新任务，直接丢弃掉。</p>
+<p>ThreadPoolExecutor.DiscardOldestPolicy：丢弃阻塞队列 workQueue 中最老的一个任务，并将新任务加入。</p>
+
     </div>
 
     
@@ -234,14 +256,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/" rel="prev" title="京东零售——一面面经——12.11">
-                  <i class="fa fa-chevron-left"></i> 京东零售——一面面经——12.11
+                <a href="/2024/04/02/4-2%E8%9A%82%E8%9A%81%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2%E2%80%94%E2%80%94%E4%BF%9D%E9%99%A9%E6%8A%80%E6%9C%AF/" rel="prev" title="4-2蚂蚁暑期一面——保险技术">
+                  <i class="fa fa-chevron-left"></i> 4-2蚂蚁暑期一面——保险技术
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/03/21/3-21%E7%BE%8E%E5%9B%A2%E6%9A%91%E6%9C%9F%E4%B8%80%E9%9D%A2/" rel="next" title="3.21美团暑期一面">
-                  3.21美团暑期一面 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
