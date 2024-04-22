@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,102 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2024/04/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%944-20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/04/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%944-20/" class="post-title-link" itemprop="url">Java学习笔记——4.20</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-20 10:21:38" itemprop="dateCreated datePublished" datetime="2024-04-20T10:21:38+08:00">2024-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-21 21:30:45" itemprop="dateModified" datetime="2024-04-21T21:30:45+08:00">2024-04-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>场景题总结：</p>
+<p>数据迁移：<br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1740904">https://cloud.tencent.com/developer/article/1740904</a></p>
+<p>数据迁移需要注意：<br>1.保证迁移后的数据不丢失<br>2.不影响用户体验<br>3.迁移后的性能和稳定性</p>
+<p>方案1: 挂从库<br>适合数据结构不变，且空闲时间流量低，允许停机迁移</p>
+<p>1.新建从库，将数据从主库向从库同步<br>2.为保证数据一致性，找空闲时间段，<strong>停掉服务</strong>，将从库升级为主库</p>
+<p><strong>方案2:双写</strong><br>老库，新库同时写入，适合数据结构变化，不允许停机迁移</p>
+<p>1.服务层的增删改查，同时操作新库和老库<br>2.准备校验脚本检查新库，老库数据是否一致<br>3.新库老库同时写入，为不影响新库性能，可以采用消息队列异步写入新库<br>4.利用脚本程序对双写时间戳之前的数据进行迁移<br>5.迁移后进行数据一致性校验</p>
+<p>—— 设计模式</p>
+<p>六大设计原则：<br>1.单一职责原则：应该有且仅有一个原因引起类的变更<br>2.里氏替换原则：只要父类能出现的地方我子类就可以出现，具体包含四层意思：子类必须完全的实现父类的方法，子类可以有自己的个性，覆盖或实现父类的方法时输入参数可以被放大，覆盖或实现父类的方法是输出结果可以被缩小<br>3.依赖倒置原则：高层模块不依赖底层模块，它们共同依赖同一个抽象。抽象不要依赖具体实现细节，具体实现细节依赖抽象。<br>4.接口隔离原则：建立单一接口，不要建立臃肿庞大的接口<br>接口尽量要小，接口要高内聚，定制服务，一个接口只服务于一个子模块或者业务逻辑<br>5.迪米特法则：最少知识原则，只和朋友交流，只和有耦合关系的对象交流，不和陌生对象交流；尽量不要对外公布太多的 public 方法和非静态的 public 变量，尽量内敛；<br>6.开闭原则：对扩展开放, 对修改封闭</p>
+<p>—— 策略模式<br>对行为的抽象，是行为型<br>可以切换不同的行为</p>
+<p>—— 工厂模式<br>对创建对象的抽象，是创建型<br>简单工厂和抽象工厂</p>
+<p>—— 代理模式</p>
+<p>—— 单例模式<br>屏蔽类自己的构造函数</p>
+<p>—— 观察者模式<br>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新</p>
+<p>延伸思考：<br>对于咚咚push这种报警工具，实际是用消息队列交给下游处理</p>
+<p>自己思考：使用观察者模式，可以根据业务类型，区分要推送给哪些人<br>观察者1，项目独有业务，推送给项目负责人<br>观察者2，紧急，或通用业务，推送给全体组员</p>
+<p>—— 装饰者模式<br>动态的给一个对象添加其它功能。从扩展性来说，这种方式比继承更有弹性，更加灵活，可作为替代继承的方案。</p>
+<p>本质是一个套娃，有主体，和附加物，比如不同奶茶和各种配料</p>
+<p>将附加物类做装饰者，对于装饰者，每次传入一个主体或者加工过的主体，叠加上自己的装饰行为返回为主体类型，这样可以像装饰一样无限叠加，最后得到最外层的主体对象即可</p>
+<p>—— 责任链模式<br>每个处理器，有一个指向下一个处理器的指针</p>
+<p>对于最快送达时间过滤，是一个filterChain，不同配送业务类型，采用不同的责任链组装方式</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1181,99 +1277,6 @@ future.cancel(true);
 <h3 id="CountDownLatch、CyclicBarrier、Semaphore的用法和区别"><a href="#CountDownLatch、CyclicBarrier、Semaphore的用法和区别" class="headerlink" title="CountDownLatch、CyclicBarrier、Semaphore的用法和区别"></a>CountDownLatch、CyclicBarrier、Semaphore的用法和区别</h3><p>CountDownLatch 类位于 java.util.concurrent 包下，利用它可以实现类似计数器的功能。比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，此时就可以利用CountDownLatch来实现这种功能了</p>
 <p>回环屏障，通过它可以实现让一组线程等待至某个状态之后再全部同时执行。叫做回环是因为当所有等待线程都被释放以后，CyclicBarrier可以被重用</p>
 <p>Semaphore翻译成字面意思为 信号量，Semaphore 可以同时让多个线程同时访问共享资源，通过 acquire() 获取一个许可，如果没有就等待，而 release() 释放一个许可</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/21/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-21/" class="post-title-link" itemprop="url">java学习笔记——11.21</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-11-21 17:21:09 / 修改时间：22:04:47" itemprop="dateCreated datePublished" datetime="2023-11-21T17:21:09+08:00">2023-11-21</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p><strong>b树索引</strong><br><strong>B树可以在内部节点同时存储键和值</strong>，频繁访问的数据放在靠近根节点的地方将会大大提高热点数据的查询效率，键和值存放在内部节点和叶子节点</p>
-<p><strong>b+树索引</strong><br><strong>B+树的内部节点只存放键，不存放值</strong>，叶子节点有一条链相连，天然<strong>支持范围查询</strong></p>
-<p>当需要进行一次全数据遍历的时候，B+树只需 要使用O(logN)时间找到最小的一个节点，然后通过链进行O(N)的顺序遍历即可</p>
-<p><strong>hash索引</strong>，不支持范围查，查询效率不稳定</p>
-<p>较频繁作为<strong>查询条件</strong>的字段才去创建索引，<strong>更新频繁字段</strong>不适合创建索引</p>
-<h3 id="为什么用B-树而不是B树"><a href="#为什么用B-树而不是B树" class="headerlink" title="为什么用B+树而不是B树"></a>为什么用B+树而不是B树</h3><p><strong>B树</strong><br>随机检索<br>元素遍历（范围查询）效率低下</p>
-<p><strong>B+树</strong><br>同时支持随机检索和顺序检索<br>内部结点不存值，比B树小，盘块能容纳的结点中关键字数量更多，一次性读入内存中可以查找的关键字也就越多，相对的，<strong>IO读写次数</strong>也就降低了</p>
-<h3 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h3><p>聚簇索引：数据存储与索引放到了一块，找到索引也就找到了数据；叶子节点存储的是行数据，因此通过聚簇索引可以直接找到真正的行数据</p>
-<p>非聚簇索引：数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，通过 key_buffer把索引先<strong>缓存到内存中</strong>；叶子节点存储的是主键信息，所以使用非聚簇索引还需要<strong>回表查询</strong></p>
-<p>聚簇索引一般是主键索引，一个表中也只能有一个，而非聚簇索引则没有数量上的限制</p>
-<h3 id="一定需要回表查询吗？"><a href="#一定需要回表查询吗？" class="headerlink" title="一定需要回表查询吗？"></a>一定需要回表查询吗？</h3><p>不一定，取决于<strong>查询语句所要求的字段是否全部命中了索引</strong>，假设我们在员工表的年龄上建立了索引，那么当进行select age from employee where age &lt; 20的查询时，在索引的叶子节点上，已经包含了age信息，不会再次进行回表查询</p>
-<h3 id="MySQL隔离级别"><a href="#MySQL隔离级别" class="headerlink" title="MySQL隔离级别"></a>MySQL隔离级别</h3><p>因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读 取提交内容):，但是你要知道的是InnoDB 存储引擎默认使用 REPEATABLE-READ(可重读)并不会有 任何性能损失<br><strong>InnoDB 存储引擎在 分布式事务 的情况下一般会用到SERIALIZABLE(可串行化)隔离级别</strong></p>
-<h3 id="隔离级别和锁"><a href="#隔离级别和锁" class="headerlink" title="隔离级别和锁"></a>隔离级别和锁</h3><p>在Read Uncommitted级别下，<strong>读取数据不需要加共享锁</strong>，这样就不会跟被修<br>改的数据上的排他锁冲突</p>
-<p>在Read Committed级别下，<strong>读操作需要加共享锁</strong>，但是在语句<strong>执行完以后释放共享锁</strong></p>
-<p>在Repeatable Read级别下，<strong>读操作需要加共享锁，但是在事务提交之前并不释放共享锁</strong>，也就是必须等待事务执行完毕以后才释放共享锁</p>
-<p>SERIALIZABLE 是限制性最强的隔离级别，因为该级别锁定整个范围的键，并一直持有锁，直到事务完成</p>
-<h3 id="锁粒度"><a href="#锁粒度" class="headerlink" title="锁粒度"></a>锁粒度</h3><p>行级锁、表级锁、页级锁；具体还分<strong>共享锁和排他锁</strong> 还有<strong>意向锁（预先通知）</strong><br>InnoDB支持行级锁和表级锁，<strong>默认为行级锁</strong></p>
-<p><strong>行级锁</strong> 开销大，加锁慢;会出现死锁;锁定粒度最小，发生锁冲突的概率最低；并发度最高</p>
-<p><strong>表级锁</strong> 开销小，加锁快;不会出现死锁（也有可能吧）;锁定粒度大，发出锁冲突的概率最高</p>
-<p><strong>页级锁</strong> 中间</p>
-<h3 id="MySQL行锁"><a href="#MySQL行锁" class="headerlink" title="MySQL行锁"></a>MySQL行锁</h3><p>InnoDB是基于<strong>索引</strong>来完成行锁<br>例: select * from tab_with_index where id &#x3D; 1 for update;<br>for update 可以根据条件来完成行锁锁定，并且 id 是有索引键的列，如果 id不是索引键那么InnoDB将 完成表锁，并发将无从谈起</p>
-<h3 id="InnoDB存储引擎的锁"><a href="#InnoDB存储引擎的锁" class="headerlink" title="InnoDB存储引擎的锁"></a>InnoDB存储引擎的锁</h3><p>Record lock:单个行记录上的锁<br>Gap lock:间隙锁，锁定一个范围，不包括记录本身<br>Next-key lock:record+gap 锁定一个范围，包含记录本身</p>
-<p>Gap Lock 的作用是为了<strong>阻止多个事务将记录插入到同一个范围内</strong>，因为这会导致幻读问题（phantom Problem）的产生</p>
-<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>虚拟表</p>
 
       
     </div>

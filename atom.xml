@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-04-07T13:36:52.540Z</updated>
+  <updated>2024-04-21T13:30:45.289Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java学习笔记——4.20</title>
+    <link href="http://coder_tinghao.github.io/2024/04/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%944-20/"/>
+    <id>http://coder_tinghao.github.io/2024/04/20/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%944-20/</id>
+    <published>2024-04-20T02:21:38.000Z</published>
+    <updated>2024-04-21T13:30:45.289Z</updated>
+    
+    <content type="html"><![CDATA[<p>场景题总结：</p><p>数据迁移：<br><a href="https://cloud.tencent.com/developer/article/1740904">https://cloud.tencent.com/developer/article/1740904</a></p><p>数据迁移需要注意：<br>1.保证迁移后的数据不丢失<br>2.不影响用户体验<br>3.迁移后的性能和稳定性</p><p>方案1: 挂从库<br>适合数据结构不变，且空闲时间流量低，允许停机迁移</p><p>1.新建从库，将数据从主库向从库同步<br>2.为保证数据一致性，找空闲时间段，<strong>停掉服务</strong>，将从库升级为主库</p><p><strong>方案2:双写</strong><br>老库，新库同时写入，适合数据结构变化，不允许停机迁移</p><p>1.服务层的增删改查，同时操作新库和老库<br>2.准备校验脚本检查新库，老库数据是否一致<br>3.新库老库同时写入，为不影响新库性能，可以采用消息队列异步写入新库<br>4.利用脚本程序对双写时间戳之前的数据进行迁移<br>5.迁移后进行数据一致性校验</p><p>—— 设计模式</p><p>六大设计原则：<br>1.单一职责原则：应该有且仅有一个原因引起类的变更<br>2.里氏替换原则：只要父类能出现的地方我子类就可以出现，具体包含四层意思：子类必须完全的实现父类的方法，子类可以有自己的个性，覆盖或实现父类的方法时输入参数可以被放大，覆盖或实现父类的方法是输出结果可以被缩小<br>3.依赖倒置原则：高层模块不依赖底层模块，它们共同依赖同一个抽象。抽象不要依赖具体实现细节，具体实现细节依赖抽象。<br>4.接口隔离原则：建立单一接口，不要建立臃肿庞大的接口<br>接口尽量要小，接口要高内聚，定制服务，一个接口只服务于一个子模块或者业务逻辑<br>5.迪米特法则：最少知识原则，只和朋友交流，只和有耦合关系的对象交流，不和陌生对象交流；尽量不要对外公布太多的 public 方法和非静态的 public 变量，尽量内敛；<br>6.开闭原则：对扩展开放, 对修改封闭</p><p>—— 策略模式<br>对行为的抽象，是行为型<br>可以切换不同的行为</p><p>—— 工厂模式<br>对创建对象的抽象，是创建型<br>简单工厂和抽象工厂</p><p>—— 代理模式</p><p>—— 单例模式<br>屏蔽类自己的构造函数</p><p>—— 观察者模式<br>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新</p><p>延伸思考：<br>对于咚咚push这种报警工具，实际是用消息队列交给下游处理</p><p>自己思考：使用观察者模式，可以根据业务类型，区分要推送给哪些人<br>观察者1，项目独有业务，推送给项目负责人<br>观察者2，紧急，或通用业务，推送给全体组员</p><p>—— 装饰者模式<br>动态的给一个对象添加其它功能。从扩展性来说，这种方式比继承更有弹性，更加灵活，可作为替代继承的方案。</p><p>本质是一个套娃，有主体，和附加物，比如不同奶茶和各种配料</p><p>将附加物类做装饰者，对于装饰者，每次传入一个主体或者加工过的主体，叠加上自己的装饰行为返回为主体类型，这样可以像装饰一样无限叠加，最后得到最外层的主体对象即可</p><p>—— 责任链模式<br>每个处理器，有一个指向下一个处理器的指针</p><p>对于最快送达时间过滤，是一个filterChain，不同配送业务类型，采用不同的责任链组装方式</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;场景题总结：&lt;/p&gt;
+&lt;p&gt;数据迁移：&lt;br&gt;&lt;a href=&quot;https://cloud.tencent.com/developer/article/1740904&quot;&gt;https://cloud.tencent.com/developer/article/1740904&lt;</summary>
+      
+    
+    
+    
+    
+    <category term="Java" scheme="http://coder_tinghao.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>Java学习笔记——4.7</title>
@@ -447,29 +470,6 @@ assert condition: expression;
     
     
     <category term="c++" scheme="http://coder_tinghao.github.io/tags/c/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>单调前缀一致性——monotonic prefix consistency</title>
-    <link href="http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/"/>
-    <id>http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/</id>
-    <published>2023-06-11T13:00:06.000Z</published>
-    <updated>2023-06-11T13:04:32.330Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://thiscute.world/posts/consistency-and-consensus-algorithm/">参考链接</a></p><h2 id="单调前缀一致性——monotonic-prefix-consistency"><a href="#单调前缀一致性——monotonic-prefix-consistency" class="headerlink" title="单调前缀一致性——monotonic prefix consistency"></a>单调前缀一致性——monotonic prefix consistency</h2><p>在读论文C5:cloned并发控制协议论文时遇到monotonic prefix consistency，故记录在此</p><p><strong>前缀一致性 Consistent Prefix</strong>：副本之间的同步过程中，会存在一些副本接收数据的顺序并不一致。「前缀一致性」是说所有用户读到的数据顺序的前缀永远是一致的。</p><p>「前缀」是指程序在执行写操作时，需要显式声明其「前缀」事件，这样每个事件就都存在一个由其他写事件排列而成的前缀。比如当前有写事件排列「A B C D」，那所有用户读到的数据都拥有同样的写事件前缀，比如「A」、「A B」、「A B C」、「A B C D」，但不可能出现「A C」或者「C A」等结果。</p><p>它解决的是<strong>分片分布式数据库的一致性问题</strong>：A B C 因为地域区别读写的是不同的副本，B 在抖音评论区问了个问题，然后 A 作出了回答。但是问题跟回答两个数据如果处于不同的分片，副本同步时这两个数据的顺序是无法保证的，C 可能会先读到回答信息，之后才刷新出 B 的提问，历史事件的顺序就乱了。<br>实现方式：需要程序主动为<strong>消息之间添加显式的依赖关系</strong>，再据此控制其读取顺序，实现比较复杂。<br>存在的问题：只有被显式定义了因果关系的事件，它们之间的顺序才能被保证。</p><p>问题与答案之间是有因果关系的，但这种关系在复制的过程中被忽略了，于是出现了异常。<br>保持这种因果关系的一致性，被称为前缀读或前缀一致性</p><p><strong>前缀一致性：在每个会话内保证了单调读，会话之间不保证</strong></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://thiscute.world/posts/consistency-and-consensus-algorithm/&quot;&gt;参考链接&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;单调前缀一致性——monotonic-prefix-consistency&quot;&gt;&lt;</summary>
-      
-    
-    
-    
-    
-    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   

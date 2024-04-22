@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">39</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,82 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/11/%E5%8D%95%E8%B0%83%E5%89%8D%E7%BC%80%E4%B8%80%E8%87%B4%E6%80%A7%E2%80%94%E2%80%94monotonic-prefix-consistency/" class="post-title-link" itemprop="url">单调前缀一致性——monotonic prefix consistency</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-11 21:00:06 / 修改时间：21:04:32" itemprop="dateCreated datePublished" datetime="2023-06-11T21:00:06+08:00">2023-06-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://thiscute.world/posts/consistency-and-consensus-algorithm/">参考链接</a></p>
+<h2 id="单调前缀一致性——monotonic-prefix-consistency"><a href="#单调前缀一致性——monotonic-prefix-consistency" class="headerlink" title="单调前缀一致性——monotonic prefix consistency"></a>单调前缀一致性——monotonic prefix consistency</h2><p>在读论文C5:cloned并发控制协议论文时遇到monotonic prefix consistency，故记录在此</p>
+<p><strong>前缀一致性 Consistent Prefix</strong>：副本之间的同步过程中，会存在一些副本接收数据的顺序并不一致。「前缀一致性」是说所有用户读到的数据顺序的前缀永远是一致的。</p>
+<p>「前缀」是指程序在执行写操作时，需要显式声明其「前缀」事件，这样每个事件就都存在一个由其他写事件排列而成的前缀。比如当前有写事件排列「A B C D」，那所有用户读到的数据都拥有同样的写事件前缀，比如「A」、「A B」、「A B C」、「A B C D」，但不可能出现「A C」或者「C A」等结果。</p>
+<p>它解决的是<strong>分片分布式数据库的一致性问题</strong>：A B C 因为地域区别读写的是不同的副本，B 在抖音评论区问了个问题，然后 A 作出了回答。但是问题跟回答两个数据如果处于不同的分片，副本同步时这两个数据的顺序是无法保证的，C 可能会先读到回答信息，之后才刷新出 B 的提问，历史事件的顺序就乱了。<br>实现方式：需要程序主动为<strong>消息之间添加显式的依赖关系</strong>，再据此控制其读取顺序，实现比较复杂。<br>存在的问题：只有被显式定义了因果关系的事件，它们之间的顺序才能被保证。</p>
+<p>问题与答案之间是有因果关系的，但这种关系在复制的过程中被忽略了，于是出现了异常。<br>保持这种因果关系的一致性，被称为前缀读或前缀一致性</p>
+<p><strong>前缀一致性：在每个会话内保证了单调读，会话之间不保证</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -984,95 +1060,6 @@ y += &quot;, World!&quot;;    // 写时复制，此时 y 使用一个新的 buff
 <p>·单个Master节点要承载数千个客户端的请求，而Master节点的CPU每秒只能处理数百个请求，尤其Master还需要将部分数据写入磁盘，很快，客户端数量超过了单个Master的能力。</p>
 <p>·应用程序发现很难处理GFS奇怪的语义（本节最开始介绍的GFS的副本数据的同步，或者可以说不同步）。</p>
 <p>·Master节点的故障切换不是自动的。GFS需要人工干预来处理已经永久故障的Master节点，并更换新的服务器，这可能需要几十分钟甚至更长的而时间来处理。对于某些应用程序来说，这个时间太长了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/12/%E6%95%85%E9%9A%9C%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">故障模型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-02-12 15:22:47" itemprop="dateCreated datePublished" datetime="2023-02-12T15:22:47+08:00">2023-02-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-13 00:21:14" itemprop="dateModified" datetime="2023-02-13T00:21:14+08:00">2023-02-13</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h1><p>最近在学习论文VM-FT，涉及到故障类型fail-stop failure，故在此对故障类型进行总结</p>
-<h2 id="fault-error-and-failure"><a href="#fault-error-and-failure" class="headerlink" title="fault, error and failure"></a>fault, error and failure</h2><p>·Fault: 在系统中某一个步骤偏离正确的执行叫做一个fault, 比如内存写入错误, 但是如果内存是ECC的那么这个fault可以立刻被修复, 就不会导致error。</p>
-<p>·Error: 如果一个fault没能在结果影响到整个系统状态之前被修复, 结果导致系统的状态错误, 那么这就是一个error, 比如不带ECC的内存导致一个计算结果错误。</p>
-<p>·Failure: 如果一个系统的error没能在错误状态传递给其它节点之前被修复, 换句话说error被扩散出去, 这就是一个failure.</p>
-<p>所以他们的关系是fault导致error, error导致failure. 在分布式系统中, 每个节点很难确定其它节点内部的状态, 通常只能通过和其他节点的交互监测到failure. 接下来我们所说的故障一般都是指failure.</p>
-<h2 id="分布式系统故障模型"><a href="#分布式系统故障模型" class="headerlink" title="分布式系统故障模型"></a>分布式系统故障模型</h2><p>Byzantine failures: 这是最难处理的情况, 一个节点压根就不按照程序逻辑执行, 对它的调用会返回给你随意或者混乱的结果. 要解决拜占庭式故障需要有同步网络, 并且故障节点必须小于1&#x2F;3或者消息传递过程中不可篡改，通常只有某些特定领域才会考虑这种情况通过高冗余来消除故障。</p>
-<p>Crash-recovery failures: 它比byzantine类故障加了一个限制, 那就是节点总是按照程序逻辑执行, 结果是正确的. 但是不保证消息返回的时间. 原因可能是crash后重启了, 网络中断了, 异步网络中的高延迟. 对于crash的情况还要分健忘(amnesia)和非健忘的两种情况. 对于健忘的情况, 是指这个crash的节点重启后没有完整的保存crash之前的状态信息, 非健忘是指这个节点crash之前能把状态完整的保存在持久存储上, 启动之后可以再次按照以前的状态继续执行和通信。</p>
-<p>Omission failures: 比crash-recovery多了一个限制, 就是一定要非健忘. 有些算法要求必须是非健忘的. 比如最基本版本的Paxos要求节点必须把ballot number记录到持久存储中, 一旦crash, 修复之后必须继续记住之前的ballot number。</p>
-<p>Crash failure: Omission failure的特例；在omission failure的基础上，增加了节点停止响应的假设，也即持续性地omission failure。</p>
-<p>Crash-stop failures&#x2F;Fail-stop failures: 也叫做crash failure, 它比omission failure多了一个故障发生后要停止响应的要求. 比如一个节点出现故障后立即停止接受和发送所有消息, 或者网络发生了故障无法进行任何通信, 并且这些故障不会恢复. 简单讲, 一旦发生故障, 这个节点 就不会再和其它节点有任何交互. 就像他的名字描述的那样, crash and stop。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/Failure_modes.png?raw=true" alt="故障模型"></p>
-<p>Fail-stop failure这个模型，其是在Crash failure模型的基础上增加了故障可检测的假设。回顾我们在第2节中的理解：同步网络和异步网络最大的区别在于故障的可检测性。<br>因此，Fail-stop failure模型本质上是在Crash failure模型的基础上增加了“同步网络”的假设</p>
-<h2 id="fail-stop-故障-和-bugs"><a href="#fail-stop-故障-和-bugs" class="headerlink" title="fail-stop 故障 和 bugs"></a>fail-stop 故障 和 bugs</h2><p>简单来说复制能够处理单台计算机的fail-stop故障，如果某些东西出现故障，只是单纯的停止运行，而不是运算出错误结果。 比如电源线、服务器风扇导致CPU过热停止运行、网络等故障。网络隔离场景很有趣，因为从外界来看，这和服务器停止运行毫无区别。</p>
-<p>复制不能处理软件中的bug和硬件设计中的缺陷。 如果相同的程序，都计算出错误的结果，那么再多副本也都无法避免。我们也不能期望复制可以处理硬件的漏洞，当硬件有漏洞的时候会计算出错误的结果，至少基于复制这种技术，我们就无能为力了。</p>
 
       
     </div>
