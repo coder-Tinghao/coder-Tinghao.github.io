@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-04-21T13:30:45.289Z</updated>
+  <updated>2024-04-26T12:21:25.618Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>淘天阿里妈妈一面——4.26</title>
+    <link href="http://coder_tinghao.github.io/2024/04/26/%E6%B7%98%E5%A4%A9%E9%98%BF%E9%87%8C%E5%A6%88%E5%A6%88%E4%B8%80%E9%9D%A2%E2%80%94%E2%80%944-26/"/>
+    <id>http://coder_tinghao.github.io/2024/04/26/%E6%B7%98%E5%A4%A9%E9%98%BF%E9%87%8C%E5%A6%88%E5%A6%88%E4%B8%80%E9%9D%A2%E2%80%94%E2%80%944-26/</id>
+    <published>2024-04-26T11:59:26.000Z</published>
+    <updated>2024-04-26T12:21:25.618Z</updated>
+    
+    <content type="html"><![CDATA[<p>53min，秒挂</p><p>实习衍生：</p><p>数据迁移方案：<br>1.主从<br>2.双写，双写过程，数据迁移出现冲突怎么解决？</p><p>迁移比对，都比对什么</p><p>项目：<br>项目工作<br>Raft相关各种细节<br>选举过程<br>如果Raft集群中，出现网络抖动，一半以上机器出现网络问题，服务是否可用？<br>Raft和Zab的区别？</p><p>—— 设计模式，装饰器模式<br>装饰器模式和继承的区别</p><p>—— 线程池<br>线程池核心参数？<br>如何停掉某一线程？<br>如何创建线程池？</p><p>什么时候会出现线程安全问题？<br>栈是线程安全的吗？堆是线程安全的吗？</p><p>暂时就想起来这些</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;53min，秒挂&lt;/p&gt;
+&lt;p&gt;实习衍生：&lt;/p&gt;
+&lt;p&gt;数据迁移方案：&lt;br&gt;1.主从&lt;br&gt;2.双写，双写过程，数据迁移出现冲突怎么解决？&lt;/p&gt;
+&lt;p&gt;迁移比对，都比对什么&lt;/p&gt;
+&lt;p&gt;项目：&lt;br&gt;项目工作&lt;br&gt;Raft相关各种细节&lt;br&gt;选举过程&lt;br&gt;如果R</summary>
+      
+    
+    
+    
+    
+    <category term="面经" scheme="http://coder_tinghao.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>美团充电宝技术一面——4.26</title>
+    <link href="http://coder_tinghao.github.io/2024/04/26/%E7%BE%8E%E5%9B%A2%E5%85%85%E7%94%B5%E5%AE%9D%E6%8A%80%E6%9C%AF%E4%B8%80%E9%9D%A2%E2%80%94%E2%80%944-26/"/>
+    <id>http://coder_tinghao.github.io/2024/04/26/%E7%BE%8E%E5%9B%A2%E5%85%85%E7%94%B5%E5%AE%9D%E6%8A%80%E6%9C%AF%E4%B8%80%E9%9D%A2%E2%80%94%E2%80%944-26/</id>
+    <published>2024-04-26T11:52:40.000Z</published>
+    <updated>2024-04-26T12:01:50.211Z</updated>
+    
+    <content type="html"><![CDATA[<p>—— 实习经历</p><p>用过哪些容器<br>ArrayList和HashSet区别，是否有序?</p><p>数据迁移过程中需要注意什么，怎么迁移的？不影响线上业务，其实可以讲双写，当时还没会，</p><p>RPC？消息队列？</p><p>RPC和消息队列的区别？什么时候用</p><p>mysql 索引优化？</p><p>事务都什么时候需要？<br>事务隔离级别？<br>隔离级别如何实现？<br>如何上锁？</p><p>看过哪些Java相关的书</p><p>手撕——二叉树层次遍历</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;—— 实习经历&lt;/p&gt;
+&lt;p&gt;用过哪些容器&lt;br&gt;ArrayList和HashSet区别，是否有序?&lt;/p&gt;
+&lt;p&gt;数据迁移过程中需要注意什么，怎么迁移的？不影响线上业务，其实可以讲双写，当时还没会，&lt;/p&gt;
+&lt;p&gt;RPC？消息队列？&lt;/p&gt;
+&lt;p&gt;RPC和消息队列的区别？</summary>
+      
+    
+    
+    
+    
+    <category term="面经" scheme="http://coder_tinghao.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>Java学习笔记——4.20</title>
@@ -419,51 +471,6 @@ assert condition: expression;
       
     <summary type="html">&lt;h3 id=&quot;迭代器&quot;&gt;&lt;a href=&quot;#迭代器&quot; class=&quot;headerlink&quot; title=&quot;迭代器&quot;&gt;&lt;/a&gt;迭代器&lt;/h3&gt;&lt;p&gt;对于c++的迭代器，&lt;strong&gt;只有!&amp;#x3D;&lt;/strong&gt; 没有&amp;lt;&lt;/p&gt;
 &lt;p&gt;迭代器分为两种：&lt;br&gt;   </summary>
-      
-    
-    
-    
-    
-    <category term="c++" scheme="http://coder_tinghao.github.io/tags/c/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>c++学习笔记——9.17</title>
-    <link href="http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/"/>
-    <id>http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/</id>
-    <published>2023-09-17T06:20:55.000Z</published>
-    <updated>2023-09-19T12:25:47.336Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h3><p>c++ 静态类型语言，在编译阶段检查类型</p><h3 id="赋值和指针"><a href="#赋值和指针" class="headerlink" title="赋值和指针"></a>赋值和指针</h3><p><strong>赋值永远改变的是等号左侧的对象</strong></p><h3 id="const引用"><a href="#const引用" class="headerlink" title="const引用"></a>const引用</h3><p>引用类型必须与其所引用对象的类型一致<br>        const int ci &#x3D; 1024;<br>        const int &amp;r1 &#x3D; ci;</p><p>常量引用：常量引用是对const的引用</p><p>对const的引用可能引用一个非const对象：<br>常量引用，即对引用加const，只是<strong>限定了引用可参与的操作</strong>，对于引用的对象本身没有限定<br>        int i &#x3D; 42;<br>        const int &amp;r1 &#x3D; i;<br>        r1 &#x3D; 0;  &#x2F;&#x2F; <strong>非法，常量引用不能修改</strong></p><h4 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h4><p>指向常量的指针和常量引用类似，<br>        const int i &#x3D; 42;<br>        const int *i &#x3D; &amp;i;<br>        *i &#x3D; 0;  &#x2F;&#x2F; <strong>非法，不能修改值</strong></p><h4 id="const指针"><a href="#const指针" class="headerlink" title="const指针"></a>const指针</h4><pre><code>    const int i = 42;    const int *const r1 = &amp;i;</code></pre><p>*<strong>const为const指针，不变的是指针本身的值，而指向的值</strong></p><h3 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h3><p>顶层 const 表示指针本身是个常量；<br>底层 const 表示指针所指的对象是一个常量<br>or<br>被修饰的变量本身无法改变的 const 是顶层 const；<br>通过指针或引用等间接途径来限制目标内容不可变的 const 是底层 const</p><h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3><p>常量表达式：值不会改变，编译过程就能得到计算结果的表达式</p><p>C++11:constexpr，如果认定变量是常量表达式，就声明为constexpr</p><h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>别名声明<br>    using SI &#x3D; Sales_item;  &#x2F;&#x2F; SI是Sales_item的同义词（Sales_item是一个类型）</p><h3 id="预处理器概述"><a href="#预处理器概述" class="headerlink" title="预处理器概述"></a>预处理器概述</h3><p>预处理功能 #include，当预处理器看到#include标记时就会用指定的头文件内容代替#include</p><h3 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符"></a>decltype类型指示符</h3><p>选择并返回操作数的数据类型<br>使用情况：希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量</p><h3 id="string-size-type类型"><a href="#string-size-type类型" class="headerlink" title="string::size_type类型"></a>string::size_type类型</h3><p>string类的配套类型，<strong>无符号类型</strong>，能足够存放下任何string对象的大小（通常等于 std::size_t）<br>访问string对象的下标也是size_type类型，<strong>使用该类型访问string中的字符可以保证安全（无符号）</strong></p><p>注：size()函数无符号，要避免和int类型混用带来的问题</p><h3 id="int类型和unsigned-int类型混用问题"><a href="#int类型和unsigned-int类型混用问题" class="headerlink" title="int类型和unsigned int类型混用问题"></a>int类型和unsigned int类型混用问题</h3><p>int和unsigned int类型进行混合算数运算时，运算结果为<strong>非负数时，结果不会出现异常</strong>，当运算结果为<strong>负数时就会出现异常结果，往往异常结果值会很大</strong></p><h3 id="字面值与string对象"><a href="#字面值与string对象" class="headerlink" title="字面值与string对象"></a>字面值与string对象</h3><p>字符串字面值和string是不同的类型<br>        string s1 &#x3D; “hello”;<br>        string s2 &#x3D; s1 + “test”;  &#x2F;&#x2F; 正确，会转化为string类型<br>        string “hello” + “test”;  &#x2F;&#x2F; 错误，两个都不是string类型</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;静态类型&quot;&gt;&lt;a href=&quot;#静态类型&quot; class=&quot;headerlink&quot; title=&quot;静态类型&quot;&gt;&lt;/a&gt;静态类型&lt;/h3&gt;&lt;p&gt;c++ 静态类型语言，在编译阶段检查类型&lt;/p&gt;
-&lt;h3 id=&quot;赋值和指针&quot;&gt;&lt;a href=&quot;#赋值和指针&quot; class</summary>
-      
-    
-    
-    
-    
-    <category term="c++" scheme="http://coder_tinghao.github.io/tags/c/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>c++学习笔记——9.15</title>
-    <link href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/"/>
-    <id>http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/</id>
-    <published>2023-09-15T06:44:37.000Z</published>
-    <updated>2023-09-17T06:20:04.751Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="缓冲区（buffer）"><a href="#缓冲区（buffer）" class="headerlink" title="缓冲区（buffer）"></a>缓冲区（buffer）</h3><p>一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区</p><h3 id="iostream对象"><a href="#iostream对象" class="headerlink" title="iostream对象"></a>iostream对象</h3><p><strong>cerr</strong>  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容</p><p><strong>clog</strong> ostream对象，标准错误流，有缓冲，用于报告程序执行信息</p><h3 id="endl与’-n’区别"><a href="#endl与’-n’区别" class="headerlink" title="endl与’\n’区别"></a>endl与’\n’区别</h3><p>endl相当于 ‘\n’+flush()</p><h3 id="类型选择"><a href="#类型选择" class="headerlink" title="类型选择"></a>类型选择</h3><p>1 明确数值不可能为负时，选无符号<br>2 选int做整数运算，超过int用long long<br>3 选double做浮点数运算</p><h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象是具有某种数据类型的内存空间</p><h3 id="分离式编译"><a href="#分离式编译" class="headerlink" title="分离式编译"></a>分离式编译</h3><ol><li>每个源文件（.cpp .cc等）都是一个<strong>独立的编译单元</strong>，都会被编译一遍，并生成中间文件。在 main.cpp 里，include用来【编译】时找函数声明，中间文件用来【链接】时找函数原型。</li><li>include简单的说就是复制粘贴而已，每个正常的头文件都会预防重复包含，如使用 #pramga once，#ifndef 等。</li></ol><p><strong>声明与定义</strong><br>c++将声明和定义区分开</p><p>声明 (declaration)使得名字为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明</p><p>定义(definition)负责<strong>创建</strong>与名字关联的实体</p><p>如果想声明一个变量而非定义它，就在变量名前添加关键字 extern，而且不要显式地初始化变量</p><pre><code>extern int i  //声明i，非定义iint j  // 声明并定义j</code></pre><p>另外，任何包含了显式初始化的声明即成为定义，如下：<br>    extern double pi &#x3D; 3.1416  &#x2F;&#x2F; 定义</p><h3 id="初始化建议"><a href="#初始化建议" class="headerlink" title="初始化建议"></a>初始化建议</h3><p>初始化每一个内置类型的变量</p><h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;缓冲区（buffer）&quot;&gt;&lt;a href=&quot;#缓冲区（buffer）&quot; class=&quot;headerlink&quot; title=&quot;缓冲区（buffer）&quot;&gt;&lt;/a&gt;缓冲区（buffer）&lt;/h3&gt;&lt;p&gt;一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲</summary>
       
     
     

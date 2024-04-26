@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,333 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/11/24/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/24/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-24/" class="post-title-link" itemprop="url">java学习笔记——11.24</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-24 10:39:52" itemprop="dateCreated datePublished" datetime="2023-11-24T10:39:52+08:00">2023-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-27 13:15:19" itemprop="dateModified" datetime="2023-11-27T13:15:19+08:00">2023-11-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>保证一个类只能有一个实例，并提供一个全局访问点</p>
+<p>单例类的构造函数必须是私有的，这样才能将类的创建权控制在类的内部，从而使得类的外部不能创建类的实例；单例类通过一个私有的静态变量来存储其唯一实例；单例类通过提供一个公开的静态方法，使得外部使用者可以访问类的唯一实例</p>
+<p>1.饿汉式</p>
+<pre><code>public class Singleton &#123; 
+    private static final Singleton instance = new Singleton();
+    
+    private Singleton () &#123;&#125;
+    
+    public static Singleton getInstance() &#123;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<p>优点：线程安全，获取单例对象不需加锁<br>缺点：不是延时加载</p>
+<p>2.懒汉式</p>
+<p>懒汉式为了支持延时加载，将对象的创建延迟到了获取对象的时候，但为了线程安全，不得不为获取对象的操作加锁；并且这把锁只有在第一次创建对象时有用，而之后每次获取对象，这把锁都是一个累赘</p>
+<pre><code>public class Singleton &#123; 
+    private static final Singleton instance;
+    
+    private Singleton () &#123;&#125;
+    
+    public static synchronized Singleton getInstance() &#123;    
+        if (instance == null) &#123;      
+        instance = new Singleton();    
+        &#125;    
+
+        return instance;  
+    &#125;
+&#125;
+</code></pre>
+<p>3.双重检测，懒汉式plus<br>    public class Singleton {<br>        private static Singleton instance;</p>
+<pre><code>    private Singleton () &#123;&#125;
+    
+    public static Singleton getInstance() &#123;
+        if (instance == null) &#123;
+        synchronized(Singleton.class) &#123; // 注意这里是类级别的锁
+            if (instance == null) &#123;       // 这里的检测避免多线程并发时多次创建对象
+            instance = new Singleton();
+            &#125;
+        &#125;
+        &#125;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<p>将锁方法变成锁代码块</p>
+<p>第二次校验是关键，这里防止了多线程创建多个实例（一般为两个），这里的特殊情况是这样的：在未创建实例的情况下，A线程和B线程都通过了第一次校验（singletonDoubleCheck为空）,<strong>这时如果通过竞争B线程拿到了锁就会执行一次new操作，生成一个实例，然后B执行完了A就会拿到资源的锁，如果没有第二次判断的话，这时A线程也会执行一次new操作，这里就出现了第二个类实例，违背了单例原则</strong>。所以说两次校验都是必不可少的。</p>
+<p>作者：chenq877<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7049327348784562213">https://juejin.cn/post/7049327348784562213</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>参考链接<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/codeshell/p/14177102.html">https://www.cnblogs.com/codeshell/p/14177102.html</a></p>
+<h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p>工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>工厂模式提供了一种将对象的实例化过程封装在工厂类中的方式。通过使用工厂模式，可以将对象的创建与使用代码分离，提供一种统一的接口来创建不同类型的对象。</p>
+<h3 id="Java-GC机制"><a href="#Java-GC机制" class="headerlink" title="Java GC机制"></a>Java GC机制</h3><h4 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h4><p>对象中引用计数器，为0时回收</p>
+<p>问题：当有对象相互引用时，无法回收</p>
+<h4 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h4><p>GC Root Set<br>通过一系列称为<strong>GC Roots</strong>的根对象作为起始节点集，搜索引用链</p>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p><strong>强引用</strong> 赋值引用</p>
+<p><strong>软引用</strong> 有用，非必须，OOM前会回收</p>
+<p><strong>弱引用</strong> 有用，非必须。下一次垃圾收集前回收</p>
+<p><strong>虚引用</strong> 即将被回收，通知系统回收</p>
+<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="分代收集理论"><a href="#分代收集理论" class="headerlink" title="分代收集理论"></a>分代收集理论</h4><p>两个分代假说：<br><strong>1.弱分代假说</strong>：绝大多数对象都是朝生夕死的</p>
+<p><strong>2.强分代假说</strong>：熬过越多次垃圾收集过程的对象越难消亡</p>
+<p><strong>3.跨代引用假说</strong>：跨代引用相对于同代引用来说，只占极少数<br>只需在新生代建立一个全局数据结构，把老年代划分为若干小块，表示哪一块存在跨代引用</p>
+<h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>1.对需要回收的对象打标记<br>2.对存活的对象打标记</p>
+<p><strong>问题：</strong><br>1.<strong>对象较多时，标记开销会很大</strong><br>2.只标记清除，不整理，会存在<strong>内存碎片化</strong>问题；内存分配可能效率低</p>
+<h4 id="标记-复制算法"><a href="#标记-复制算法" class="headerlink" title="标记-复制算法"></a>标记-复制算法</h4><p>分1：1的两个半区，当当前半区内存用完时，每次将存活的对象复制到另外的半区</p>
+<p>问题：每次有一半内存没用上，浪费了</p>
+<p>假设：新生代中98%的对象活不过第一轮收集<br><strong>优化：Eden空间 + 2个Survivor空间（Eden和Survivor空间比，8:1）</strong><br>若Survivor装不下，直接进入老年代</p>
+<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>每次让存活的对象都向内存空间另一端移动，然后直接清理边界以外的内存</p>
+<p><strong>和清除对比：移动的话，内存回收代价大；清除的话，内存分配代价大</strong><br>也可以两者结合，自然的，先清除，碎片化程度太大时进行移动即可</p>
+<h4 id="可达性分析"><a href="#可达性分析" class="headerlink" title="可达性分析"></a>可达性分析</h4><p>白色：没访问到<br>灰色：这个对象上至少还有一个引用没扫描过<br>黑色：这个对象被访问，且所有引用都已经被扫描过</p>
+<p>对象消失问题：书P89例子<br>增量更新：黑色对象插入新的指向白色的引用，记录下来，最后重新扫描<br>原始快照（SATB）：灰色对象要删除指向白色的对象引用时，记录下来，最后重新扫描</p>
+<h3 id="经典垃圾收集器"><a href="#经典垃圾收集器" class="headerlink" title="经典垃圾收集器"></a>经典垃圾收集器</h3><h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>新生代，<strong>单线程</strong>，需要暂停其他所有工作线程<br>新生代采用复制算法，老年代采用标记-整理算法</p>
+<h4 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h4><p>老年代，标记-整理算法</p>
+<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>Serial收集器的多线程版本，对于新生代的收集，采用<strong>多GC线程</strong>复制算法</p>
+<h4 id="Parallel-Scavenge收集器"><a href="#Parallel-Scavenge收集器" class="headerlink" title="Parallel Scavenge收集器"></a>Parallel Scavenge收集器</h4><p>新生代，标记-复制算法，<strong>期望达到一个可控制的吞吐量</strong></p>
+<p>参数：MaxGCPauseMills最大GC停顿时间；GCTimeRatio直接设置吞吐量大小</p>
+<h4 id="Parallel-Old收集器"><a href="#Parallel-Old收集器" class="headerlink" title="Parallel Old收集器"></a>Parallel Old收集器</h4><p>Parallel Scavenge的老年代版本，多线程收集，标记-整理算法</p>
+<h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><p>四个步骤：（标记-清除算法）</p>
+<p><strong>初始标记</strong> 标记GC Roots直接关联到的对象，需要停顿</p>
+<p><strong>并发标记</strong> 可达性分析，遍历整个对象图，但和用户进程并发进行，不需要停顿</p>
+<p><strong>重新标记</strong> 修正并发标记期间，标记产生变动的那一部分对象的标记记录，需要停顿</p>
+<p><strong>并发清除</strong> 清除标记阶段判断的已经死亡的对象，不需要停顿</p>
+<p>缺点：<br>1.无法处理浮动垃圾，我理解就是并发标记期间，得给那些新对象预留空间，避免堆满触发FullGC<br>2.因为是标记-清除算法，存在内存碎片问题</p>
+<h4 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h4><p>基于Region的堆内存布局，划分为多个相同大小的独立Region，可以扮演Eden，Suvivor，老年代空间的不同角色</p>
+<p>还有特殊的Humongous区域用来专门存储大对象（超过一个Region空间一半）</p>
+<p><strong>回收思路：</strong>跟踪各个Region中垃圾堆积的<strong>价值大小</strong>，即回收所获得的空间和回收所需时间的经验值，再维护一个<strong>优先级列表</strong></p>
+<p>四个步骤</p>
+<p>初始标记 标记GC Roots直接关联到的对象，需要停顿</p>
+<p>并发标记 可达性分析</p>
+<p>最终标记 处理遗留下来的少量SATB记录</p>
+<p>筛选回收 更新Region统计数据，根据价值和成本排序，回收</p>
+<p>缺点：内存占用和程序运行的额外执行负载更高</p>
+<h4 id="ZGC收集器"><a href="#ZGC收集器" class="headerlink" title="ZGC收集器"></a>ZGC收集器</h4><p>Region分为小型Region、中型Region、大型Region</p>
+<p>染色指针</p>
+<h3 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h3><h4 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h4><p>1.加载，通过一个类的全限定名获取二进制字节流，将字节流所代表的静态存储结构转化为方法区的运行时数据结构，生成一个java.lang.Class对象</p>
+<p>2.验证，验证这个class文件，包括文件格式校验、元数 据验证，字节码校验</p>
+<p>3.准备，对这个对象分配内存，仅类变量，且通常情况赋值0，而不是代码中的值；仅在final修饰的常量值赋值代码中的值</p>
+<p>4.解析，将符号引用转化为直接引用</p>
+<p>5.初始化，执行构造器代码</p>
+<h4 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h4><p>判断两个类是否相等：<strong>来源于同一个Class文件+同一个Java类加载器加载</strong></p>
+<p><strong>从Java虚拟机角度看</strong>，只有两种类加载器：<br>1.启动类加载器，是虚拟机自身的一部分</p>
+<p>2.其他所有类的加载器，独立于虚拟机之外，继承自java.lang.ClassLoader</p>
+<p><strong>从Java开发人员角度看</strong>，有三种类加载器：<br>1.启动类加载器，用来加载 java 核心类库，无法被 java 程序直接引用</p>
+<p>2.扩展类加载器，用来加载 Java 的扩展库。Java 虚拟机的实现会提供一个<br>扩展库目录。该类加载器在此目录里面查找并加载 Java 类</p>
+<p>3.应用程序类加载器，通过继承 java.lang.ClassLoader 类的方式实现</p>
+<h4 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h4><p>工作过程：如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达<strong>顶层的启动类加载器</strong>，如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载</p>
+<h4 id="破坏双亲委派模型"><a href="#破坏双亲委派模型" class="headerlink" title="破坏双亲委派模型"></a>破坏双亲委派模型</h4><h3 id="一致性哈希算法"><a href="#一致性哈希算法" class="headerlink" title="一致性哈希算法"></a>一致性哈希算法</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Hs411j73w/?share_source=copy_web&amp;vd_source=b9fdf8380afcac3eebf150a26e73ff50">https://www.bilibili.com/video/BV1Hs411j73w/?share_source=copy_web&amp;vd_source=b9fdf8380afcac3eebf150a26e73ff50</a></p>
+<p>普通哈希算法在服务器数量变化时的缓存失效，雪崩问题</p>
+<p>一致性哈希只影响部分资源，其余部分资源不受影响</p>
+<h4 id="缓存偏斜问题"><a href="#缓存偏斜问题" class="headerlink" title="缓存偏斜问题"></a>缓存偏斜问题</h4><p>引入虚拟节点，平衡访问</p>
+<h4 id="减少哈希冲突"><a href="#减少哈希冲突" class="headerlink" title="减少哈希冲突"></a>减少哈希冲突</h4><p>Redis——<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2313606">https://cloud.tencent.com/developer/article/2313606</a><br>rehash：Redis的rehash是指在哈希表扩容或缩小时，重新计算并重新分配所有键值对的过程。rehash的目的是为了保持哈希表的负载因子在一个合理的范围内，以提高哈希表的性能。</p>
+<p>在Redis中，rehash是一个渐进式的过程，它不会一次性地将所有键值对重新分配到新的哈希表中，而是分多次进行，每次处理一小部分键值对。这种渐进式的rehash过程可以保证在rehash期间，Redis仍然可以正常处理读取和写入操作，不会阻塞客户端请求</p>
+<h4 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h4><p>具体的rehash过程如下：</p>
+<p><strong>1.Redis会创建一个新的空哈希表，大小是当前哈希表的两倍（或更小，如果是缩小操作）。</strong><br>2.Redis会将当前哈希表的rehashidx属性设置为0，表示rehash的起始位置。<br>3.<strong>在每次执行读取或写入操作时，Redis会同时对当前哈希表和新哈希表进行操作。</strong><br><strong>4.对于读取操作，Redis首先在当前哈希表中查找键值对，如果找不到，则继续在新哈希表中查找。</strong><br><strong>5.对于写入操作，Redis会将新的键值对添加到新哈希表中，同时保留当前哈希表中的键值对。</strong><br><strong>6.在每次执行完一定数量的操作后，Redis会逐步将当前哈希表中的键值对迁移到新哈希表中，直到迁移完成。</strong></p>
+<h4 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h4><p><strong>字符串String</strong></p>
+<p><strong>列表List</strong><br><strong>压缩列表（Ziplist）和双向链表（Doubly Linked List）</strong><br>列表长度和列表元素大小超过一定阈值，改为双向链表</p>
+<p><strong>集合Set</strong><br><strong>哈希表（Hash Table）和跳跃表（Skip List）</strong></p>
+<p>哈希表适用于存储大量元素的集合，并且对于查找操作的性能要求较高</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/11/22/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/22/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%9411-22/" class="post-title-link" itemprop="url">java学习笔记——11.22</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-22 11:21:45" itemprop="dateCreated datePublished" datetime="2023-11-22T11:21:45+08:00">2023-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-24 10:39:30" itemprop="dateModified" datetime="2023-11-24T10:39:30+08:00">2023-11-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Innodb事务"><a href="#Innodb事务" class="headerlink" title="Innodb事务"></a>Innodb事务</h3><p><strong>redo log</strong><br>redo log就是保存执行的SQL语句到一个指定的Log文件，当Mysql执行recovery时重新执行redo log记录的SQL操作即可,当客户端执行每条SQL(更新语句)时，redo log会被首先写入log buffer;当客户端执行COMMIT命令时，log buffer中的内容会被视情况刷新到磁盘</p>
+<p><strong>undo log</strong><br>undo log是为回滚而用，就是copy事务前的数据库内容(行)到undo buffer，在适合的时间把undo buffer中的内容刷新到磁盘</p>
+<h3 id="Java内存泄漏"><a href="#Java内存泄漏" class="headerlink" title="Java内存泄漏"></a>Java内存泄漏</h3><p>未引用对象将会被垃圾回收器回收，而引用对象却不会。<br>未引用对象很显然是无用的对象，有一些无用对象也有可能是引用对象，<strong>这部分对象正是内存泄露的来源</strong></p>
+<p><strong>为什么会发生？</strong><br>对象A引用对象B，A的生命周期(t1- t4)比B的生命周期(t2-t3)要长，当B在程序中不再被使用的时候，A仍然引用着B。在这种情况下， 垃圾回收器是不会回收B对象的，这就可能造成了内存不足问题</p>
+<p>因为A可能不止引用着B对象，还可能 引用其它生命周期比A短的对象，这就造成了大量无用对象不能被回收，且占据了昂贵的内存资源。</p>
+<p>同样的，B对象也可能引用着一大堆对象，这些被B对象引用着的对象也不能被垃圾回收器回收，所有的 这些无用对象消耗了大量内存资源。</p>
+<p><strong>如何阻止？</strong><br>使用集合、大对象、文件等时，及时赋值为null或关闭</p>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p><strong>工作原理</strong><br>刚开始都是在创建新的线程，达到<strong>核心线程数量5个后，新的任务进来后不再创建新的线程，而是将任务加入工作队列</strong>，任务队列到达上线5个后，新的任务又会创建新的普通线程，直到达到线程池最大的线 程数量10个，后面的任务则根据配置的饱和策略来处理<br><img data-src="/image.png" alt="Alt text"><br><strong>优点</strong><br>1、线程是稀缺资源，使用线程池可以减少创建和销毁线程的次数，每个工作线程都可以重复使用</p>
+<p>2、可以根据系统的承受能力，调整线程池中工作线程的数量，防止因为消耗过多内存导致服务器崩溃</p>
+<p>降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。<br>提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行。<br>提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</p>
+<h3 id="Executor框架两级调度（Java岗面试核心MCA版-P458）"><a href="#Executor框架两级调度（Java岗面试核心MCA版-P458）" class="headerlink" title="Executor框架两级调度（Java岗面试核心MCA版 P458）"></a>Executor框架两级调度（Java岗面试核心MCA版 P458）</h3><p>在上层，JAVA程序会将应用分解为多个任务，然后使用应用级的调度器(Executor)将这些任务映射成固定数量的线程;在底层，操作系统内核将这些线程映射到硬件处理器上</p>
+<p>Runnable和Callable是工作单元(也就是俗称的任务)，执行机制由Executor来提 供。Executor是基于<strong>生产者消费者模式</strong></p>
+<h3 id="线程池与线程组"><a href="#线程池与线程组" class="headerlink" title="线程池与线程组"></a>线程池与线程组</h3><p><strong>线程组</strong>就表示一个线程的集合</p>
+<p><strong>线程池</strong>是为<strong>线程的生命周期开销问题和资源不足问题</strong>提供解决方案，主要用来管理线程；如果每当一个请求到达就创建一个新线程，开销是相当大的</p>
+<p><strong>Callable是Runnable封装的异步运算任务<br>Future用来保存Callable异步运算的结果<br>FutureTask封装Future的实体类</strong></p>
+<h3 id="Callable与Runnbale的区别"><a href="#Callable与Runnbale的区别" class="headerlink" title="Callable与Runnbale的区别"></a>Callable与Runnbale的区别</h3><p>a、Callable定义的方法是call，而Runnable定义的方法是run<br>b、call方法有返回值，而run方法是没有返回值的<br>c、call方法可以抛出异常，而run方法不能抛出异常</p>
+<pre><code>public class MyCallableTask implements Callable&lt;Integer&gt; &#123;
+@Override
+public Integer call()
+&#123;
+        System.out.println(&quot;callable do somothing&quot;);
+        Thread.sleep(5000);
+        return new Random().nextInt(100);
+    &#125;
+&#125;
+
+Callable&lt;Integer&gt; callable = new MyCallableTask();
+FutureTask&lt;Integer&gt; future = new FutureTask&lt;Integer&gt;(callable);
+Thread thread = new Thread(future);
+thread.start();
+Thread.sleep(100);
+future.cancel(true);
+</code></pre>
+<h3 id="什么是线程安全，如何实现线程安全"><a href="#什么是线程安全，如何实现线程安全" class="headerlink" title="什么是线程安全，如何实现线程安全"></a>什么是线程安全，如何实现线程安全</h3><p>线程安全：线程执行过程中不会产生共享资源的冲突<br>线程不安全：如果有多个线程同时在操作主内存中的变量</p>
+<h3 id="Java多线程安全机制"><a href="#Java多线程安全机制" class="headerlink" title="Java多线程安全机制"></a>Java多线程安全机制</h3><h4 id="互斥同步（阻塞同步，悲观）"><a href="#互斥同步（阻塞同步，悲观）" class="headerlink" title="互斥同步（阻塞同步，悲观）"></a>互斥同步（阻塞同步，悲观）</h4><p>最基本的就是<strong>synchronized关键字</strong>，执行时，会有monitorenter指令和monitorexit指令，monitorenter指令尝试获取对象的锁，或者给锁的计数器加1；monitorexit指令会给锁的计数器减1，获取失败就阻塞等待</p>
+<p>还有java.util.concurrent包中的<strong>ReentrantLock重入锁</strong>，基本用法相似，目前性能接近</p>
+<h4 id="非阻塞同步（乐观）"><a href="#非阻塞同步（乐观）" class="headerlink" title="非阻塞同步（乐观）"></a>非阻塞同步（乐观）</h4><p><strong>操作和冲突检测，具备原子性</strong><br><strong>Test-and-Set, Fetch-and-Increment, Swap, Compare-and-Swap(CAS)</strong></p>
+<h4 id="无同步方案"><a href="#无同步方案" class="headerlink" title="无同步方案"></a>无同步方案</h4><h4 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h4><h4 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h4><p>一个变量被定义为volatile后，保证此变量对<strong>所有线程可见性</strong>，普通变量做不到，因为普通变量在线程间传递需要通过主内存</p>
+<p><strong>volatile变量在使用之前需要先从主内存刷新最新的值</strong>，执行引擎看不到不一致的情况，但是Java内的运算操作符不是原子操作，所以若不满足以下两条规则，仍要通过加锁保证原子性：</p>
+<p>1.运算结果不依赖变量当前值，或只有单一线程修改变量值</p>
+<p>2.变量不需要与其他状态变量共同参与不变约束</p>
+<p>Java虚拟机书P446有例子，<strong>volatile关键字很适合控制并发（状态标志），例如：其他线程看到某一标志变量变化了，就停止线程</strong></p>
+<h4 id="禁止指令重排序优化"><a href="#禁止指令重排序优化" class="headerlink" title="禁止指令重排序优化"></a>禁止指令重排序优化</h4><p>volatile修饰的变量会建立<strong>内存屏障</strong>，指重排序不能把后面的指令重排序到内存屏障之前的位置，例如：<strong>lock</strong> addl xxxxx</p>
+<p>其中，<strong>lock前缀将本处理器的缓存写入内存，同时其他处理器缓存无效化</strong>，就建立了内存屏障</p>
+<p><strong>synchronized关键字，一个变量在同一个时刻只允许一条线程进行lock操作</strong></p>
+<h3 id="synchronized、volatile区别"><a href="#synchronized、volatile区别" class="headerlink" title="synchronized、volatile区别"></a>synchronized、volatile区别</h3><p>volatile仅能使用在<strong>变量级别</strong>，仅能实现变量的修改可见性，<strong>不能保证原子性</strong>，<strong>不会被编译器优化</strong></p>
+<p>synchronized则可以使用在<strong>变量、方法、和类级别</strong>的，可以保证变量的修改可见性和原子性，因为线程获得锁才能进入临界区，<strong>可以被编译器优化</strong></p>
+<h3 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h3><p>处理器与内存之间——高速缓存</p>
+<p>多个处理器，多个缓存，共享内存，带来的<strong>缓存一致性问题</strong></p>
+<p>通过缓存一致性协议协调</p>
+<p><strong>happens-before规则</strong></p>
+<h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p><strong>ThreadLocal是一个本地线程副本变量工具类，主要用于将私有线程和该线程存放的副本对象做一个映射，各个线程之间的变量互不干扰</strong></p>
+<p>每个Thread线程内部都有一个ThreadLocalMap。<br>Map里面存储线程本地对象ThreadLocal（key）和线程的变量副本（value）</p>
+<p>Thread内部的Map是由ThreadLocal维护，ThreadLocal负责向map获取和设置线程的变量值。<br>一个Thread可以有多个ThreadLocal</p>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>1.8的实现已经抛弃了Segment分段锁机制，利用CAS+Synchronized来保证并发更新的安全，底层采用数组+链表+红黑树的存储结构<br>利用了CAS对数组的某个位置进行并发安全的赋值</p>
+<h3 id="CAS（Compare-and-Swap）"><a href="#CAS（Compare-and-Swap）" class="headerlink" title="CAS（Compare-and-Swap）"></a>CAS（Compare-and-Swap）</h3><p>CAS指令需要三个操作数，分别是内存地址（在Java内存模型中可以简单理解为主内存中变量的内存地址）、旧值（在Java内存模型中，可以理解工作内存中缓存的主内存的变量的值）和新值。<strong>CAS操作执行时，当且仅当主内存对应的值等于旧值时，处理器用新值去更新旧值，否则它就不执行更新</strong>。但是无论是否更新了主内存中的值，都会返回旧值，上述的处理过程是一个原子操作。<br>如果线程中的值和主内存中的值不一致，根据缓存一致性原则，会重新去主内存读取a的值（11）</p>
+<p><strong>CAS 操作是抱着乐观的态度进行的(乐观锁)，它总是认为自己可以成功完成操作。当多个线程同时使用 CAS 操作一个变量时，只有一个会胜出，并成功更新，其余均会失败。</strong></p>
+<h3 id="CountDownLatch、CyclicBarrier、Semaphore的用法和区别"><a href="#CountDownLatch、CyclicBarrier、Semaphore的用法和区别" class="headerlink" title="CountDownLatch、CyclicBarrier、Semaphore的用法和区别"></a>CountDownLatch、CyclicBarrier、Semaphore的用法和区别</h3><p>CountDownLatch 类位于 java.util.concurrent 包下，利用它可以实现类似计数器的功能。比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，此时就可以利用CountDownLatch来实现这种功能了</p>
+<p>回环屏障，通过它可以实现让一组线程等待至某个状态之后再全部同时执行。叫做回环是因为当所有等待线程都被释放以后，CyclicBarrier可以被重用</p>
+<p>Semaphore翻译成字面意思为 信号量，Semaphore 可以同时让多个线程同时访问共享资源，通过 acquire() 获取一个许可，如果没有就等待，而 release() 释放一个许可</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -978,197 +1305,8 @@ sout(p.x() + p.y());
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/17/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-17/" class="post-title-link" itemprop="url">c++学习笔记——9.17</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-17 14:20:55" itemprop="dateCreated datePublished" datetime="2023-09-17T14:20:55+08:00">2023-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-19 20:25:47" itemprop="dateModified" datetime="2023-09-19T20:25:47+08:00">2023-09-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h3><p>c++ 静态类型语言，在编译阶段检查类型</p>
-<h3 id="赋值和指针"><a href="#赋值和指针" class="headerlink" title="赋值和指针"></a>赋值和指针</h3><p><strong>赋值永远改变的是等号左侧的对象</strong></p>
-<h3 id="const引用"><a href="#const引用" class="headerlink" title="const引用"></a>const引用</h3><p>引用类型必须与其所引用对象的类型一致<br>        const int ci &#x3D; 1024;<br>        const int &amp;r1 &#x3D; ci;</p>
-<p>常量引用：常量引用是对const的引用</p>
-<p>对const的引用可能引用一个非const对象：<br>常量引用，即对引用加const，只是<strong>限定了引用可参与的操作</strong>，对于引用的对象本身没有限定<br>        int i &#x3D; 42;<br>        const int &amp;r1 &#x3D; i;<br>        r1 &#x3D; 0;  &#x2F;&#x2F; <strong>非法，常量引用不能修改</strong></p>
-<h4 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h4><p>指向常量的指针和常量引用类似，<br>        const int i &#x3D; 42;<br>        const int *i &#x3D; &amp;i;<br>        *i &#x3D; 0;  &#x2F;&#x2F; <strong>非法，不能修改值</strong></p>
-<h4 id="const指针"><a href="#const指针" class="headerlink" title="const指针"></a>const指针</h4><pre><code>    const int i = 42;
-    const int *const r1 = &amp;i;
-</code></pre>
-<p>*<strong>const为const指针，不变的是指针本身的值，而指向的值</strong></p>
-<h3 id="顶层const和底层const"><a href="#顶层const和底层const" class="headerlink" title="顶层const和底层const"></a>顶层const和底层const</h3><p>顶层 const 表示指针本身是个常量；<br>底层 const 表示指针所指的对象是一个常量<br>or<br>被修饰的变量本身无法改变的 const 是顶层 const；<br>通过指针或引用等间接途径来限制目标内容不可变的 const 是底层 const</p>
-<h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3><p>常量表达式：值不会改变，编译过程就能得到计算结果的表达式</p>
-<p>C++11:constexpr，如果认定变量是常量表达式，就声明为constexpr</p>
-<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>别名声明<br>    using SI &#x3D; Sales_item;  &#x2F;&#x2F; SI是Sales_item的同义词（Sales_item是一个类型）</p>
-<h3 id="预处理器概述"><a href="#预处理器概述" class="headerlink" title="预处理器概述"></a>预处理器概述</h3><p>预处理功能 #include，当预处理器看到#include标记时就会用指定的头文件内容代替#include</p>
-<h3 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符"></a>decltype类型指示符</h3><p>选择并返回操作数的数据类型<br>使用情况：希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量</p>
-<h3 id="string-size-type类型"><a href="#string-size-type类型" class="headerlink" title="string::size_type类型"></a>string::size_type类型</h3><p>string类的配套类型，<strong>无符号类型</strong>，能足够存放下任何string对象的大小（通常等于 std::size_t）<br>访问string对象的下标也是size_type类型，<strong>使用该类型访问string中的字符可以保证安全（无符号）</strong></p>
-<p>注：size()函数无符号，要避免和int类型混用带来的问题</p>
-<h3 id="int类型和unsigned-int类型混用问题"><a href="#int类型和unsigned-int类型混用问题" class="headerlink" title="int类型和unsigned int类型混用问题"></a>int类型和unsigned int类型混用问题</h3><p>int和unsigned int类型进行混合算数运算时，运算结果为<strong>非负数时，结果不会出现异常</strong>，当运算结果为<strong>负数时就会出现异常结果，往往异常结果值会很大</strong></p>
-<h3 id="字面值与string对象"><a href="#字面值与string对象" class="headerlink" title="字面值与string对象"></a>字面值与string对象</h3><p>字符串字面值和string是不同的类型<br>        string s1 &#x3D; “hello”;<br>        string s2 &#x3D; s1 + “test”;  &#x2F;&#x2F; 正确，会转化为string类型<br>        string “hello” + “test”;  &#x2F;&#x2F; 错误，两个都不是string类型</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/15/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-15/" class="post-title-link" itemprop="url">c++学习笔记——9.15</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-15 14:44:37" itemprop="dateCreated datePublished" datetime="2023-09-15T14:44:37+08:00">2023-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-17 14:20:04" itemprop="dateModified" datetime="2023-09-17T14:20:04+08:00">2023-09-17</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="缓冲区（buffer）"><a href="#缓冲区（buffer）" class="headerlink" title="缓冲区（buffer）"></a>缓冲区（buffer）</h3><p>一个存储区域，用于保存数据，IO设施通常将输入输出数据保存在一个缓冲区中，可以显式刷新缓冲区</p>
-<h3 id="iostream对象"><a href="#iostream对象" class="headerlink" title="iostream对象"></a>iostream对象</h3><p><strong>cerr</strong>  ostream对象，标准错误流，默认不缓冲，用于输出错误信息或其他不属于程序正常逻辑的输出内容</p>
-<p><strong>clog</strong> ostream对象，标准错误流，有缓冲，用于报告程序执行信息</p>
-<h3 id="endl与’-n’区别"><a href="#endl与’-n’区别" class="headerlink" title="endl与’\n’区别"></a>endl与’\n’区别</h3><p>endl相当于 ‘\n’+flush()</p>
-<h3 id="类型选择"><a href="#类型选择" class="headerlink" title="类型选择"></a>类型选择</h3><p>1 明确数值不可能为负时，选无符号<br>2 选int做整数运算，超过int用long long<br>3 选double做浮点数运算</p>
-<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象是具有某种数据类型的内存空间</p>
-<h3 id="分离式编译"><a href="#分离式编译" class="headerlink" title="分离式编译"></a>分离式编译</h3><ol>
-<li>每个源文件（.cpp .cc等）都是一个<strong>独立的编译单元</strong>，都会被编译一遍，并生成中间文件。在 main.cpp 里，include用来【编译】时找函数声明，中间文件用来【链接】时找函数原型。</li>
-<li>include简单的说就是复制粘贴而已，每个正常的头文件都会预防重复包含，如使用 #pramga once，#ifndef 等。</li>
-</ol>
-<p><strong>声明与定义</strong><br>c++将声明和定义区分开</p>
-<p>声明 (declaration)使得名字为程序所知，一个文件如果想使用别处定义的名字则必须包含对那个名字的声明</p>
-<p>定义(definition)负责<strong>创建</strong>与名字关联的实体</p>
-<p>如果想声明一个变量而非定义它，就在变量名前添加关键字 extern，而且不要显式地初始化变量</p>
-<pre><code>extern int i  //声明i，非定义i
-int j  // 声明并定义j
-</code></pre>
-<p>另外，任何包含了显式初始化的声明即成为定义，如下：<br>    extern double pi &#x3D; 3.1416  &#x2F;&#x2F; 定义</p>
-<h3 id="初始化建议"><a href="#初始化建议" class="headerlink" title="初始化建议"></a>初始化建议</h3><p>初始化每一个内置类型的变量</p>
-<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
