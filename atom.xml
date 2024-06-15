@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-04-26T12:21:25.618Z</updated>
+  <updated>2024-06-14T07:09:12.156Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ThreadLocal原理及源码分析——6.13</title>
+    <link href="http://coder_tinghao.github.io/2024/06/13/ThreadLocal%E5%8E%9F%E7%90%86%E5%8F%8A%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E2%80%94%E2%80%946-13/"/>
+    <id>http://coder_tinghao.github.io/2024/06/13/ThreadLocal%E5%8E%9F%E7%90%86%E5%8F%8A%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E2%80%94%E2%80%946-13/</id>
+    <published>2024-06-13T06:43:39.000Z</published>
+    <updated>2024-06-14T07:09:12.156Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h3><p><a href="https://www.cnblogs.com/ysw-go/p/5944837.html">https://www.cnblogs.com/ysw-go/p/5944837.html</a></p><p><a href="https://www.bilibili.com/video/BV1SJ41157oF/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b">https://www.bilibili.com/video/BV1SJ41157oF/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b</a></p><p><a href="https://www.bilibili.com/video/BV1ZY4y1L7WJ/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b">https://www.bilibili.com/video/BV1ZY4y1L7WJ/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b</a></p><p>ThreadLocal类用来提供线程内部的局部变量。这种变量在多线程环境下访问(通过get或set方法访问)时能保证各个线程里的变量相对独立于其他线程内的变量。ThreadLocal实例通常来说都是private static类型的，用于关联线程和线程的上下文。</p><p><strong>ThreadLocal的作用是提供线程内的局部变量，这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度</strong>提供线程内部的局部变量，在本线程内随时随地可取，隔离其他线程</p><p>比如说一个网站的一个用户访问，占用了线程池中一个线程，像用户的一些信息，不需要通过参数形式传递，也不可以设置全局变量，因为全局变量不是线程隔离，提供了一种线程内部的作用域的变量</p><p>包括get方法、set方法、remove方法等等</p><h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>每个Thread维护一个ThreadLocalMap映射表，这个映射表的key是ThreadLocal实例本身，value是真正需要存储的Object</p><p>ThreadLocalMap是使用ThreadLocal的<strong>弱引用</strong>作为Key的</p><p>如上图，ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用引用他，那么系统gc的时候，这个ThreadLocal势必会被回收，这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，如果当前线程再迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链：<br>ThreadLocal Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value<br>永远无法回收，造成内存泄露</p><p>ThreadLocalMap的getEntry函数或者set函数在操作的同时会顺带检查当前entry的key是否为空，对key为空的entry做及时处理。但是显然，不能只指望调用这两个函数的时候才处理内存泄漏。很多情况下需要使用者手动调用ThreadLocal的remove函数，手动删除不再需要的ThreadLocal</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;参考博客&quot;&gt;&lt;a href=&quot;#参考博客&quot; class=&quot;headerlink&quot; title=&quot;参考博客&quot;&gt;&lt;/a&gt;参考博客&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/ysw-go/p/5944837.html&quot;&gt;https:</summary>
+      
+    
+    
+    
+    
+    <category term="多线程" scheme="http://coder_tinghao.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HttpSession学习——6.6</title>
+    <link href="http://coder_tinghao.github.io/2024/06/06/HttpSession%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%946-6/"/>
+    <id>http://coder_tinghao.github.io/2024/06/06/HttpSession%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%946-6/</id>
+    <published>2024-06-06T08:04:51.000Z</published>
+    <updated>2024-06-06T08:08:23.807Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="HttpSession原理"><a href="#HttpSession原理" class="headerlink" title="HttpSession原理"></a>HttpSession原理</h2><p>原理讲解<br><a href="https://www.cnblogs.com/myseries/p/11588267.html">https://www.cnblogs.com/myseries/p/11588267.html</a></p><p>实现讲解<br><a href="https://www.liaoxuefeng.com/wiki/1545956031987744/1545956933763105">https://www.liaoxuefeng.com/wiki/1545956031987744/1545956933763105</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;HttpSession原理&quot;&gt;&lt;a href=&quot;#HttpSession原理&quot; class=&quot;headerlink&quot; title=&quot;HttpSession原理&quot;&gt;&lt;/a&gt;HttpSession原理&lt;/h2&gt;&lt;p&gt;原理讲解&lt;br&gt;&lt;a href=&quot;https://w</summary>
+      
+    
+    
+    
+    
+    <category term="日常学习" scheme="http://coder_tinghao.github.io/tags/%E6%97%A5%E5%B8%B8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>淘天阿里妈妈一面——4.26</title>
@@ -432,51 +476,6 @@ assert condition: expression;
     
     
     <category term="java" scheme="http://coder_tinghao.github.io/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>c++学习笔记——9.21</title>
-    <link href="http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/"/>
-    <id>http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/</id>
-    <published>2023-09-21T00:55:01.000Z</published>
-    <updated>2023-09-21T04:42:53.932Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="标准库函数begin和end"><a href="#标准库函数begin和end" class="headerlink" title="标准库函数begin和end"></a>标准库函数begin和end</h3><pre><code>    int ia[] = &#123;0, 1, 2, 3&#125;;    int *beg = begin(ia); // 指向ia首元素的指针    int *last = end(ia); // 指向ia尾元素的下一个位置的指针</code></pre><h3 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h3><p>当一个对象被用作右值，用的是对象的<strong>值（内容）</strong><br>当一个对象被用作左值，用的是对象的<strong>身份（在内存中的位置）</strong></p><h3 id="自增-自减运算符"><a href="#自增-自减运算符" class="headerlink" title="自增 自减运算符"></a>自增 自减运算符</h3><p><strong>除非必须，否则不用自增自减运算符的后置版本（i++）</strong><br>原因：后置版本会先将原始值存储下来，不必要</p><h3 id="const形参和实参"><a href="#const形参和实参" class="headerlink" title="const形参和实参"></a>const形参和实参</h3><p>函数中不会改变的形参定义为<strong>常量引用</strong></p><h3 id="含有可变形参的函数"><a href="#含有可变形参的函数" class="headerlink" title="含有可变形参的函数"></a>含有可变形参的函数</h3><p>1 如果所有实参类型相同，可用initialzer_list（标准库类型），initialzer_list是一个模版类型<br>        void error_msg(initialzer_list<string> i) {<br>            …<br>        }</p><p>2 如果实参类型不同，</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;标准库函数begin和end&quot;&gt;&lt;a href=&quot;#标准库函数begin和end&quot; class=&quot;headerlink&quot; title=&quot;标准库函数begin和end&quot;&gt;&lt;/a&gt;标准库函数begin和end&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;    int ia[] =</summary>
-      
-    
-    
-    
-    
-    <category term="c++" scheme="http://coder_tinghao.github.io/tags/c/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>c++学习笔记——9.20</title>
-    <link href="http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/"/>
-    <id>http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/</id>
-    <published>2023-09-20T02:27:06.000Z</published>
-    <updated>2023-09-20T04:03:56.277Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>对于c++的迭代器，<strong>只有!&#x3D;</strong> 没有&lt;</p><p>迭代器分为两种：<br>        vector<int>::iterator it1;  &#x2F;&#x2F; 能读写<br>        vector<int>::const_iterator it2;  &#x2F;&#x2F; 只读，不能写<br>若想得到const_iterator，有<strong>cbegin(),cend();</strong></p><p><strong>但凡使用迭代器的循环体，都不要向容器添加元素</strong></p><p><strong>std::difference_type</strong> 是C++标准库中的一种类型，通常与容器迭代器相关。它是一个有符号整数类型，用于表示两个迭代器之间的距离（差异）</p><p>与size_type()函数类似 <strong>目的是确保在不同平台和编译器中，容器迭代器的距离计算都能正确工作，因为不同的平台和编译器可能会有不同的整数大小，保证可移植性</strong></p><h3 id="size-t和size-type的区别（来自chatgpt，未完全理解）"><a href="#size-t和size-type的区别（来自chatgpt，未完全理解）" class="headerlink" title="size_t和size_type的区别（来自chatgpt，未完全理解）"></a>size_t和size_type的区别（来自chatgpt，未完全理解）</h3><p><strong>size_t：</strong> size_t是C和C++<strong>标准库</strong>中定义的一种无符号整数类型，通常用于表示对象的大小、元素数量或者数组的索引，它不是一个特定容器或类型的成员</p><p><strong>size_type：</strong> size_type是一些<strong>标准库容器类</strong>的成员类型，例如 std::vector、std::string、std::deque等，是<strong>容器类特定</strong>的无符号整数类型，用于表示容器的大小、元素数量或者迭代器之间的距离。</p><p>在使用容器的成员函数时，应该使用容器的 size_type 类型，以确保代码在容器的上下文中正常工作。例如，在使用 std::vector 时，应该使用 std::vector::size_type 来表示容器的大小。</p><h3 id="箭头运算符-gt"><a href="#箭头运算符-gt" class="headerlink" title="箭头运算符 -&gt;"></a>箭头运算符 -&gt;</h3><p>箭头运算符 &#x3D; 解引用 + 成员访问<br>        it-&gt;mem<br>        (*it).mem<br>上面两句意思相同</p><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>编译时维度已知，所以维度必须是一个<strong>常量表达式</strong></p><p><strong>字符数组：用字符串字面值初始化字符数组时，字符串字面值的结尾有一个空字符</strong><br>        char a[] &#x3D; “Daniel”； &#x2F;&#x2F; 自动添加表示空字符串结束的空字符，所以维度为7</p><p><strong>使用数组下标时，通常定义为size_t类型</strong>，是一种机器相关的<strong>无符号类型</strong><br>size_t 的大小在不同的编译器和平台上可能会有所不同，但它的目的是确保能够安全地表示当前系统上的最大对象大小<br>通常被用于与内存分配和数据结构相关的操作，以确保代码的可移植性</p><h3 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h3><p>从内向外看<br>int *ptr[10]; &#x2F;&#x2F; ptr是含有10个整型指针的数组<br>int (*ptr)[10] &#x3D; &amp;arr; &#x2F;&#x2F; ptr指向一个含有10个整数的数组</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;迭代器&quot;&gt;&lt;a href=&quot;#迭代器&quot; class=&quot;headerlink&quot; title=&quot;迭代器&quot;&gt;&lt;/a&gt;迭代器&lt;/h3&gt;&lt;p&gt;对于c++的迭代器，&lt;strong&gt;只有!&amp;#x3D;&lt;/strong&gt; 没有&amp;lt;&lt;/p&gt;
-&lt;p&gt;迭代器分为两种：&lt;br&gt;   </summary>
-      
-    
-    
-    
-    
-    <category term="c++" scheme="http://coder_tinghao.github.io/tags/c/"/>
     
   </entry>
   

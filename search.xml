@@ -1378,4 +1378,33 @@ future.cancel(true);
         <tag>面经</tag>
       </tags>
   </entry>
+  <entry>
+    <title>HttpSession学习——6.6</title>
+    <url>/2024/06/06/HttpSession%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%946-6/</url>
+    <content><![CDATA[<h2 id="HttpSession原理"><a href="#HttpSession原理" class="headerlink" title="HttpSession原理"></a>HttpSession原理</h2><p>原理讲解<br><a href="https://www.cnblogs.com/myseries/p/11588267.html">https://www.cnblogs.com/myseries/p/11588267.html</a></p>
+<p>实现讲解<br><a href="https://www.liaoxuefeng.com/wiki/1545956031987744/1545956933763105">https://www.liaoxuefeng.com/wiki/1545956031987744/1545956933763105</a></p>
+]]></content>
+      <tags>
+        <tag>日常学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ThreadLocal原理及源码分析——6.13</title>
+    <url>/2024/06/13/ThreadLocal%E5%8E%9F%E7%90%86%E5%8F%8A%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E2%80%94%E2%80%946-13/</url>
+    <content><![CDATA[<h3 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h3><p><a href="https://www.cnblogs.com/ysw-go/p/5944837.html">https://www.cnblogs.com/ysw-go/p/5944837.html</a></p>
+<p><a href="https://www.bilibili.com/video/BV1SJ41157oF/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b">https://www.bilibili.com/video/BV1SJ41157oF/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b</a></p>
+<p><a href="https://www.bilibili.com/video/BV1ZY4y1L7WJ/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b">https://www.bilibili.com/video/BV1ZY4y1L7WJ/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b</a></p>
+<p>ThreadLocal类用来提供线程内部的局部变量。这种变量在多线程环境下访问(通过get或set方法访问)时能保证各个线程里的变量相对独立于其他线程内的变量。ThreadLocal实例通常来说都是private static类型的，用于关联线程和线程的上下文。</p>
+<p><strong>ThreadLocal的作用是提供线程内的局部变量，这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度</strong>提供线程内部的局部变量，在本线程内随时随地可取，隔离其他线程</p>
+<p>比如说一个网站的一个用户访问，占用了线程池中一个线程，像用户的一些信息，不需要通过参数形式传递，也不可以设置全局变量，因为全局变量不是线程隔离，提供了一种线程内部的作用域的变量</p>
+<p>包括get方法、set方法、remove方法等等</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>每个Thread维护一个ThreadLocalMap映射表，这个映射表的key是ThreadLocal实例本身，value是真正需要存储的Object</p>
+<p>ThreadLocalMap是使用ThreadLocal的<strong>弱引用</strong>作为Key的</p>
+<p>如上图，ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用引用他，那么系统gc的时候，这个ThreadLocal势必会被回收，这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，如果当前线程再迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链：<br>ThreadLocal Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value<br>永远无法回收，造成内存泄露</p>
+<p>ThreadLocalMap的getEntry函数或者set函数在操作的同时会顺带检查当前entry的key是否为空，对key为空的entry做及时处理。但是显然，不能只指望调用这两个函数的时候才处理内存泄漏。很多情况下需要使用者手动调用ThreadLocal的remove函数，手动删除不再需要的ThreadLocal</p>
+]]></content>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
 </search>

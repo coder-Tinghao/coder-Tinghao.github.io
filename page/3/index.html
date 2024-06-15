@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">44</span></a></li>
   </ul>
 </nav>
 
@@ -124,13 +124,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -155,6 +155,166 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/21/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-21/" class="post-title-link" itemprop="url">c++学习笔记——9.21</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-21 08:55:01 / 修改时间：12:42:53" itemprop="dateCreated datePublished" datetime="2023-09-21T08:55:01+08:00">2023-09-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="标准库函数begin和end"><a href="#标准库函数begin和end" class="headerlink" title="标准库函数begin和end"></a>标准库函数begin和end</h3><pre><code>    int ia[] = &#123;0, 1, 2, 3&#125;;
+    int *beg = begin(ia); // 指向ia首元素的指针
+    int *last = end(ia); // 指向ia尾元素的下一个位置的指针
+</code></pre>
+<h3 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h3><p>当一个对象被用作右值，用的是对象的<strong>值（内容）</strong><br>当一个对象被用作左值，用的是对象的<strong>身份（在内存中的位置）</strong></p>
+<h3 id="自增-自减运算符"><a href="#自增-自减运算符" class="headerlink" title="自增 自减运算符"></a>自增 自减运算符</h3><p><strong>除非必须，否则不用自增自减运算符的后置版本（i++）</strong><br>原因：后置版本会先将原始值存储下来，不必要</p>
+<h3 id="const形参和实参"><a href="#const形参和实参" class="headerlink" title="const形参和实参"></a>const形参和实参</h3><p>函数中不会改变的形参定义为<strong>常量引用</strong></p>
+<h3 id="含有可变形参的函数"><a href="#含有可变形参的函数" class="headerlink" title="含有可变形参的函数"></a>含有可变形参的函数</h3><p>1 如果所有实参类型相同，可用initialzer_list（标准库类型），initialzer_list是一个模版类型<br>        void error_msg(initialzer_list<string> i) {<br>            …<br>        }</p>
+<p>2 如果实参类型不同，</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/20/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-20/" class="post-title-link" itemprop="url">c++学习笔记——9.20</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-20 10:27:06 / 修改时间：12:03:56" itemprop="dateCreated datePublished" datetime="2023-09-20T10:27:06+08:00">2023-09-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>对于c++的迭代器，<strong>只有!&#x3D;</strong> 没有&lt;</p>
+<p>迭代器分为两种：<br>        vector<int>::iterator it1;  &#x2F;&#x2F; 能读写<br>        vector<int>::const_iterator it2;  &#x2F;&#x2F; 只读，不能写<br>若想得到const_iterator，有<strong>cbegin(),cend();</strong></p>
+<p><strong>但凡使用迭代器的循环体，都不要向容器添加元素</strong></p>
+<p><strong>std::difference_type</strong> 是C++标准库中的一种类型，通常与容器迭代器相关。它是一个有符号整数类型，用于表示两个迭代器之间的距离（差异）</p>
+<p>与size_type()函数类似 <strong>目的是确保在不同平台和编译器中，容器迭代器的距离计算都能正确工作，因为不同的平台和编译器可能会有不同的整数大小，保证可移植性</strong></p>
+<h3 id="size-t和size-type的区别（来自chatgpt，未完全理解）"><a href="#size-t和size-type的区别（来自chatgpt，未完全理解）" class="headerlink" title="size_t和size_type的区别（来自chatgpt，未完全理解）"></a>size_t和size_type的区别（来自chatgpt，未完全理解）</h3><p><strong>size_t：</strong> size_t是C和C++<strong>标准库</strong>中定义的一种无符号整数类型，通常用于表示对象的大小、元素数量或者数组的索引，它不是一个特定容器或类型的成员</p>
+<p><strong>size_type：</strong> size_type是一些<strong>标准库容器类</strong>的成员类型，例如 std::vector、std::string、std::deque等，是<strong>容器类特定</strong>的无符号整数类型，用于表示容器的大小、元素数量或者迭代器之间的距离。</p>
+<p>在使用容器的成员函数时，应该使用容器的 size_type 类型，以确保代码在容器的上下文中正常工作。例如，在使用 std::vector 时，应该使用 std::vector::size_type 来表示容器的大小。</p>
+<h3 id="箭头运算符-gt"><a href="#箭头运算符-gt" class="headerlink" title="箭头运算符 -&gt;"></a>箭头运算符 -&gt;</h3><p>箭头运算符 &#x3D; 解引用 + 成员访问<br>        it-&gt;mem<br>        (*it).mem<br>上面两句意思相同</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>编译时维度已知，所以维度必须是一个<strong>常量表达式</strong></p>
+<p><strong>字符数组：用字符串字面值初始化字符数组时，字符串字面值的结尾有一个空字符</strong><br>        char a[] &#x3D; “Daniel”； &#x2F;&#x2F; 自动添加表示空字符串结束的空字符，所以维度为7</p>
+<p><strong>使用数组下标时，通常定义为size_t类型</strong>，是一种机器相关的<strong>无符号类型</strong><br>size_t 的大小在不同的编译器和平台上可能会有所不同，但它的目的是确保能够安全地表示当前系统上的最大对象大小<br>通常被用于与内存分配和数据结构相关的操作，以确保代码的可移植性</p>
+<h3 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h3><p>从内向外看<br>int *ptr[10]; &#x2F;&#x2F; ptr是含有10个整型指针的数组<br>int (*ptr)[10] &#x3D; &amp;arr; &#x2F;&#x2F; ptr指向一个含有10个整数的数组</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -856,195 +1016,6 @@ for (nsec = 1; nsec &lt; MAXSLEEP; nsec &lt;&lt;=1) &#123;
 <p>其中包括三个投票的约束，通过反证法可以证明得到一致性结论，比较重要的是MaxVote的定义</p>
 <p>问题：为什么需要多轮投票？</p>
 <h2 id="Multi-Paxos算法"><a href="#Multi-Paxos算法" class="headerlink" title="Multi-Paxos算法"></a>Multi-Paxos算法</h2><p>暂时没看懂</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/19/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81Message-Authentication-Code-MAC/" class="post-title-link" itemprop="url">消息认证码Message Authentication Code(MAC)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-03-19 15:44:26" itemprop="dateCreated datePublished" datetime="2023-03-19T15:44:26+08:00">2023-03-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-20 13:56:57" itemprop="dateModified" datetime="2023-03-20T13:56:57+08:00">2023-03-20</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>消息认证码（Message Authentication Code）是一种确认完整性并进行认证的技术</p>
-<p>消息认证码的输入为任意长度的<strong>消息</strong>和一个发送者与接收者之间<strong>共享的密钥</strong>，它可以输出固定长度的数据，这个数据称为 MAC 值</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/message_authentication_code.png?raw=true" alt="消息认证码"></p>
-<p>个人理解，消息认证码就是：传递一条消息，为了保证这个消息是你本人发的，把这个消息和共享密钥结合得到一个MAC值，同时传递过去，接收方通过接收消息，计算MAC值再与发送<br>方发来的MAC值对比即可验证。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/message_authentication_code_example.png?raw=true" alt="例子"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/02/27/vm-ft%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/27/vm-ft%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">vm-ft论文总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-02-27 16:36:08" itemprop="dateCreated datePublished" datetime="2023-02-27T16:36:08+08:00">2023-02-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-02 20:27:56" itemprop="dateModified" datetime="2023-03-02T20:27:56+08:00">2023-03-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="容错与复制"><a href="#容错与复制" class="headerlink" title="容错与复制"></a>容错与复制</h1><p>这节课首先谈论了容错（Fault-Tolerance）技术中的<strong>复制（Replication）技术</strong></p>
-<p>目前我知道的分布式存储手段有<strong>复制（Replication）</strong>和<strong>分片（Sharding）</strong>，复制技术主要用于解决<strong>fail-stop故障</strong>，比如 CPU 过热而关闭、主机或者网络断电、硬盘空间耗尽等问题。但是复制不能处理一些<strong>相关联（correlated，主副本机器会同时存在）的问题和软件中的bug和硬件设计中的缺陷</strong>。</p>
-<p>至于是否值得使用复制技术，需要对业务场景和所需费用考量，是否真的需要进行 Replica。比如银行数据就需要多备份，而课程网站可能并不需要。</p>
-<h1 id="VM-FT论文总结"><a href="#VM-FT论文总结" class="headerlink" title="VM-FT论文总结"></a>VM-FT论文总结</h1><h2 id="状态转移和复制状态机"><a href="#状态转移和复制状态机" class="headerlink" title="状态转移和复制状态机"></a>状态转移和复制状态机</h2><p>论文首先介绍了两种进行状态备份的方式：</p>
-<p><strong>状态转移（State transfer）</strong></p>
-<p>Primary和Backup互为副本，Primary将自己完整状态，比如说内存中的内容，拷贝并发送给Backup。Backup会保存收到的<strong>最近一次状态</strong>。每过一会，Primary就会对自身的内存做一大份拷贝，并通过网络将其发送到Backup。为了提升效率，你可以想到每次同步只发送上次同步之后变更了的内存。</p>
-<p><strong>复制状态机（Replicated State Machine）</strong></p>
-<p>将服务器看作是一个具有确定性状态的状态机，只要给定相同初始状态和同样顺序的确定输入，就能保持同样的状态。同步的是<strong>外部的事件 &#x2F; 操作 &#x2F; 输入</strong>；同步的内容通常较小，但是依赖主机的一些特性：比如指令执行的确定性（deterministic）。而在物理机上保证确定性很难，但是在 VM 上就简单的多，由于 hypervisor 有对 VM 有完全的控制权，因此可以通过某些手段来额外同步某些不确定性输入（比如类似随机数、系统时钟等）。</p>
-<p>Replicated State Machine 需要机器为<strong>单核</strong>，因为在多核机器上，指令的执行顺序本身是不确定的。那对于多核机器如何做同步？State Transfer </p>
-<h2 id="同步状态的层级"><a href="#同步状态的层级" class="headerlink" title="同步状态的层级"></a>同步状态的层级</h2><p>应用层（Application state）。如 GFS，更为高效，只需要发送高维操作即可，缺点是需要在应用层进行容错。<br>机器层（Machine level）。可以让运行在服务器上的应用无需改动而获取容错能力。但需要细粒度的同步机器事件（中断、DMA）；并且需要修改机器底层实现以发送这些事件。<br>而 VM-FT 选择了后者，能力更强大，但也做出了更多牺牲。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/vm-ft_configuration.png?raw=true" alt="vm-ft配置"></p>
-<p>VM-FT 系统使用一个额外的虚拟层 <strong>VMMonitor</strong>（ hypervisor &#x2F; (VMM)Virtual Machine Monitor），当 client 请求到达 Primary 时，VMMonitor 一方面向本机转发请求、一方面向 Backup 的 VMMonitor 同步请求。处理完请求得到结果时，Primary 的 VMMonitor 会回复 Client，而 Backup 的 VMMonitor 会丢弃 Backup 产生的回复。</p>
-<p>使用两种方法来检测 Primary 和 Backup 的健康状况：</p>
-<p>· 和 Primary&#x2F;Backup 进行心跳<br>· 监控<strong>logging channel</strong></p>
-<p>VMware FT论文中将<strong>Primary到Backup之间同步的数据流的通道称之为Log Channel</strong></p>
-<h2 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h2><p>当Primary宕机时，Backup虚机会上线（Go Alive），Backup的VMM会让Backup自由执行，而不是受来自于Primary的事件驱动。Backup的VMM会在网络中做一些处理（猜测是发GARP），让后续的客户端请求发往Backup，而不是Primary。同时，Backup的VMM不再会丢弃Backup的输出。然后利用 VMotion 的技术在和新 Primary 共享外存的地方启动一个副本，并且建立日志通道。</p>
-<p>一种可能是，Backup 声称具有 Primary 的 MAC 地址，然后让 ARP 缓存表过期，就将打向某个 IP 的流量从 Primary 切换到了 Backup。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/wm-ft_workflow%20.png?raw=true" alt="vm-ft工作原理"></p>
-<h2 id="非确定性事件"><a href="#非确定性事件" class="headerlink" title="非确定性事件"></a>非确定性事件</h2><p>所谓非确定性事件就是不由当前内存直接决定的指令。如果不够小心，这些指令在Primary和Backup的运行结果可能会不一样。</p>
-<p>非确定性事件主要包括以下三种：</p>
-<p>·<strong>客户端输入</strong></p>
-<p>输入实际上是指接收到了一个<strong>网络数据包</strong>，网络数据包有两部分，一个是数据包中的数据，另一个是提示<strong>数据包送达的中断</strong>。当网络数据包送达时，通常网卡的DMA（Direct Memory Access）会将网络数据包的内容拷贝到内存，之后触发一个中断。</p>
-<p><strong>·怪异指令</strong></p>
-<p>随机数生成器，获取当前时间的指令，获取计算机的唯一ID</p>
-<p><strong>·多CPU并发</strong></p>
-<p>当服务运行在多CPU上时，指令在不同的CPU上会交织在一起运行，进而产生的指令顺序是不可预期的</p>
-<p>所有的事件都需要通过<strong>Log Channel</strong>，从Primary同步到Backup，对于不确定性操作，需要保留充足的信息到日志通道中，以使 Backup 可以进行同样的状态改变，并且产生同样输出。发送到日志通道的事件信息包括：<strong>事件发生时的指令序号、日志条目的类型、数据</strong></p>
-<p><strong>如何防止backup执行快于primary？</strong><br>VMware FT会维护一个来自于Primary的<strong>Log条目的等待缓冲区</strong>，如果缓冲区为空，Backup是不允许执行指令的。如果缓冲区不为空，那么它可以根据Log的信息知道Primary对应的指令序号，并且会强制Backup虚机最多执行指令到这个位置。</p>
-<h2 id="输出控制（OutPut-rule）"><a href="#输出控制（OutPut-rule）" class="headerlink" title="输出控制（OutPut rule）"></a>输出控制（OutPut rule）</h2><p>在Primary收到客户端请求并生成数据后，VMM不会无条件转发这个输出给客户端。</p>
-<p><img data-src="https://github.com/coder-Tinghao/coder-Tinghao.github.io/blob/main/images/FT_protocol.png?raw=true" alt="FT_protocol"></p>
-<p><strong>Primary的VMM会等到之前的Log条目都被Backup虚机确认收到了才将输出转发给客户端</strong>。所以，包含了客户端输入的Log条目，会从Primary的VMM送到Backup的VMM，Backup的VMM不用等到Backup虚机实际执行这个输入，就会发送一个表明收到了这条Log的ACK报文给Primary的VMM。当Primary的VMM收到了这个ACK，才会将Primary虚机生成的输出转发到网络中。</p>
-<p><strong>核心：确保在客户端看到对于请求的响应时，Backup虚机一定也看到了对应的请求</strong></p>
-<h2 id="Test-and-Set服务"><a href="#Test-and-Set服务" class="headerlink" title="Test-and-Set服务"></a>Test-and-Set服务</h2><p>当Primary和Backup都在运行，但是它们之间的网络出现了问题，同时它们各自又能够与一些客户端通信。<strong>产生Split Brain现象</strong>，这篇论文的办法是：向一个<strong>外部的第三方权威机构求证，来决定Primary还是Backup允许上线</strong>。</p>
-<p>Test-and-Set服务不运行在Primary和Backup的物理服务器上，VMware FT需要通过网络支持Test-and-Set服务。Test-and-Set请求会设置<strong>标志位</strong>，并且返回旧的值。Primary和Backup都需要获取Test-and-Set标志位，当第一个请求送达时，Test-and-Set服务会说，这个标志位之前是0，现在是1。第二个请求送达时，Test-and-Set服务会说，标志位已经是1了，你不允许成为Primary。</p>
 
       
     </div>

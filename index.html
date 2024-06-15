@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">44</span></a></li>
   </ul>
 </nav>
 
@@ -124,13 +124,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -155,6 +155,163 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2024/06/13/ThreadLocal%E5%8E%9F%E7%90%86%E5%8F%8A%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E2%80%94%E2%80%946-13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/06/13/ThreadLocal%E5%8E%9F%E7%90%86%E5%8F%8A%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E2%80%94%E2%80%946-13/" class="post-title-link" itemprop="url">ThreadLocal原理及源码分析——6.13</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-06-13 14:43:39" itemprop="dateCreated datePublished" datetime="2024-06-13T14:43:39+08:00">2024-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-14 15:09:12" itemprop="dateModified" datetime="2024-06-14T15:09:12+08:00">2024-06-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ysw-go/p/5944837.html">https://www.cnblogs.com/ysw-go/p/5944837.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1SJ41157oF/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b">https://www.bilibili.com/video/BV1SJ41157oF/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ZY4y1L7WJ/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b">https://www.bilibili.com/video/BV1ZY4y1L7WJ/?spm_id_from=333.788.top_right_bar_window_default_collection.content.click&amp;vd_source=cc4910ad55a90281a3f278b41a379e5b</a></p>
+<p>ThreadLocal类用来提供线程内部的局部变量。这种变量在多线程环境下访问(通过get或set方法访问)时能保证各个线程里的变量相对独立于其他线程内的变量。ThreadLocal实例通常来说都是private static类型的，用于关联线程和线程的上下文。</p>
+<p><strong>ThreadLocal的作用是提供线程内的局部变量，这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度</strong>提供线程内部的局部变量，在本线程内随时随地可取，隔离其他线程</p>
+<p>比如说一个网站的一个用户访问，占用了线程池中一个线程，像用户的一些信息，不需要通过参数形式传递，也不可以设置全局变量，因为全局变量不是线程隔离，提供了一种线程内部的作用域的变量</p>
+<p>包括get方法、set方法、remove方法等等</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>每个Thread维护一个ThreadLocalMap映射表，这个映射表的key是ThreadLocal实例本身，value是真正需要存储的Object</p>
+<p>ThreadLocalMap是使用ThreadLocal的<strong>弱引用</strong>作为Key的</p>
+<p>如上图，ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用引用他，那么系统gc的时候，这个ThreadLocal势必会被回收，这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，如果当前线程再迟迟不结束的话，这些key为null的Entry的value就会一直存在一条强引用链：<br>ThreadLocal Ref -&gt; Thread -&gt; ThreaLocalMap -&gt; Entry -&gt; value<br>永远无法回收，造成内存泄露</p>
+<p>ThreadLocalMap的getEntry函数或者set函数在操作的同时会顺带检查当前entry的key是否为空，对key为空的entry做及时处理。但是显然，不能只指望调用这两个函数的时候才处理内存泄漏。很多情况下需要使用者手动调用ThreadLocal的remove函数，手动删除不再需要的ThreadLocal</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2024/06/06/HttpSession%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%946-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/06/06/HttpSession%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%946-6/" class="post-title-link" itemprop="url">HttpSession学习——6.6</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-06-06 16:04:51 / 修改时间：16:08:23" itemprop="dateCreated datePublished" datetime="2024-06-06T16:04:51+08:00">2024-06-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="HttpSession原理"><a href="#HttpSession原理" class="headerlink" title="HttpSession原理"></a>HttpSession原理</h2><p>原理讲解<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/myseries/p/11588267.html">https://www.cnblogs.com/myseries/p/11588267.html</a></p>
+<p>实现讲解<br><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1545956031987744/1545956933763105">https://www.liaoxuefeng.com/wiki/1545956031987744/1545956933763105</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -913,199 +1070,6 @@
 <p>覆盖率，是不是走到了</p>
 <p>Mock注解，IDEA自带覆盖率报告，断点Debug自己看</p>
 <p>—— 手撕 LC78. 子集</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/12/11/%E4%BA%AC%E4%B8%9C%E9%9B%B6%E5%94%AE%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F%E2%80%94%E2%80%9412-11/" class="post-title-link" itemprop="url">京东零售——一面面经——12.11</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-12-11 11:55:14 / 修改时间：14:37:01" itemprop="dateCreated datePublished" datetime="2023-12-11T11:55:14+08:00">2023-12-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="京东零售一面面经"><a href="#京东零售一面面经" class="headerlink" title="京东零售一面面经"></a>京东零售一面面经</h3><p>这个面试官超柔和，语速也比较慢，会给提示辅助，总体答完很舒畅，没有上次的压力和紧张感，全程几乎没八股，全是计算机基础</p>
-<p>1.区块链理解</p>
-<p>2.raft共识算法，PBFT共识算法<br>——raft算法都有哪几个角色，都是干嘛的<br>——PBFT共识算法和raft算法区别</p>
-<p>3.C++和Java区别，谈理解</p>
-<p>4.虚拟内存是什么</p>
-<p>5.计算机网络五层模型，分别都做什么的，举例子<br>——Java中有没有和计算机网络这种模型相似的地方，谈谈理解</p>
-<p>——答的：分层思想，解藕</p>
-<p>6.网络层中最短路算法都有什么，有按边找的，有按节点找的，具体讲讲<br>——讲的不是很好，不是很流畅，面试官赶时间，讲一半pass了</p>
-<p>7.C++引用和指针有什么区别<br>——没答出来，刚思考3秒钟，面试官说没事，不知道也没事什么的</p>
-<p>8.讲一下聚簇索引，是什么</p>
-<p>9.MySQL场景题，查百万级电话号码，对电话号码排序</p>
-<p>我答：基数排序思想，按位查，然后再并行查，不知道对不对。。</p>
-<p>反问：部门具体业务<br>答：数据中台，分线下和什么的忘了</p>
-<p>其他的慢慢回想再写吧。。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2023/11/28/%E5%BF%AB%E6%89%8B%E2%80%94%E2%80%94Java%E7%94%B5%E5%95%86%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E5%87%89%E7%BB%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/profile.png">
-      <meta itemprop="name" content="Fength">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Feng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/11/28/%E5%BF%AB%E6%89%8B%E2%80%94%E2%80%94Java%E7%94%B5%E5%95%86%E2%80%94%E2%80%94%E4%B8%80%E9%9D%A2%E5%87%89%E7%BB%8F/" class="post-title-link" itemprop="url">快手——Java电商——一面凉经</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-28 12:43:22" itemprop="dateCreated datePublished" datetime="2023-11-28T12:43:22+08:00">2023-11-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-29 16:55:18" itemprop="dateModified" datetime="2023-11-29T16:55:18+08:00">2023-11-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="面试过程"><a href="#面试过程" class="headerlink" title="面试过程"></a>面试过程</h4><p>10min项目+30min拷打<br>面试官还是很耐心的，很多问题我答的可以说很烂，最后还是愿意跟我聊问题，怎么提升</p>
-<h4 id="项目亮点，收获"><a href="#项目亮点，收获" class="headerlink" title="项目亮点，收获"></a>项目亮点，收获</h4><p>表述清楚，用程序员语言描述</p>
-<p><strong>不match</strong></p>
-<h4 id="SQL题，统计一个小学7～12岁的年龄分布-id-name-age"><a href="#SQL题，统计一个小学7～12岁的年龄分布-id-name-age" class="headerlink" title="SQL题，统计一个小学7～12岁的年龄分布 id name age"></a>SQL题，统计一个小学7～12岁的年龄分布 id name age</h4><p>select count(id) from xxx where 7&lt;&#x3D;age ans age&lt;&#x3D;12 order by age</p>
-<p>不要用等于号</p>
-<h4 id="分析题"><a href="#分析题" class="headerlink" title="分析题"></a>分析题</h4><p>Integer b &#x3D; null;<br>int a &#x3D; 0;<br>a &#x3D;&#x3D; b;<br>实际上会报异常，因为Integer是一个对象，对于b来说，b&#x3D;&#x3D;null还没分配内存，还没有这个对象，根本不涉及拆箱装箱</p>
-<h4 id="Object-a-x3D-new-Object-实际发生了什么"><a href="#Object-a-x3D-new-Object-实际发生了什么" class="headerlink" title="Object[] a &#x3D; new Object[]实际发生了什么"></a>Object[] a &#x3D; new Object[]实际发生了什么</h4><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7265679390242947112">https://juejin.cn/post/7265679390242947112</a></p>
-<h4 id="面向对象三大特性？封装、继承、多态"><a href="#面向对象三大特性？封装、继承、多态" class="headerlink" title="面向对象三大特性？封装、继承、多态"></a>面向对象三大特性？封装、继承、多态</h4><p>解释一下多态<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chenssy/p/3372798.html">https://www.cnblogs.com/chenssy/p/3372798.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/thinkGhoster/article/details/2307001">https://blog.csdn.net/thinkGhoster/article/details/2307001</a><br>多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法调用在编程时并不确定，而是在程序运行期间才确定，即一个引用变量倒底会指向哪个类的实例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须在由程序运行期间才能决定。因为在程序运行时才确定具体的类，这样，不用修改源程序代码，就可以让引用变量绑定到各种不同的类实现上，从而导致该引用调用的具体方法随之改变，即不修改程序代码就可以改变程序运行时所绑定的具体代码，让程序可以选择多个运行状态，这就是多态性</p>
-<p>我们只有在运行的时候才会知道引用变量所指向的具体实例对象。</p>
-<p>Wine a &#x3D; new JNC();</p>
-<p>在这里我们这样理解，这里定义了一个Wine 类型的a，它指向JNC对象实例。由于JNC是继承与Wine，所以JNC可以自动<strong>向上转型为Wine</strong>，所以a是可以指向JNC实例对象的。这样做存在一个非常大的好处，在继承中我们知道子类是父类的扩展，它可以提供比父类更加强大的功能，如果我们定义了一个指向子类的父类引用类型，那么它除了能够引用父类的共性外，还可以使用子类强大的功能。</p>
-<p>父类类型的引用可以调用父类中定义的所有属性和方法，对于只存在与子类中的方法和属性它就望尘莫及了</p>
-<p><strong>指向子类的父类引用由于向上转型了，它只能访问父类中拥有的方法和属性，而对于子类中存在而父类中不存在的方法，该引用是不能使用的，尽管是重载该方法。若子类重写了父类中的某些方法，在调用该些方法的时候，必定是使用子类中定义的这些方法（动态连接、动态调用）</strong></p>
-<h4 id="方法表角度思考多态（自）"><a href="#方法表角度思考多态（自）" class="headerlink" title="方法表角度思考多态（自）"></a>方法表角度思考多态（自）</h4><p><strong>jvm会为每一个类预先计算一个方法表，列出所有方法的签名和要调用的实际方法</strong><br>在动态方法调度中，对象可以调用子类的覆盖方法和基类的所有非覆盖方法，但是<strong>它不能调用子类中新声明的方法</strong>，我理解重载的话，和父类中的函数签名不同，也算是个新方法了，不能在动态方法中调用</p>
-<p>父类的方法表肯定就只有父类的方法，子类的方法表会有所有<strong>父类中未被覆盖的方法</strong>和<strong>子类覆盖的方法</strong>和<strong>新方法和重载的方法</strong>，</p>
-<h4 id="多态是在运行时还是在编译时，多态是如何实现的"><a href="#多态是在运行时还是在编译时，多态是如何实现的" class="headerlink" title="多态是在运行时还是在编译时，多态是如何实现的"></a>多态是在运行时还是在编译时，多态是如何实现的</h4><p><strong>多态分为编译时多态和运行时多态。其中编译时多态是静态的，主要是指方法的重载，它是根据参数列表的不同来区分不同的函数，通过编译之后会变成两个不同的函数，在运行时谈不上多态。而运行时多态是动态的，它是通过动态绑定来实现的，也就是我们所说的多态性。</strong></p>
-<p><strong>动态绑定：</strong>在<strong>运行时</strong>根据具体对象的类型进行绑定</p>
-<p><strong>静态绑定：</strong>在程序执行前方法已经被绑定  <strong>编译过程确定</strong></p>
-<h4 id="多态机制原则"><a href="#多态机制原则" class="headerlink" title="多态机制原则"></a>多态机制原则</h4><p><strong>当超类对象引用变量引用子类对象时，被引用对象的类型而不是引用变量的类型决定了调用谁的成员方法，但是这个被调用的方法必须是在超类中定义过的，也就是说被子类覆盖的方法</strong>，但是它仍然要根据继承链中方法调用的优先级来确认方法，该优先级为：this.show(O)、super.show(O)、this.show((super)O)、super.show((super)O)。</p>
-<h4 id="equals-和-x3D-x3D-区别"><a href="#equals-和-x3D-x3D-区别" class="headerlink" title="equals()和&#x3D;&#x3D;区别"></a>equals()和&#x3D;&#x3D;区别</h4><p>Person a  Person b怎么equals</p>
-<p>需要重写equals方法，一般认为各个字段相同，就是对象相同</p>
-<h4 id="wait-和sleep-区别，哪个释放CPU资源"><a href="#wait-和sleep-区别，哪个释放CPU资源" class="headerlink" title="wait()和sleep()区别，哪个释放CPU资源"></a>wait()和sleep()区别，哪个释放CPU资源</h4><p>都释放，但sleep不释放锁资源，wait释放锁资源<br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7062988072039743525">https://juejin.cn/post/7062988072039743525</a></p>
-<h4 id="异常都有什么"><a href="#异常都有什么" class="headerlink" title="异常都有什么"></a>异常都有什么</h4><p><a target="_blank" rel="noopener" href="https://pdai.tech/md/java/basic/java-basic-x-exception.html">https://pdai.tech/md/java/basic/java-basic-x-exception.html</a><br>答：IndexOutOfBoundsException 越界异常，被问了下异常全名<br>NullPointerException 空指针异常<br>OutOfMemoryException</p>
-<p><strong>运行时异常</strong><br>都是RuntimeException类及其子类异常，如NullPointerException(空指针异常)、IndexOutOfBoundsException(下标越界异常)等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生</p>
-<p><strong>非运行时异常（编译异常）</strong><br>是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常，一般情况下不自定义检查异常。</p>
-<h4 id="OutOfMemory异常——OOM"><a href="#OutOfMemory异常——OOM" class="headerlink" title="OutOfMemory异常——OOM"></a>OutOfMemory异常——OOM</h4><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_14499/7147575">https://blog.51cto.com/u_14499/7147575</a><br>1.<strong>Java堆溢出</strong>，不断的创建对象，总容量触及最大堆的容量限制；要判断是内存泄漏还是内存溢出，如果是内存泄漏，通过Dump出来的堆转储快照进行分析，找泄漏变量的引用路径和哪些GCRoots相关联；如果是内存溢出，对象都必须活着，要么调整堆参数，要么检查是否有对象生命周期过长，存储结构设计不合理等</p>
-<p>2.<strong>虚拟机栈和本地方法栈溢出</strong><br>如果线程请求的栈深度大于jvm允许的深度，StackOverflowError异常<br>如果jvm容量可以动态扩展，当扩展到无法申请到足够内存时，抛出OutOfMemoryError异常</p>
-<p>3.<strong>方法区和运行时常量池溢出</strong><br>运行时常量池包括字段引用以及常量，当常量池没有足够内存可用时<br>方法区在无法满足新内存分配需求时，会OOM</p>
-<p>4.<strong>本机直接内存溢出</strong><br>程序直接或间接的使用了直接内存</p>
-<h4 id="什么对象不会被回收"><a href="#什么对象不会被回收" class="headerlink" title="什么对象不会被回收"></a>什么对象不会被回收</h4><p>引用计数法</p>
-<p>可达性分析法</p>
-<h4 id="Java线程安全"><a href="#Java线程安全" class="headerlink" title="Java线程安全"></a>Java线程安全</h4><h4 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h4><p><a target="_blank" rel="noopener" href="https://pdai.tech/md/java/thread/java-thread-x-key-synchronized.html">https://pdai.tech/md/java/thread/java-thread-x-key-synchronized.html</a><br><strong>锁粒度问题</strong><br>1.synchronized用来标识一个<strong>普通方法</strong>，表示一个线程要执行该方法，必须取得该方法所在的<strong>对象的锁</strong></p>
-<p>2.synchronized用来标识一个<strong>静态方法</strong>，表示一个线程要执行该方法，必须取得该方法所在的<strong>类的类锁</strong></p>
-<p>3.synchronized用来修饰一个代码块，表示一个线程要执行该代码块，必须获得obj的锁</p>
-<h4 id="Java-web流程"><a href="#Java-web流程" class="headerlink" title="Java web流程"></a>Java web流程</h4><p>比如一个手机想客户端发请求，到返回请求，处理流程</p>
 
       
     </div>
