@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-07-19T07:48:45.722Z</updated>
+  <updated>2024-07-19T08:28:43.498Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://coder_tinghao.github.io/2024/07/19/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8BloomFilter%E2%80%94%E2%80%947-19/"/>
     <id>http://coder_tinghao.github.io/2024/07/19/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8BloomFilter%E2%80%94%E2%80%947-19/</id>
     <published>2024-07-19T07:22:39.000Z</published>
-    <updated>2024-07-19T07:48:45.722Z</updated>
+    <updated>2024-07-19T08:28:43.498Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h3><p><a href="https://juejin.cn/post/6844904007790673933">https://juejin.cn/post/6844904007790673933</a></p><p>用于解决缓存穿透问题等</p><p>将一个要查询的元素，用k个哈希函数进行k次哈希，得到对应的索引值（数组上的位置）</p><p>布隆过滤器是一个长度为m的比特数组（即每一位只有0或1）</p><p>我们搜索一个值的时候，若该值经过 K 个哈希函数运算后的<strong>任何</strong>一个索引位为 ”0“，那么该值<strong>肯定</strong>不在集合中；如果<strong>所有哈希索引值均为 ”1“</strong>，则只能说该搜索的值<strong>可能</strong>存在集合中</p><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>相比于防止缓存穿透另一解决办法:数据库中没查询到的key，存一个null值到缓存</p><p>布隆过滤器仅需要一个比特数组，占用内存小，但只能排除不存在的元素，对于存在的元素有一定误判率，也就是不能完全防止缓存穿透</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h3><p><a href="https://juejin.cn/post/6844904007790673933">https://juejin.cn/post/6844904007790673933</a></p><p>用于解决<strong>缓存穿透</strong>问题等<br><strong>缓存穿透另一解决办法:数据库中没查询到的key，存一个null值到缓存</strong><br>还有一些其他解决办法，不止这两个</p><p>将一个要查询的元素，用k个哈希函数进行k次哈希，得到对应的索引值（数组上的位置）</p><p>布隆过滤器是一个长度为m的比特数组（即每一位只有0或1）</p><p>我们搜索一个值的时候，若该值经过 K 个哈希函数运算后的<strong>任何</strong>一个索引位为 ”0“，那么该值<strong>肯定</strong>不在集合中；如果<strong>所有哈希索引值均为 ”1“</strong>，则只能说该搜索的值<strong>可能</strong>存在集合中</p><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>相比于在缓存中存null值，布隆过滤器占用空间更小</p><p>布隆过滤器仅需要一个比特数组，占用内存小，但只能排除不存在的元素，对于存在的元素有一定误判率，也就是不能完全防止缓存穿透</p>]]></content>
     
     
       
