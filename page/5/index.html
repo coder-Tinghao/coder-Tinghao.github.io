@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">44</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">45</span></a></li>
   </ul>
 </nav>
 
@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,85 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://coder_tinghao.github.io/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/profile.png">
+      <meta itemprop="name" content="Fength">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Feng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/12/25/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99-BFT/" class="post-title-link" itemprop="url">拜占庭容错--BFT</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-12-25 13:07:54 / 修改时间：13:41:58" itemprop="dateCreated datePublished" datetime="2022-12-25T13:07:54+08:00">2022-12-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="拜占庭容错系统中的N-gt-x3D-3f-1问题"><a href="#拜占庭容错系统中的N-gt-x3D-3f-1问题" class="headerlink" title="拜占庭容错系统中的N &gt;&#x3D; 3f+1问题"></a>拜占庭容错系统中的<strong>N &gt;&#x3D; 3f+1</strong>问题</h1><p><a target="_blank" rel="noopener" href="https://decentralizedthoughts.github.io/start-here/">https://decentralizedthoughts.github.io/start-here/</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在上面的网站中学习区块链基础知识，昨天从<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36000412">https://zhuanlan.zhihu.com/p/36000412</a>看懂了N &gt;&#x3D; 3f+1的证明，在此进行总结：<br><br>解决拜占庭将军问题的共识算法有很多（如PBFT，QU，HQ等），但无论共识算法如何设计，所有的算法都需要遵守一个容忍攻击者数量的限制(这个限制是与某个具体的算法实现无关的)。该限制描述如下：结点总数量为N时，最多只能容纳f个拜占庭故障（叛徒）节点，令N &gt;&#x3D; 3f+1。</p>
+<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>quorum（法定人数），所谓quorum指的是做出一次决策至少需要的同意票数量<br><br>liveness（活性）：liveness这个术语来自论文<a href="https://link.zhihu.com/?target=https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">FLP impossibility</a>。liveness，又称guaranteed termination，就是说共识算法的执行过程中不能卡死，最终能按照算法流程一步步得到执行结果。<br><br>safety（安全性）:safety这个术语同样来自论文FLP impossibility。此处用通俗的话解释一下，所谓安全性又称linearizability，就是说，执行共识算法之后，所有节点的内容能保证一致</p>
+<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>设总结点数为N，作恶的拜占庭节点数为 f，法定人数为Q<br><br>要满足liveness必须有：<br><br>**Q &lt;&#x3D; N-f** <br><br>说明：如果共识算法需要的Q大于N-f，则当f个拜占庭故障节点都主动破坏时，算法必然不能执行下去<br></p>
+<p>要满足safety必须有：<br><br><strong>2Q - N &gt; f</strong> <br><br>说明：假设好人的意见分裂了，X个人倾向于方案A，剩余N-f-X个人倾向于方案B。根据safety的定义，坏人要使系统不safety，就要利用自己的f张投票使得方案A和B都能通过：X+f≥Q；N-f-X+f≥Q 。两式相加得证N+f≥2Q 是坏人能作恶的边界条件。</p>
+<p>因为除了leader节点之外的好人节点有可能会出现运行异常，对外表现为意见分裂。但好人节点与拜占庭节点最大的不同是，拜占庭节点可能同时支持正反两种观点，而好人节点只可能分裂（有人支持正有人支持反），但不会说两样话（即，既支持正也支持反）</p>
+<p>因此：</p>
+<p>N+f &lt; 2Q &lt;&#x3D; 2(N-f)<br><br>N &gt; 3f<br><br>if N&#x3D;3f+1 此时Q的最小值为：<br><br>Qmin &#x3D; 2f+1</p>
+<p>证毕</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于所有的拜占庭将军问题，在不更改假设前提时，无论算法怎么设计，当总结点数为N时，最多只能容忍f个作恶节点(拜占庭故障节点)，使N &gt; 3f + 1，此时Q &gt; 2f + 1</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

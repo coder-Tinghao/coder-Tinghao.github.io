@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-06-14T07:09:12.156Z</updated>
+  <updated>2024-07-19T07:48:45.722Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>布隆过滤器BloomFilter——7.19</title>
+    <link href="http://coder_tinghao.github.io/2024/07/19/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8BloomFilter%E2%80%94%E2%80%947-19/"/>
+    <id>http://coder_tinghao.github.io/2024/07/19/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8BloomFilter%E2%80%94%E2%80%947-19/</id>
+    <published>2024-07-19T07:22:39.000Z</published>
+    <updated>2024-07-19T07:48:45.722Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h3><p><a href="https://juejin.cn/post/6844904007790673933">https://juejin.cn/post/6844904007790673933</a></p><p>用于解决缓存穿透问题等</p><p>将一个要查询的元素，用k个哈希函数进行k次哈希，得到对应的索引值（数组上的位置）</p><p>布隆过滤器是一个长度为m的比特数组（即每一位只有0或1）</p><p>我们搜索一个值的时候，若该值经过 K 个哈希函数运算后的<strong>任何</strong>一个索引位为 ”0“，那么该值<strong>肯定</strong>不在集合中；如果<strong>所有哈希索引值均为 ”1“</strong>，则只能说该搜索的值<strong>可能</strong>存在集合中</p><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>相比于防止缓存穿透另一解决办法:数据库中没查询到的key，存一个null值到缓存</p><p>布隆过滤器仅需要一个比特数组，占用内存小，但只能排除不存在的元素，对于存在的元素有一定误判率，也就是不能完全防止缓存穿透</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;布隆过滤器&quot;&gt;&lt;a href=&quot;#布隆过滤器&quot; class=&quot;headerlink&quot; title=&quot;布隆过滤器&quot;&gt;&lt;/a&gt;布隆过滤器&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://juejin.cn/post/6844904007790673933&quot;&gt;https</summary>
+      
+    
+    
+    
+    
+    <category term="Java" scheme="http://coder_tinghao.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>ThreadLocal原理及源码分析——6.13</title>
@@ -447,29 +469,6 @@ assert condition: expression;
       
     <summary type="html">&lt;h3 id=&quot;java堆&quot;&gt;&lt;a href=&quot;#java堆&quot; class=&quot;headerlink&quot; title=&quot;java堆&quot;&gt;&lt;/a&gt;java堆&lt;/h3&gt;&lt;p&gt;java new出来的对象都&lt;strong&gt;大多&lt;/strong&gt;是在堆中构造的，不绝对&lt;/p&gt;
 &lt;h3 id=&quot;j</summary>
-      
-    
-    
-    
-    
-    <category term="java" scheme="http://coder_tinghao.github.io/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java学习笔记——9.26</title>
-    <link href="http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/"/>
-    <id>http://coder_tinghao.github.io/2023/09/26/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-26/</id>
-    <published>2023-09-26T12:28:45.000Z</published>
-    <updated>2023-12-05T14:08:57.270Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Java类型转换"><a href="#Java类型转换" class="headerlink" title="Java类型转换"></a>Java类型转换</h3><p>long类型比float类型表示的范围小</p><p><strong>byte、char、short类型在做运算过程中，会自动提升为int类型</strong></p><pre><code>    byte a = 3;    byte b = 4;    byte c = a + b;  // 会报错，因为运算时提升成int了    byte c = (byte)(a+b); // int转byte，大转小，用强制类型转换    byte c = 3 + 4;  // 不会报错，因为上面的运算是变量，这行代码是两个字面量</code></pre><p>**Java有常量优化机制：编译期间会对3+4进行计算，实际的字节码文件：byte c&#x3D;7;对于String类型，也有常量优化机制，String s &#x3D; “a” +  **</p><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>java字符串，String类对象<strong>不可变</strong></p><p>优点：编译器可以让字符串<strong>共享</strong></p><p>字符串字面值存放在<strong>常量池</strong>（也是在堆内存中）</p><pre><code>    String s1 = &quot;abc&quot;; // 通过赋值的方式初始化    String s2 = &quot;abc&quot;;    System.out.println(s1==s2); // 返回true，说明在常量池的同一个地方</code></pre><p>若通过new初始化，则在堆内存中，不在常量池中</p><pre><code>    String s1 = new String(&quot;abc&quot;);    String s2 = new String(&quot;abc&quot;);    System.out.println(s1==s2); // 返回false，说明s2创建时，在堆内存中又新建了一个“abc”对象</code></pre><p>所以，通过直接赋值的方式进行初始化还可以节省空间</p><h4 id="检测字符串相等"><a href="#检测字符串相等" class="headerlink" title="检测字符串相等"></a>检测字符串相等</h4><p>用.equals()方法检测</p><p>&#x3D;&#x3D; 运算符只能确定两个字符串是否存放在同一位置<br>只有字符串字面值会共享，+和substring得到的字符串不共享</p><h4 id="空串与null"><a href="#空串与null" class="headerlink" title="空串与null"></a>空串与null</h4><p>空串是一个对象，长度为0，内容为空</p><pre><code>    str.length() == 0;    str.equals(&quot;&quot;);</code></pre><p>null表示没有任何对象与该变量相关联</p><pre><code>    str === null</code></pre><h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>StringBuilder和StringBuffer都可以理解成容器，用于<strong>支持String修改操作</strong></p><p><strong>StringBuilder</strong><br>如果所有字符串编辑操作都单线程执行，应当使用StringBuilder</p><pre><code>    StringBuilder sb = new StringBuilder();    sb.append(str1);    sb.append(str2);    String ret = sb.toString();</code></pre><p><strong>源码分析</strong><br>长度 .length() ：实际存了多少<br>容量 .capacity() :最多可以存多少<br>初始容量为<strong>指定字符串 +16</strong>，若初始化时为空，容量就是16；也可以指定容量</p><h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><p>若不够，先扩容为2倍+2；若还不够，扩容为字符串实际长度<br>扩容就是创建一个新容量的byte数组，把字符串内容复制进去，再返回</p><p><strong>StringBuffer</strong><br>与StringBuilder类似，没有StringBuilder速度快，多数情况下用Builder<br>但是，StringBuilder不是线程安全的，<strong>若要求线程安全必须用StringBuffer</strong></p><p><strong>原因</strong>：StringBuffer中所有方法都是synchronized修饰的，同一时间只能有一个线程访问，StringBuilder中的操作有非原子操作。但是实际情况中，String的构建几乎不涉及多线程场景</p><p><strong>StringJoiner</strong><br>StringJoiner基于StringBuilder构建的适用于<strong>字符拼接</strong>的场景</p><pre><code>    StringJoiner sj = new StringJoiner(&quot;,&quot;); // 指定分隔符    sj.add(&quot;张三&quot;).add(&quot;李四&quot;).add(&quot;王五&quot;); // 添加元素    String result = sj.toString(); // 转换为字符串    System.out.println(result); // 张三,李四,王五</code></pre><h3 id="字符串拼接底层原理"><a href="#字符串拼接底层原理" class="headerlink" title="字符串拼接底层原理"></a>字符串拼接底层原理</h3><p>如果没有变量参与，编译时会进行优化，<strong>编译时拼接起来，会复用常量池中的字符串</strong></p><pre><code>    String s1 = &quot;abc&quot;;    String s2 = &quot;a&quot; + &quot;b&quot; + &quot;c&quot;;    System.out.println(s1==s2); // 返回true，</code></pre><p>如果有变量参与，每一行拼接都会在内存中创建新字符串对象，浪费内存</p><h4 id="StringBuilder优化原理"><a href="#StringBuilder优化原理" class="headerlink" title="StringBuilder优化原理"></a>StringBuilder优化原理</h4><p>创建一次StringBuilder对象，所有要拼接的都往这一个对象放，节约内存</p><h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>java不允许在嵌套的块中重定义变量<br>java不能实现运算符重载</p><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>快速打印数组</p><pre><code>    int[] a = new int[100];    System.out.println(Arrays.toString(a));</code></pre><p>快速打印二维数组</p><pre><code>    int[] a = new int[100][100];    System.out.println(Arrays.deeptoString(a));</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;Java类型转换&quot;&gt;&lt;a href=&quot;#Java类型转换&quot; class=&quot;headerlink&quot; title=&quot;Java类型转换&quot;&gt;&lt;/a&gt;Java类型转换&lt;/h3&gt;&lt;p&gt;long类型比float类型表示的范围小&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;byte、char、</summary>
       
     
     
