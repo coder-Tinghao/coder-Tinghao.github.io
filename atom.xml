@@ -6,7 +6,7 @@
   <link href="http://coder_tinghao.github.io/atom.xml" rel="self"/>
   
   <link href="http://coder_tinghao.github.io/"/>
-  <updated>2024-07-19T08:28:43.498Z</updated>
+  <updated>2024-07-29T03:21:30.221Z</updated>
   <id>http://coder_tinghao.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>分布式Id生成方案</title>
+    <link href="http://coder_tinghao.github.io/2024/07/28/%E5%88%86%E5%B8%83%E5%BC%8FId%E7%94%9F%E6%88%90%E6%96%B9%E6%A1%88/"/>
+    <id>http://coder_tinghao.github.io/2024/07/28/%E5%88%86%E5%B8%83%E5%BC%8FId%E7%94%9F%E6%88%90%E6%96%B9%E6%A1%88/</id>
+    <published>2024-07-28T06:03:58.000Z</published>
+    <updated>2024-07-29T03:21:30.221Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="分布式ID"><a href="#分布式ID" class="headerlink" title="分布式ID"></a>分布式ID</h1><p><a href="https://pdai.tech/md/arch/arch-z-id.html">https://pdai.tech/md/arch/arch-z-id.html</a></p><p><a href="https://juejin.cn/post/6847009773536149517">https://juejin.cn/post/6847009773536149517</a></p><p>UUID<br>当前的时间戳及机器mac地址 全球唯一</p><p>不利于存储<br>无序，查询效率低下</p><p>数据库生成</p><p>Redis实现</p><p>雪花算法Snowflake</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;分布式ID&quot;&gt;&lt;a href=&quot;#分布式ID&quot; class=&quot;headerlink&quot; title=&quot;分布式ID&quot;&gt;&lt;/a&gt;分布式ID&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://pdai.tech/md/arch/arch-z-id.html&quot;&gt;https:/</summary>
+      
+    
+    
+    
+    
+    <category term="分布式" scheme="http://coder_tinghao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>布隆过滤器BloomFilter——7.19</title>
@@ -446,29 +468,6 @@ assert condition: expression;
       
       
     <summary type="html">&lt;h3 id=&quot;接口&quot;&gt;&lt;a href=&quot;#接口&quot; class=&quot;headerlink&quot; title=&quot;接口&quot;&gt;&lt;/a&gt;接口&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;为什么不用抽象类表示通用属性？&lt;/strong&gt;&lt;br&gt;java中没有多重继承，每个类只能扩展一个类，那比如一个类想扩展多个</summary>
-      
-    
-    
-    
-    
-    <category term="java" scheme="http://coder_tinghao.github.io/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java学习笔记——9.29</title>
-    <link href="http://coder_tinghao.github.io/2023/09/29/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-29/"/>
-    <id>http://coder_tinghao.github.io/2023/09/29/java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%949-29/</id>
-    <published>2023-09-29T03:45:19.000Z</published>
-    <updated>2023-10-05T14:24:22.771Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="java堆"><a href="#java堆" class="headerlink" title="java堆"></a>java堆</h3><p>java new出来的对象都<strong>大多</strong>是在堆中构造的，不绝对</p><h3 id="java-var关键字"><a href="#java-var关键字" class="headerlink" title="java var关键字"></a>java var关键字</h3><p>var关键字用于<strong>局部变量的类型推导</strong>，参数和字段的类型必须声明</p><h3 id="java类"><a href="#java类" class="headerlink" title="java类"></a>java类</h3><p>只访问对象而不修改对象——<strong>访问器方法</strong></p><pre><code>getXXX() &#123;    &#125;</code></pre><p>能修改的——<strong>修改器方法</strong></p><pre><code>setXXX() &#123;&#125;</code></pre><h3 id="null引用"><a href="#null引用" class="headerlink" title="null引用"></a>null引用</h3><p>没有任何引用对象</p><pre><code>// 对象引用参数为null时，转化为非null值public Emmployee(String name, int age) &#123;    name = Objects.requireNonNullElse(n, &quot;unknown&quot;);&#125;// 对象引用参数为null时，产生异常// 但可以准确定位，会提供问题描述public Emmployee(String name, int age) &#123;    name = Objects.requireNonNull(n, &quot;name cannot be null&quot;);&#125;</code></pre><h3 id="方法参数（java核心技术P122）"><a href="#方法参数（java核心技术P122）" class="headerlink" title="方法参数（java核心技术P122）"></a>方法参数（java核心技术P122）</h3><p>参数类型：基本数据类型，对象引用</p><p>java中总是采用<strong>按值传递</strong>，方法不可能修改基本数据类型的参数</p><p>传入一个<strong>对象参数</strong>就可以实现修改</p><p>原因：Java中实际上对象引用也是按值传递的<br>参数传一个对象引用，因为是值传递，可以获得一个对象引用的副本（个人理解：就是传入这个对象地址值的副本，和远对象引用指向同一个对象）那么这个对象引用的副本就可以操作这个对象修改所引用对象的状态</p><h3 id="java记录"><a href="#java记录" class="headerlink" title="java记录"></a>java记录</h3><p>特殊类，状态不可变，公共可读</p><pre><code>record Point(double x, double y) &#123; &#125;var p = new Point(3, 4);sout(p.x() + p.y());</code></pre><p>访问器方法名为变量名</p><h3 id="java静态绑定和动态绑定"><a href="#java静态绑定和动态绑定" class="headerlink" title="java静态绑定和动态绑定"></a>java静态绑定和动态绑定</h3><p>静态绑定发生在编译时期，动态绑定发生在运行时</p><p>使用private或static或final修饰的变量或者方法，编译器可以准确的知道可以调用哪个方法，使用静态绑定<br>可以被子类重写的方法则会根据运行时的对象进行动态绑定</p><p>动态绑定过程：<br>jvm会为每个类生成一个<strong>方法表</strong>，方便在调用方法时查找该用哪个方法</p><h3 id="Object类"><a href="#Object类" class="headerlink" title="Object类"></a>Object类</h3><p><strong>toString方法</strong><br>返回一个表示对象的值的字符串<br>用法：例如下面的代码，常用于自定义toString方法，来<strong>方便获取和打印对象状态</strong>的有用信息</p><pre><code>public String toString() &#123;    return getClass().getName()    + &quot;name=&quot; + name;&#125;</code></pre><h3 id="包装器"><a href="#包装器" class="headerlink" title="包装器"></a>包装器</h3><p>如：Integer对应int<br><strong>包装器类是不可变的，不允许更改里面的值</strong>，且是final的</p><h3 id="密封类sealed"><a href="#密封类sealed" class="headerlink" title="密封类sealed"></a>密封类sealed</h3><p>可以控制哪些类可以继承他</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;java堆&quot;&gt;&lt;a href=&quot;#java堆&quot; class=&quot;headerlink&quot; title=&quot;java堆&quot;&gt;&lt;/a&gt;java堆&lt;/h3&gt;&lt;p&gt;java new出来的对象都&lt;strong&gt;大多&lt;/strong&gt;是在堆中构造的，不绝对&lt;/p&gt;
-&lt;h3 id=&quot;j</summary>
       
     
     

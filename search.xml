@@ -1422,4 +1422,19 @@ future.cancel(true);
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>分布式Id生成方案</title>
+    <url>/2024/07/28/%E5%88%86%E5%B8%83%E5%BC%8FId%E7%94%9F%E6%88%90%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h1 id="分布式ID"><a href="#分布式ID" class="headerlink" title="分布式ID"></a>分布式ID</h1><p><a href="https://pdai.tech/md/arch/arch-z-id.html">https://pdai.tech/md/arch/arch-z-id.html</a></p>
+<p><a href="https://juejin.cn/post/6847009773536149517">https://juejin.cn/post/6847009773536149517</a></p>
+<p>UUID<br>当前的时间戳及机器mac地址 全球唯一</p>
+<p>不利于存储<br>无序，查询效率低下</p>
+<p>数据库生成</p>
+<p>Redis实现</p>
+<p>雪花算法Snowflake</p>
+]]></content>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
 </search>
